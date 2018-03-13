@@ -1,3 +1,7 @@
-# README
+# iTeach
+<Description>
 
-## iTeach
+
+## Run
+- npm install
+- react-native run-ios
