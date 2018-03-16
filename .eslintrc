@@ -1,28 +1,28 @@
 {
   "parser": "babel-eslint",
   "plugins": [
-    "react",
-    "react-native"
+  "react",
+  "react-native"
   ],
   "parserOptions": {
-    "ecmaVersion": 7,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
+  "ecmaVersion": 7,
+  "sourceType": "module",
+  "ecmaFeatures": {
+    "jsx": true
+  }
   },
   "extends" : [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "airbnb-base"
+  "eslint:recommended",
+  "plugin:react/recommended",
+  "airbnb-base"
   ],
   "env": {
-    "react-native/react-native": true
+  "react-native/react-native": true
   },
   "rules" : {
-    "arrow-body-style" : "warn",
-    "comma-dangle": "warn",
-    "no-console":"off",
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
+  "arrow-body-style" : "warn",
+  "comma-dangle": "warn",
+  "no-console":"off",
+  "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
   }
 }
