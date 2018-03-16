@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
-import styles from './App.style';
+import { DrawerNavigator, SwitchNavigator } from 'react-navigation'
+import Login from './src/pages/Login'
+import Home from './src/pages/Home'
 
-export default class HelloWorldApp extends Component {
-  render() {
-    return (
-      <Text>Hello world!</Text>
-    );
-  }
-}
+const App = SwitchNavigator({
+  Login: {
+    screen: Login,
+  },
+  Pages: DrawerNavigator({
+    Home: {
+      screen: Home,
+    },
+  }),
+})
+
+export default App
