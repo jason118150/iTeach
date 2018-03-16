@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import {
-  Platform,
-  StyleSheet,
   Text,
   View
 } from 'react-native';
-import styles from './App.style';
+import Login from './src/pages/Login';
 
-export default class HelloWorldApp extends Component {
+export default class App extends Component {
   render() {
     return (
-      <Text>Hello world!</Text>
+      <Login />
     );
   }
 }
