@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import {
-  Image,
   Text,
-  TextInput,
-  TouchableHighlight,
   View,
   Alert,
   AsyncStorage,
 } from 'react-native'
 import { Picker } from 'react-native-picker-dropdown'
+import Logo from '../components/Logo';
+import Button from '../components/Button';
+import TextFormInput from '../components/TextFormInput';
 import PropTypes from 'prop-types'
 import styles from './styles/Login.styles'
 
@@ -47,11 +47,7 @@ export default class Login extends Component {
 
   render() {
     return <View style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image
-          style={styles.logo}
-          source={{ uri: '' }} />
-      </View>
+      <Logo />
       <View style={styles.form}>
         <View style={styles.formInput}>
           <Text style={styles.text}>
@@ -61,35 +57,20 @@ export default class Login extends Component {
             style={styles.picker}
             textStyle={styles.text}
             selectedValue={this.state.status}
-            onValueChange={itemValue => this.setState({ status: itemValue })}>
+            onValueChange={itemValue => { this.setState({ status: itemValue }); }}>
             <Picker.Item label='老師' value='teacher' />
             <Picker.Item label='學生' value='student' />
           </Picker>
-          <Text style={styles.text}>
-            暱稱 ：
-          </Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={username => this.setState({ username })}
+          <TextFormInput
+            label='暱稱 :'
+            onChangeText={username => { this.setState({ username }); }}
             value={this.state.username} />
-          <Text style={styles.text}>
-            E-mail :
-          </Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={email => this.setState({ email })}
+          <TextFormInput
+            label='E-mail :'
+            onChangeText={email => { this.setState({ email }); }}
             value={this.state.email} />
         </View>
-        <View style={styles.buttonContainer}>
-          <TouchableHighlight
-            underlayColor='steelblue'
-            onPress={this.onPress}
-            style={styles.button}>
-            <Text style={styles.buttonLabel}>
-              註冊
-            </Text>
-          </TouchableHighlight>
-        </View>
+        <Button label='註冊' onPress={this.onPress} />
       </View>
     </View>
   }
