@@ -57,17 +57,17 @@ export default class Login extends Component {
             style={styles.picker}
             textStyle={styles.text}
             selectedValue={this.state.status}
-            onValueChange={itemValue => { this.setState({ status: itemValue }); }}>
+            onValueChange={(itemValue) => { this.setState({ status: itemValue }) }}>
             <Picker.Item label='老師' value='teacher' />
             <Picker.Item label='學生' value='student' />
           </Picker>
           <TextFormInput
             label='暱稱 :'
-            onChangeText={username => { this.setState({ username }); }}
+            onChangeText={(username) => { this.setState({ username }) }}
             value={this.state.username} />
           <TextFormInput
             label='E-mail :'
-            onChangeText={email => { this.setState({ email }); }}
+            onChangeText={(email) => { this.setState({ email }) }}
             value={this.state.email} />
         </View>
         <Button label='註冊' onPress={this.onPress} />
