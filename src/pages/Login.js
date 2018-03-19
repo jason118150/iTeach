@@ -6,10 +6,10 @@ import {
   AsyncStorage,
 } from 'react-native'
 import { Picker } from 'react-native-picker-dropdown'
-import Logo from '../components/Logo';
-import Button from '../components/Button';
-import TextFormInput from '../components/TextFormInput';
 import PropTypes from 'prop-types'
+import Logo from '../components/Logo'
+import Button from '../components/Button'
+import TextFormInput from '../components/TextFormInput'
 import styles from './styles/Login.styles'
 
 export default class Login extends Component {
