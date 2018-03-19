@@ -1,11 +1,16 @@
-import React, { Component } from 'react';
-import { } from 'react-native';
-import Login from './src/pages/Login';
+import { DrawerNavigator, SwitchNavigator } from 'react-navigation'
+import Login from './src/pages/Login'
+import Home from './src/pages/Home'
 
-export default class App extends Component {
-  render() {
-    return (
-      <Login />
-    );
-  }
-}
+const App = SwitchNavigator({
+  Login: {
+    screen: Login,
+  },
+  Pages: DrawerNavigator({
+    Home: {
+      screen: Home,
+    },
+  }),
+})
+
+export default App

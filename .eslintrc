@@ -20,9 +20,11 @@
   "react-native/react-native": true
   },
   "rules" : {
-  "arrow-body-style" : "warn",
-  "comma-dangle": "warn",
-  "no-console":"off",
-  "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
+    "arrow-body-style" : "warn",
+    "comma-dangle": "warn",
+    "no-console":"off",
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "semi": ["error", "never"],
+    "indent": ["error", 2]
   }
 }
