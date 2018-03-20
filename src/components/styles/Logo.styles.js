@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   logoContainer: {
@@ -13,4 +13,4 @@ export default StyleSheet.create({
     borderRadius: 20,
     backgroundColor: '#3A8FB7',
   },
-});
+})
