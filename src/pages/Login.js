@@ -11,6 +11,8 @@ import Logo from '../components/Logo'
 import Button from '../components/Button'
 import TextFormInput from '../components/TextFormInput'
 import styles from './styles/Login.styles'
+import signUpValidation from '../util/signUpValidation'
+
 
 export default class Login extends Component {
   constructor(props) {
@@ -32,17 +34,60 @@ export default class Login extends Component {
   }
 
   onPress = () => {
-    AsyncStorage.setItem('iTeachStore', JSON.stringify(this.state), (error) => {
-      if (error) {
-        Alert.alert(
-          '註冊錯誤',
-          '該暱稱已經存在',
-          [{ text: 'OK' }],
-        )
-      } else {
-        this.props.navigation.navigate('Home')
+    if (!signUpValidation(this.state).valid) {
+      // 不符合規則，跳出警告視窗
+      Alert.alert(
+        '警告',
+        signUpValidation(this.state).description,
+        [
+          { text: 'OK', onPress: () => console.log('OK Pressed') },
+        ],
+      )
+      // 檢查應該清除哪行
+      switch (signUpValidation(this.state).errorCode) {
+      case 1:
+        this.setState({
+          username: '',
+        })
+        break
+      case 2:
+        this.setState({
+          email: '',
+        })
+        break
+      case 3:
+        this.setState({
+          status: '',
+        })
+        break
+      default:
+        this.setState({
+          status: '',
+          username: '',
+          email: '',
+        })
       }
+    } else {
+      // 符合規則，跳轉到HomePage
+      AsyncStorage.setItem('iTeachStore', JSON.stringify(this.state), (error) => {
+        if (error) {
+          Alert.alert(
+            '註冊錯誤',
+            '該暱稱已經存在',
+            [{ text: 'OK' }],
+          )
+        } else {
+          this.props.navigation.navigate('Home')
+        }
+      })
+    }
+    /*
+    this.setState({
+      status: '',
+      username: '',
+      email: '',
     })
+    */
   }
 
   render() {
