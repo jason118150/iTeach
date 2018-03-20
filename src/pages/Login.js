@@ -11,7 +11,7 @@ import Logo from '../components/Logo'
 import Button from '../components/Button'
 import TextFormInput from '../components/TextFormInput'
 import styles from './styles/Login.styles'
-import signUpValidation from '../util/signUpValidation';
+import signUpValidation from '../util/signUpValidation'
 
 
 export default class Login extends Component {
@@ -34,18 +34,17 @@ export default class Login extends Component {
   }
 
   onPress = () => {
-    const { navigate } = this.props.navigation;
-    if (!signUpValidation(this.state).valid){
-      //不符合規則，跳出警告視窗
+    if (!signUpValidation(this.state).valid) {
+      // 不符合規則，跳出警告視窗
       Alert.alert(
         '警告',
         signUpValidation(this.state).description,
         [
-               {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ]
+          { text: 'OK', onPress: () => console.log('OK Pressed') },
+        ],
       )
     } else {
-      //符合規則，跳轉到HomePage
+      // 符合規則，跳轉到HomePage
       AsyncStorage.setItem('iTeachStore', JSON.stringify(this.state), (error) => {
         if (error) {
           Alert.alert(
@@ -62,7 +61,7 @@ export default class Login extends Component {
       status: '',
       username: '',
       email: '',
-    });
+    })
   }
 
   render() {
