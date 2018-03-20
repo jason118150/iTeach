@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   buttonContainer: {
@@ -20,4 +20,4 @@ export default StyleSheet.create({
     fontFamily: 'Avenir',
     fontSize: 24,
   },
-});
+})

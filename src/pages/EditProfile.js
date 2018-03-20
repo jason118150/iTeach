@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import {
-  Text,
   View,
   Alert,
   AsyncStorage,
 } from 'react-native'
-import { Picker } from 'react-native-picker-dropdown'
 import PropTypes from 'prop-types'
 import Logo from '../components/Logo'
 import Button from '../components/Button'
@@ -14,7 +12,7 @@ import styles from './styles/Login.styles'
 import signUpValidation from '../util/signUpValidation'
 
 
-export default class Login extends Component {
+export default class EditProfile extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -22,18 +20,21 @@ export default class Login extends Component {
       username: '',
       email: '',
     }
-    this.onPress = this.onPress.bind(this)
+    this.onPressConfirm = this.onPressConfirm.bind(this)
+    this.onPressCancel = this.onPressCancel.bind(this)
   }
 
-  componentWillMount() {
-    AsyncStorage.getItem('iTeachStore', (error, result) => {
-      if (result) {
-        this.props.navigation.navigate('Home')
-      }
-    })
+  async componentWillMount() {
+    // 從本地資料庫中撈出舊帳戶資料
+    const storeState = await AsyncStorage.getItem('iTeachStore')
+    this.setState(JSON.parse(storeState))
   }
 
-  onPress = () => {
+  onPressCancel = () => {
+    this.props.navigation.navigate('Home')
+  }
+
+  onPressConfirm = () => {
     if (!signUpValidation(this.state).valid) {
       // 不符合規則，跳出警告視窗
       Alert.alert(
@@ -55,14 +56,8 @@ export default class Login extends Component {
           email: '',
         })
         break
-      case 3:
-        this.setState({
-          status: '',
-        })
-        break
       default:
         this.setState({
-          status: '',
           username: '',
           email: '',
         })
@@ -73,7 +68,6 @@ export default class Login extends Component {
         if (error) {
           Alert.alert(
             '註冊錯誤',
-            '該暱稱已經存在',
             [{ text: 'OK' }],
           )
         } else {
@@ -88,33 +82,23 @@ export default class Login extends Component {
       <Logo />
       <View style={styles.form}>
         <View style={styles.formInput}>
-          <Text style={styles.text}>
-            身份 ：
-          </Text>
-          <Picker
-            style={styles.picker}
-            textStyle={styles.text}
-            selectedValue={this.state.status}
-            onValueChange={(itemValue) => { this.setState({ status: itemValue }) }}>
-            <Picker.Item label='老師' value='teacher' />
-            <Picker.Item label='學生' value='student' />
-          </Picker>
           <TextFormInput
-            label='暱稱 :'
+            label='新暱稱 :'
             onChangeText={(username) => { this.setState({ username }) }}
             value={this.state.username} />
           <TextFormInput
-            label='E-mail :'
+            label='新 E-mail :'
             onChangeText={(email) => { this.setState({ email }) }}
             value={this.state.email} />
         </View>
-        <Button label='註冊' onPress={this.onPress} />
+        <Button label='確認' onPress={this.onPressConfirm} />
+        <Button label='取消' onPress={this.onPressCancel} />
       </View>
     </View>
   }
 }
 
-Login.propTypes = {
+EditProfile.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
