@@ -43,6 +43,30 @@ export default class Login extends Component {
           { text: 'OK', onPress: () => console.log('OK Pressed') },
         ],
       )
+      // 檢查應該清除哪行
+      switch (signUpValidation(this.state).errorCode) {
+      case 1:
+        this.setState({
+          username: '',
+        })
+        break
+      case 2:
+        this.setState({
+          email: '',
+        })
+        break
+      case 3:
+        this.setState({
+          status: '',
+        })
+        break
+      default:
+        this.setState({
+          status: '',
+          username: '',
+          email: '',
+        })
+      }
     } else {
       // 符合規則，跳轉到HomePage
       AsyncStorage.setItem('iTeachStore', JSON.stringify(this.state), (error) => {
@@ -57,11 +81,13 @@ export default class Login extends Component {
         }
       })
     }
+    /*
     this.setState({
       status: '',
       username: '',
       email: '',
     })
+    */
   }
 
   render() {
