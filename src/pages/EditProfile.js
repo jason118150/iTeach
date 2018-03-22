@@ -24,6 +24,10 @@ export default class EditProfile extends Component {
     this.onPressCancel = this.onPressCancel.bind(this)
   }
 
+  static navigationOptions = {
+    drawerLabel: '修改個人資料',
+  };
+
   async componentWillMount() {
     // 從本地資料庫中撈出舊帳戶資料
     const storeState = await AsyncStorage.getItem('iTeachStore')
