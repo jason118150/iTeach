@@ -25,7 +25,7 @@ export default StyleSheet.create({
   },
   title: {
     marginHorizontal: 10,
-    color: 'powderblue',
+    color: '#3A8FB7',
     fontFamily: 'Avenir',
     fontSize: 24,
     textAlign: 'center',

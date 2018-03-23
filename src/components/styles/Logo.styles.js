@@ -10,7 +10,5 @@ export default StyleSheet.create({
   logo: {
     width: 100,
     height: 100,
-    borderRadius: 20,
-    backgroundColor: '#3A8FB7',
   },
 })
