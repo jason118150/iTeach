@@ -1,10 +1,25 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Text, View } from 'react-native'
+import { Text, View, AsyncStorage } from 'react-native'
 import styles from './styles/DrawerContainer.styles'
 
 
 export default class DrawerContainer extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      status: '',
+      username: '',
+      email: '',
+    }
+  }
+
+  async componentWillMount() {
+    // 從本地資料庫中撈出舊帳戶資料
+    const storeState = await AsyncStorage.getItem('iTeachStore')
+    this.setState(JSON.parse(storeState))
+  }
+
   render() {
     const { navigation } = this.props
     return (
@@ -12,7 +27,7 @@ export default class DrawerContainer extends Component {
         <View style={styles.buttonContainer}>
           <Text
             style={styles.usernameItem}>
-            使用者暱稱
+            {this.state.username}
           </Text>
           <Text
             onPress={() => navigation.navigate('Home')}
