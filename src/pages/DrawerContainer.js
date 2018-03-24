@@ -14,7 +14,7 @@ export default class DrawerContainer extends Component {
     }
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     // 從本地資料庫中撈出舊帳戶資料
     const storeState = await AsyncStorage.getItem('iTeachStore')
     this.setState(JSON.parse(storeState))
@@ -35,7 +35,7 @@ export default class DrawerContainer extends Component {
             主頁
           </Text>
           <Text
-            onPress={() => navigation.navigate('Edit')}
+            onPress={() => navigation.navigate('EditProfile')}
             style={styles.drawerItem}>
             修改個人資料
           </Text>
