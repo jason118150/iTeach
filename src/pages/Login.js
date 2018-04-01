@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import {
   Text,
   View,
   Alert,
-  AsyncStorage,
 } from 'react-native'
 import { Picker } from 'react-native-picker-dropdown'
 import PropTypes from 'prop-types'
@@ -12,9 +12,24 @@ import Button from '../components/Button'
 import TextFormInput from '../components/TextFormInput'
 import styles from './styles/Login.styles'
 import signUpValidation from '../util/signUpValidation'
+import account from '../actions/account'
+import nav from '../actions/nav'
 
+const mapStateToProps = state => ({
+  ...state.account,
+  initComplete: state.initComplete,
+})
 
-export default class Login extends Component {
+const mapDispatchToProps = dispatch => ({
+  account: {
+    set: async (info) => { dispatch(await account.set(info)) },
+  },
+  nav: {
+    classMenu: () => { dispatch(nav.classMenu()) },
+  },
+})
+
+class Login extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -25,15 +40,7 @@ export default class Login extends Component {
     this.onPress = this.onPress.bind(this)
   }
 
-  componentWillMount() {
-    AsyncStorage.getItem('iTeachStore', (error, result) => {
-      if (result) {
-        this.props.navigation.navigate('Home')
-      }
-    })
-  }
-
-  onPress = () => {
+  onPress = async () => {
     if (!signUpValidation(this.state).valid) {
       // 不符合規則，跳出警告視窗
       Alert.alert(
@@ -68,23 +75,13 @@ export default class Login extends Component {
         })
       }
     } else {
-      // 符合規則，跳轉到HomePage
-      AsyncStorage.setItem('iTeachStore', JSON.stringify(this.state), (error) => {
-        if (error) {
-          Alert.alert(
-            '註冊錯誤',
-            '該暱稱已經存在',
-            [{ text: 'OK' }],
-          )
-        } else {
-          this.props.navigation.navigate('Home')
-        }
-      })
+      // 符合規則，跳轉到ClassMenu
+      await this.props.account.set(this.state)
     }
   }
 
   render() {
-    return <View style={styles.container}>
+    return <View style={[styles.container, { display: this.props.initComplete ? 'flex' : 'none' }]}>
       <Logo />
       <View style={styles.form}>
         <View style={styles.formInput}>
@@ -115,7 +112,14 @@ export default class Login extends Component {
 }
 
 Login.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
+  account: PropTypes.shape({
+    set: PropTypes.func.isRequired,
   }).isRequired,
+  nav: PropTypes.shape({
+    classMenu: PropTypes.func.isRequired,
+  }).isRequired,
+  username: PropTypes.string.isRequired,
+  initComplete: PropTypes.bool.isRequired,
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

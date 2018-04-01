@@ -1,8 +1,13 @@
-import { NavigationActions } from 'react-navigation'
+import { createActions } from 'redux-actions'
 
-const nav = {
-  openDrawer: () => NavigationActions.navigate({ routeName: 'DrawerOpen' }),
-  editProfile: () => NavigationActions.navigate({ routeName: 'EditProfile' }),
-}
+const { nav } = createActions({
+  nav: {
+    openDrawer: () => null,
+    closeDrawer: () => null,
+    editProfile: () => null,
+    classMenu: () => null,
+    channels: () => null,
+  },
+})
 
 export default nav

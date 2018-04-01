@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types'
 import DrawerImage from '../../asset/drawer.png'
-import styles from './styles/Home.styles'
+import styles from './styles/ClassMenu.styles'
 
 export default class Channels extends Component {
   constructor(props) {
@@ -18,10 +18,6 @@ export default class Channels extends Component {
   openDrawer() {
     this.props.navigation.navigate('DrawerOpen')
   }
-
-  static navigationOptions = {
-    drawerLabel: '切換頻道',
-  };
 
   render() {
     return <View style={styles.container}>

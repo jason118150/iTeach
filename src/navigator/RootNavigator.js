@@ -1,6 +1,6 @@
 import { DrawerNavigator, SwitchNavigator } from 'react-navigation'
 import Login from '../pages/Login'
-import Home from '../pages/Home'
+import ClassMenu from '../pages/ClassMenu'
 import EditProfile from '../pages/EditProfile'
 import Channels from '../pages/Channels'
 import DrawerContainer from '../pages/DrawerContainer'
@@ -16,8 +16,8 @@ export default SwitchNavigator({
     Channels: {
       screen: Channels, // Page for 切換頻道
     },
-    Home: {
-      screen: Home,
+    ClassMenu: {
+      screen: ClassMenu,
     },
   }, {
     contentComponent: DrawerContainer,

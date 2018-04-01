@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { View } from 'react-native'
 import { Provider, connect } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import { addNavigationHelpers } from 'react-navigation'
@@ -6,6 +7,10 @@ import { createReactNavigationReduxMiddleware, createReduxBoundAddListener } fro
 import PropTypes from 'prop-types'
 import reducer from './src/reducers'
 import RootNavigator from './src/navigator/RootNavigator'
+import account from './src/actions/account'
+import nav from './src/actions/nav'
+import initComplete from './src/actions/initComplete'
+// import classMenu from './src/actions/classMenu'
 
 const middleware = createReactNavigationReduxMiddleware(
   'root',
@@ -13,6 +18,30 @@ const middleware = createReactNavigationReduxMiddleware(
 )
 const addListener = createReduxBoundAddListener('root')
 const store = createStore(reducer, applyMiddleware(middleware))
+
+const initStore = async () => {
+  store.dispatch({
+    type: 'classMenu/classList/get',
+    payload: [{
+      title: '網路與多媒體實驗',
+      color: 'red',
+    }, {
+      title: '機器學習及其深層與結構化',
+      color: 'blue',
+    }, {
+      title: '資料庫系統-從SQL到NoSQL',
+      color: 'green',
+    }],
+  })
+  // store.dispatch(await classMenu.classList.get())
+  store.dispatch(await account.get())
+  if (store.getState().account.username !== '') {
+    store.dispatch(nav.classMenu())
+  }
+  store.dispatch(initComplete())
+}
+
+initStore()
 
 const mapStateToProps = state => ({
   nav: state.nav,
