@@ -16,23 +16,29 @@ class ClassItem extends Component {
   }
 
   render() {
-    const { title, color, deleteClass } = this.props
+    const {
+      title,
+      color,
+      deleteClass,
+      cancelAllDelete,
+      onPress,
+    } = this.props
     return (
       <View style={styles.classItemContainer}>
         <ScrollView
           ref={(ref) => { this.ref = ref }}
-          onScrollBeginDrag={() => { this.props.cancelAllDelete(this.ref) }}
+          onScrollBeginDrag={() => { cancelAllDelete(this.ref) }}
           horizontal
           contentContainerStyle={styles.scroll}
           bounces={false}
           pagingEnabled
           showsHorizontalScrollIndicator={false}>
           <View style={[styles.colorBox, { backgroundColor: color }]} />
-          <View style={styles.textContainer}>
+          <TouchableHighlight style={styles.textContainer} onPress={() => { onPress(title, color) }} underlayColor='white'>
             <Text style={styles.title}>
               {title}
             </Text>
-          </View>
+          </TouchableHighlight>
           <TouchableHighlight style={styles.deleteContainer} onPress={() => { deleteClass(title) }} underlayColor='#C20C02'>
             <Image style={styles.delete} source={DeleteImage}/>
           </TouchableHighlight>

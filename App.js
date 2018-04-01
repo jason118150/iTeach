@@ -19,6 +19,7 @@ const addListener = createReduxBoundAddListener('root')
 const store = createStore(reducer, applyMiddleware(middleware))
 
 const initStore = async () => {
+  // Load data from local storage
   store.dispatch({
     type: 'classMenu/classList/get',
     payload: [{
@@ -37,6 +38,7 @@ const initStore = async () => {
   if (store.getState().account.username !== '') {
     store.dispatch(nav.classMenu())
   }
+  // Load Complete
   store.dispatch(initComplete())
 }
 

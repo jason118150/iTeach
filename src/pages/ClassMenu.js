@@ -35,10 +35,12 @@ class ClassMenu extends Component {
     super(props)
     this.cancelAllDelete = this.cancelAllDelete.bind(this)
     this.deleteClass = this.deleteClass.bind(this)
+    this.classOnPress = this.classOnPress.bind(this)
   }
 
   cancelAllDelete(without) {
     Object.values(this.classRef).forEach((ref) => {
+      // Scroll back the reference of ScrollView inside ClassItem
       if (ref.ref !== without) {
         ref.ref.scrollTo({ x: 0 })
       }
@@ -48,6 +50,14 @@ class ClassMenu extends Component {
   async deleteClass(title) {
     await this.props.classList.set(this.props.classes.filter(item => item.title !== title))
     delete this.classRef[title]
+  }
+
+  async classOnPress(title, color) {
+    if (this.props.classes[0].title !== title) {
+      const classes = this.props.classes.filter(item => item.title !== title)
+      classes.splice(0, 0, { title, color })
+      await this.props.classList.set(classes)
+    }
   }
 
   render() {
@@ -83,6 +93,7 @@ class ClassMenu extends Component {
                 color={item.color}
                 deleteClass={this.deleteClass}
                 cancelAllDelete={this.cancelAllDelete}
+                onPress={this.classOnPress}
                 ref={(ref) => {
                   this.classRef = { ...this.classRef, [item.title]: ref }
                 }}/>
