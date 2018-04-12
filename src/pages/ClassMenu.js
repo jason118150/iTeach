@@ -71,7 +71,7 @@ class ClassMenu extends Component {
             課程選單
           </Text>
           <TouchableHighlight style={styles.addSearchIconContainer} onPress={null} underlayColor='#E5F2FF'>
-            <Image style={styles.addSearchIcon} source={this.props.status === 'student' ? AddImage : SearchImage} />
+            <Image style={styles.addSearchIcon} source={this.props.status === 'teacher' ? AddImage : SearchImage} />
           </TouchableHighlight>
         </View>
         <View style={styles.listContainer}>
