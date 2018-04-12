@@ -20,19 +20,10 @@ const store = createStore(reducer, applyMiddleware(middleware))
 
 const initStore = async () => {
   // Load data from local storage
-  store.dispatch({
-    type: 'classMenu/classList/get',
-    payload: [{
-      title: '網路與多媒體實驗',
-      color: 'red',
-    }, {
-      title: '機器學習及其深層與結構化',
-      color: 'blue',
-    }, {
-      title: '資料庫系統-從SQL到NoSQL',
-      color: 'green',
-    }],
-  })
+
+  let mockData = require('./asset/mockData.json')
+  store.dispatch(mockData)
+
   // store.dispatch(await classMenu.classList.get())
   store.dispatch(await account.get())
   if (store.getState().account.username !== '') {
