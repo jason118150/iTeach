@@ -2,15 +2,15 @@ import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   container: {
-    marginTop: 20,
+    paddingTop: 20,
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#3A8FB7',
   },
   titleBar: {
     height: 60,
     alignItems: 'center',
     flexDirection: 'row',
-    backgroundColor: '#E5F2FF',
+    backgroundColor: '#3A8FB7',
   },
   drawerIconContainer: {
     width: 40,
@@ -39,7 +39,7 @@ export default StyleSheet.create({
   },
   title: {
     marginHorizontal: 10,
-    color: '#3A8FB7',
+    color: 'white',
     fontFamily: 'Avenir',
     fontSize: 24,
     textAlign: 'center',
@@ -47,8 +47,9 @@ export default StyleSheet.create({
   },
   listContainer: {
     flex: 1,
-    margin: 10,
+    padding: 15,
     justifyContent: 'space-around',
+    backgroundColor: 'white',
   },
   welcomeMsgContainer: {
     height: 300,

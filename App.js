@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { StatusBar } from 'react-native'
 import { Provider, connect } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import { addNavigationHelpers } from 'react-navigation'
@@ -9,25 +10,14 @@ import RootNavigator from './src/navigator/RootNavigator'
 import accountAction from './src/actions/account.action'
 // import classMenu from './src/actions/classMenu'
 import middlewares from './src/util/middlewares'
+import mockData from './asset/mockData.json'
 
 const addListener = createReduxBoundAddListener('root')
 const store = createStore(reducer, applyMiddleware(...middlewares))
 
 const initStore = async () => {
   // Load data from local storage
-  store.dispatch({
-    type: 'classMenu/classList/set',
-    payload: [{
-      title: '網路與多媒體實驗',
-      color: 'red',
-    }, {
-      title: '機器學習及其深層與結構化',
-      color: 'blue',
-    }, {
-      title: '資料庫系統-從SQL到NoSQL',
-      color: 'green',
-    }],
-  })
+  store.dispatch(mockData)
   store.dispatch(accountAction.get())
 }
 
@@ -39,6 +29,7 @@ const mapStateToProps = state => ({
 
 class Root extends Component {
   render() {
+    StatusBar.setBarStyle('light-content', true)
     return (
       <RootNavigator navigation={ addNavigationHelpers({
         dispatch: this.props.dispatch,

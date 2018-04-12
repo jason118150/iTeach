@@ -78,6 +78,7 @@ class Login extends Component {
 
   render() {
     return <View style={[styles.container, { display: this.props.initComplete ? 'flex' : 'none' }]}>
+      <View style={styles.statusbar}/>
       <Logo />
       <View style={styles.form}>
         <View style={styles.formInput}>

@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native'
 export default StyleSheet.create({
   classItemContainer: {
     height: 50,
+    marginBottom: 5,
     flexDirection: 'row',
     width: '100%',
   },
@@ -11,9 +12,11 @@ export default StyleSheet.create({
     width: '120%',
   },
   colorBox: {
-    height: 20,
-    width: 20,
+    height: 25,
+    width: 25,
     marginHorizontal: 10,
+    borderRadius: 5,
+    opacity: 0.6,
   },
   textContainer: {
     flex: 0.85,
@@ -21,11 +24,12 @@ export default StyleSheet.create({
   title: {
     fontFamily: 'Avenir',
     fontSize: 20,
+    color: '#3A8FB7',
   },
   deleteContainer: {
     flex: 0.15,
     height: 50,
-    backgroundColor: '#C20C02',
+    backgroundColor: 'red',
     alignItems: 'center',
   },
   delete: {
