@@ -78,6 +78,7 @@ class EditProfile extends Component {
 
   render() {
     return <View style={styles.container}>
+      <View style={styles.statusbar}/>
       <Logo />
       <View style={styles.form}>
         <View style={styles.formInput}>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { StatusBar } from 'react-native'
 import { Provider, connect } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import { addNavigationHelpers } from 'react-navigation'
@@ -41,6 +42,7 @@ const mapStateToProps = state => ({
 
 class Root extends Component {
   render() {
+    StatusBar.setBarStyle('light-content', true)
     return (
       <RootNavigator navigation={ addNavigationHelpers({
         dispatch: this.props.dispatch,
