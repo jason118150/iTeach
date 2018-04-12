@@ -25,16 +25,16 @@ export default StyleSheet.create({
     zIndex: 1,
   },
   addSearchIconContainer: {
-    width: 35,
-    height: 35,
+    width: 30,
+    height: 30,
     margin: 12.5,
     position: 'absolute',
     right: 0,
     zIndex: 2,
   },
   addSearchIcon: {
-    width: 35,
-    height: 35,
+    width: 30,
+    height: 30,
     zIndex: 1,
   },
   title: {

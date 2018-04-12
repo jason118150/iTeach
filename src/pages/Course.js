@@ -7,27 +7,26 @@ import {
   View,
 } from 'react-native'
 import PropTypes from 'prop-types'
-import DrawerImage from '../../asset/drawer.png'
 import CloseImage from '../../asset/close.png'
 import styles from './styles/Course.styles'
-import nav from '../actions/nav'
-import { getCourse } from '../actions/course'
+import navAction from '../actions/nav.action'
+import courseAction from '../actions/course.action'
 import CourseItem from '../components/CourseItem'
 import CourseItemData from '../components/CourseItemData'
 
 const mapStateToProps = state => ({
   status: state.account.status,
-  courseName: getCourse,
+  ...state,
 })
 
 const mapDispatchToProps = dispatch => ({
-  nav: {
-    openDrawer: () => { dispatch(nav.openDrawer()) },
-    // onExit: () => { dispatch(nav.classMenu()) },
+  navAction: {
+    openDrawer: () => { dispatch(navAction.openDrawer()) },
+    onExit: () => { dispatch(navAction.classMenu()) },
   },
-  /* classList: {
-    set: async (classes) => { dispatch(await classMenu.classList.set(classes)) },
-  }, */
+  courseAction: {
+    getName: () => { dispatch(courseAction.get()) },
+  },
 })
 
 class Course extends Component {
@@ -40,17 +39,13 @@ class Course extends Component {
           imgSrc={item.imgSrc}
           clicked={item.clicked}/>
       ))
-
     return (
       <View style={styles.container}>
         <View style={styles.titleBar}>
-          <TouchableHighlight style={styles.drawerIconContainer} onPress={this.props.nav.openDrawer} underlayColor='#E5F2FF'>
-            <Image style={styles.drawerIcon} source={DrawerImage} />
-          </TouchableHighlight>
           <Text style={styles.title}>
-            {this.state.courseName}
+            {this.props.course}
           </Text>
-          <TouchableHighlight style={styles.addSearchIconContainer} onPress={null} underlayColor='#E5F2FF'>
+          <TouchableHighlight style={styles.addSearchIconContainer} onPress={this.props.navAction.onExit} underlayColor='#3A8FB7'>
             <Image style={styles.addSearchIcon} source={CloseImage} />
           </TouchableHighlight>
         </View>
@@ -63,10 +58,11 @@ class Course extends Component {
 }
 
 Course.propTypes = {
-  nav: PropTypes.shape({
+  navAction: PropTypes.shape({
     openDrawer: PropTypes.func.isRequired,
-    // onExit: PropTypes.func.isRequired,
+    onExit: PropTypes.func.isRequired,
   }).isRequired,
+  course: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
 }
 
