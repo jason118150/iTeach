@@ -26,7 +26,6 @@ const { account } = createActions({
     }),
     get: () => (async (dispatch) => {
       const accountData = JSON.parse(await AsyncStorage.getItem('iTeachStore:Account'))
-      console.log(accountData)
       dispatch(account.set(accountData))
       dispatch(initCompleteAction())
     }),

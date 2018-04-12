@@ -1,5 +1,5 @@
 {
-    "type": "classMenu/classList/get",
+    "type": "classMenu/classList/set",
     "payload": [{
       "title": "網路與多媒體實驗",
       "color": "red"
