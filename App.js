@@ -2,26 +2,21 @@ import React, { Component } from 'react'
 import { Provider, connect } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import { addNavigationHelpers } from 'react-navigation'
-import { createReactNavigationReduxMiddleware, createReduxBoundAddListener } from 'react-navigation-redux-helpers'
+import { createReduxBoundAddListener } from 'react-navigation-redux-helpers'
 import PropTypes from 'prop-types'
 import reducer from './src/reducers'
 import RootNavigator from './src/navigator/RootNavigator'
-import account from './src/actions/account'
-import nav from './src/actions/nav'
-import initComplete from './src/actions/initComplete'
+import accountAction from './src/actions/account.action'
 // import classMenu from './src/actions/classMenu'
+import middlewares from './src/util/middlewares'
 
-const middleware = createReactNavigationReduxMiddleware(
-  'root',
-  state => state.nav,
-)
 const addListener = createReduxBoundAddListener('root')
-const store = createStore(reducer, applyMiddleware(middleware))
+const store = createStore(reducer, applyMiddleware(...middlewares))
 
 const initStore = async () => {
   // Load data from local storage
   store.dispatch({
-    type: 'classMenu/classList/get',
+    type: 'classMenu/classList/set',
     payload: [{
       title: '網路與多媒體實驗',
       color: 'red',
@@ -33,13 +28,7 @@ const initStore = async () => {
       color: 'green',
     }],
   })
-  // store.dispatch(await classMenu.classList.get())
-  store.dispatch(await account.get())
-  if (store.getState().account.username !== '') {
-    store.dispatch(nav.classMenu())
-  }
-  // Load Complete
-  store.dispatch(initComplete())
+  store.dispatch(accountAction.get())
 }
 
 initStore()

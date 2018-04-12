@@ -1,19 +1,18 @@
 const initialState = {
-  classes: [],
+  classList: [],
 }
 
 const reducerMap = {
   classList: {
-    get: (state, action) => ({
-      ...state,
-      classMenu: {
-        ...state.classMenu,
-        classes: action.payload,
-      },
-    }),
     set: (state, action) => {
       if (action.payload) {
-        return { ...state, classMenu: { ...state.classMenu, classes: action.payload } }
+        return {
+          ...state,
+          classMenu: {
+            ...state.classMenu,
+            classList: action.payload,
+          },
+        }
       }
       return state
     },

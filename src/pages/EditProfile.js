@@ -10,19 +10,19 @@ import Button from '../components/Button'
 import TextFormInput from '../components/TextFormInput'
 import styles from './styles/Login.styles'
 import signUpValidation from '../util/signUpValidation'
-import account from '../actions/account'
-import nav from '../actions/nav'
+import accountAction from '../actions/account.action'
+import navAction from '../actions/nav.action'
 
 const mapStateToProps = state => ({
   ...state.account,
 })
 
 const mapDispatchToProps = dispatch => ({
-  account: {
-    set: async (info) => { dispatch(await account.set(info)) },
+  accountAction: {
+    set: async (info) => { dispatch(accountAction.save(info)) },
   },
-  nav: {
-    classMenu: () => { dispatch(nav.classMenu()) },
+  navAction: {
+    classMenu: () => { dispatch(navAction.classMenu()) },
   },
 })
 
@@ -39,7 +39,7 @@ class EditProfile extends Component {
   }
 
   onPressCancel = () => {
-    this.props.nav.classMenu()
+    this.props.navAction.classMenu()
   }
 
   onPressConfirm = async () => {
@@ -72,7 +72,7 @@ class EditProfile extends Component {
       }
     } else {
       // 符合規則，跳轉到ClassMenu
-      await this.props.account.set(this.state)
+      await this.props.accountAction.set(this.state)
     }
   }
 
@@ -98,10 +98,10 @@ class EditProfile extends Component {
 }
 
 EditProfile.propTypes = {
-  account: PropTypes.shape({
+  accountAction: PropTypes.shape({
     set: PropTypes.func.isRequired,
   }).isRequired,
-  nav: PropTypes.shape({
+  navAction: PropTypes.shape({
     classMenu: PropTypes.func.isRequired,
   }).isRequired,
   status: PropTypes.string.isRequired,

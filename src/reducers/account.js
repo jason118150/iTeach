@@ -15,9 +15,6 @@ const reducerMap = {
     }
     return state
   },
-  get: (state, action) => {
-    return { ...state, account: action.payload }
-  },
 }
 
 export default { initialState, reducerMap }

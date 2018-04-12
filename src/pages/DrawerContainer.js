@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Text, View } from 'react-native'
 import styles from './styles/DrawerContainer.styles'
-import nav from '../actions/nav'
+import navAction from '../actions/nav.action'
 
 const mapStateToProps = state => ({
   username: state.account.username,
@@ -11,10 +11,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   nav: {
-    classMenu: () => { dispatch(nav.classMenu()) },
-    editProfile: () => { dispatch(nav.editProfile()) },
-    channels: () => { dispatch(nav.channels()) },
-    closeDrawer: () => { dispatch(nav.closeDrawer()) },
+    classMenu: () => { dispatch(navAction.classMenu()) },
+    editProfile: () => { dispatch(navAction.editProfile()) },
+    channels: () => { dispatch(navAction.channels()) },
+    closeDrawer: () => { dispatch(navAction.closeDrawer()) },
   },
 })
 

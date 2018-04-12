@@ -53,6 +53,7 @@ ClassItem.propTypes = {
   color: PropTypes.string.isRequired,
   deleteClass: PropTypes.func.isRequired,
   cancelAllDelete: PropTypes.func.isRequired,
+  onPress: PropTypes.func.isRequired,
 }
 
 export default ClassItem
