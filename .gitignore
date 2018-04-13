@@ -57,3 +57,6 @@ buck-out/
 
 # React Native build
 android/
+
+# lock
+package-lock.json
