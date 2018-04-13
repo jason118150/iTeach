@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 import CloseImage from '../../asset/close.png'
 import styles from './styles/Course.styles'
 import navAction from '../actions/nav.action'
-import courseAction from '../actions/course.action'
+import courseItemAction from '../actions/courseItem.action'
 import CourseItem from '../components/CourseItem'
 import CourseItemData from '../components/CourseItemData'
 
@@ -24,21 +24,14 @@ const mapDispatchToProps = dispatch => ({
     openDrawer: () => { dispatch(navAction.openDrawer()) },
     onExit: () => { dispatch(navAction.classMenu()) },
   },
-  courseAction: {
-    getName: () => { dispatch(courseAction.get()) },
+  courseItemAction: {
+    setName: (id) => { dispatch(courseItemAction.setName(id)) },
   },
 })
 
 class Course extends Component {
   render() {
-    const ItemData = CourseItemData.filter(item => item.user.includes(this.props.status))
-      .map(item => (
-        <CourseItem
-          key={item.title}
-          title={item.title}
-          imgSrc={item.imgSrc}
-          clicked={item.clicked}/>
-      ))
+    const { courseItem } = this.props
     return (
       <View style={styles.container}>
         <View style={styles.titleBar}>
@@ -50,7 +43,16 @@ class Course extends Component {
           </TouchableHighlight>
         </View>
         <View style={styles.itemContainer}>
-          {ItemData}
+          {CourseItemData.filter(item => item.user.includes(this.props.status))
+            .map(item => (
+              <CourseItem
+                key={item.id} id={item.id}
+                title={courseItem.courseItem[item.id].title}
+                imgSrc={courseItem.courseItem[item.id].imgSrc}
+                clicked={item.clicked}
+                onPress={this.props.courseItemAction.setName}/>
+            ))
+          }
         </View>
       </View>
     )
@@ -62,7 +64,11 @@ Course.propTypes = {
     openDrawer: PropTypes.func.isRequired,
     onExit: PropTypes.func.isRequired,
   }).isRequired,
+  courseItemAction: PropTypes.shape({
+    setName: PropTypes.func.isRequired,
+  }).isRequired,
   course: PropTypes.string.isRequired,
+  courseItem: PropTypes.object.isRequired,
   status: PropTypes.string.isRequired,
 }
 
