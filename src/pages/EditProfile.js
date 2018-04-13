@@ -73,7 +73,6 @@ class EditProfile extends Component {
     } else {
       // 符合規則，跳轉到ClassMenu
       this.props.accountAction.set(this.state)
-      this.props.navAction.classMenu()
     }
   }
 
