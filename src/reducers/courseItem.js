@@ -9,21 +9,29 @@ const reducerMap = {
     if (action.payload) {
       const menu = CourseItemData.filter(item => item.id === action.payload)[0]
       const { onclick } = state.courseItem.courseItem[menu.id]
-      const newState = menu.id === 1 ? {
+      const menuState = menu.id === 1 ? [{
         id: menu.id,
-        title: !onclick ? menu.clicked.title : menu.title,
-        imgSrc: !onclick ? menu.clicked.imgSrc : menu.imgSrc,
+        title: menu.title,
+        imgSrc: menu.imgSrc,
         user: menu.user,
         onclick: !onclick,
-        clicked: menu.clicked,
-      } : {
+      }] : [{
         id: action.payload,
         title: menu.title,
         imgSrc: menu.imgSrc,
         user: menu.user,
+      }]
+      const newState = state.courseItem.courseItem.slice(0, action.payload)
+        .concat(
+          menuState,
+          state.courseItem.courseItem.slice(action.payload + 1)
+        )
+      return {
+        ...state,
+        courseItem: {
+          courseItem: newState,
+        }
       }
-      state.courseItem.courseItem.splice(action.payload, 1, newState)
-      return state
     }
     return state
   },

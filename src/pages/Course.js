@@ -47,9 +47,12 @@ class Course extends Component {
             .map(item => (
               <CourseItem
                 key={item.id} id={item.id}
-                title={courseItem.courseItem[item.id].title}
-                imgSrc={courseItem.courseItem[item.id].imgSrc}
-                clicked={item.clicked}
+                title={courseItem.courseItem[item.id].onclick
+                  ? courseItem.courseItem[item.id].title[1]
+                  : courseItem.courseItem[item.id].title[0]}
+                imgSrc={courseItem.courseItem[item.id].onclick
+                  ? courseItem.courseItem[item.id].imgSrc[1]
+                  : courseItem.courseItem[item.id].imgSrc[0]}
                 onPress={this.props.courseItemAction.setName}/>
             ))
           }

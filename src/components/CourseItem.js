@@ -34,7 +34,7 @@ class CourseItem extends Component {
 CourseItem.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  imgSrc: PropTypes.string.isRequired,
+  imgSrc: PropTypes.number.isRequired,
   onPress: PropTypes.func.isRequired,
 }
 
