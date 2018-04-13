@@ -13,6 +13,7 @@ import TextFormInput from '../components/TextFormInput'
 import styles from './styles/Login.styles'
 import signUpValidation from '../util/signUpValidation'
 import accountAction from '../actions/account.action'
+import navAction from '../actions/nav.action'
 
 const mapStateToProps = state => ({
   ...state.account,
@@ -21,7 +22,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   accountAction: {
-    save: async (info) => { dispatch(accountAction.save(info)) },
+    save: (info) => { dispatch(accountAction.save(info)) },
+  },
+  navAction: {
+    classMenu: () => { dispatch(navAction.classMenu()) },
   },
 })
 
@@ -36,7 +40,7 @@ class Login extends Component {
     this.onPress = this.onPress.bind(this)
   }
 
-  onPress = async () => {
+  onPress = () => {
     if (!signUpValidation(this.state).valid) {
       // 不符合規則，跳出警告視窗
       Alert.alert(
@@ -72,7 +76,8 @@ class Login extends Component {
       }
     } else {
       // 符合規則，跳轉到ClassMenu
-      await this.props.accountAction.save(this.state)
+      this.props.accountAction.save(this.state)
+      this.props.navAction.classMenu()
     }
   }
 
@@ -111,6 +116,9 @@ class Login extends Component {
 Login.propTypes = {
   accountAction: PropTypes.shape({
     save: PropTypes.func.isRequired,
+  }).isRequired,
+  navAction: PropTypes.shape({
+    classMenu: PropTypes.func.isRequired,
   }).isRequired,
   username: PropTypes.string.isRequired,
   initComplete: PropTypes.bool.isRequired,
