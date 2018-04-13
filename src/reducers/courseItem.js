@@ -24,13 +24,13 @@ const reducerMap = {
       const newState = state.courseItem.courseItem.slice(0, action.payload)
         .concat(
           menuState,
-          state.courseItem.courseItem.slice(action.payload + 1)
+          state.courseItem.courseItem.slice(action.payload + 1),
         )
       return {
         ...state,
         courseItem: {
           courseItem: newState,
-        }
+        },
       }
     }
     return state
