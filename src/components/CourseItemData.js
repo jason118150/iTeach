@@ -51,7 +51,7 @@ const CourseItemData = [
   {
     id: 8,
     title: ['檔案下載'],
-    imgSrc: [''],
+    imgSrc: [2],
     user: 'student',
   },
   {
