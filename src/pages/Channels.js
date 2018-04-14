@@ -6,23 +6,22 @@ import {
   Image,
 } from 'react-native'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import DrawerImage from '../../asset/drawer.png'
+import navAction from '../actions/nav.action'
 import styles from './styles/ClassMenu.styles'
 
-export default class Channels extends Component {
-  constructor(props) {
-    super(props)
-    this.openDrawer = this.openDrawer.bind(this)
-  }
+const mapDispatchToProps = dispatch => ({
+  navAction: {
+    openDrawer: () => { dispatch(navAction.openDrawer()) },
+  },
+})
 
-  openDrawer() {
-    this.props.navigation.navigate('DrawerOpen')
-  }
-
+class Channels extends Component {
   render() {
     return <View style={styles.container}>
       <View style={styles.titleBar}>
-        <TouchableHighlight style={styles.drawerIconContainer} onPress={this.openDrawer} underlayColor='#3A8FB7'>
+        <TouchableHighlight style={styles.drawerIconContainer} onPress={this.props.navAction.openDrawer} underlayColor='#3A8FB7'>
           <Image style={styles.drawerIcon} source={DrawerImage} />
         </TouchableHighlight>
         <Text style={styles.title}>
@@ -34,7 +33,9 @@ export default class Channels extends Component {
 }
 
 Channels.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
+  navAction: PropTypes.shape({
+    openDrawer: PropTypes.func.isRequired,
   }).isRequired,
 }
+
+export default connect(null, mapDispatchToProps)(Channels)

@@ -21,7 +21,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   accountAction: {
-    save: async (info) => { dispatch(accountAction.save(info)) },
+    save: (info) => { dispatch(accountAction.save(info)) },
   },
 })
 
@@ -36,7 +36,7 @@ class Login extends Component {
     this.onPress = this.onPress.bind(this)
   }
 
-  onPress = async () => {
+  onPress = () => {
     if (!signUpValidation(this.state).valid) {
       // 不符合規則，跳出警告視窗
       Alert.alert(
@@ -72,7 +72,7 @@ class Login extends Component {
       }
     } else {
       // 符合規則，跳轉到ClassMenu
-      await this.props.accountAction.save(this.state)
+      this.props.accountAction.save(this.state)
     }
   }
 

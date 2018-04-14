@@ -19,7 +19,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   accountAction: {
-    set: async (info) => { dispatch(accountAction.save(info)) },
+    set: (info) => { dispatch(accountAction.save(info)) },
   },
   navAction: {
     classMenu: () => { dispatch(navAction.classMenu()) },
@@ -42,7 +42,7 @@ class EditProfile extends Component {
     this.props.navAction.classMenu()
   }
 
-  onPressConfirm = async () => {
+  onPressConfirm = () => {
     if (!signUpValidation(this.state).valid) {
       // 不符合規則，跳出警告視窗
       Alert.alert(
@@ -72,7 +72,7 @@ class EditProfile extends Component {
       }
     } else {
       // 符合規則，跳轉到ClassMenu
-      await this.props.accountAction.set(this.state)
+      this.props.accountAction.set(this.state)
     }
   }
 
