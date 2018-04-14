@@ -1,5 +1,6 @@
 import { DrawerNavigator, SwitchNavigator } from 'react-navigation'
 import Login from '../pages/Login'
+import Course from '../pages/Course'
 import ClassMenu from '../pages/ClassMenu'
 import EditProfile from '../pages/EditProfile'
 import Channels from '../pages/Channels'
@@ -8,6 +9,9 @@ import DrawerContainer from '../pages/DrawerContainer'
 export default SwitchNavigator({
   Login: {
     screen: Login,
+  },
+  Course: {
+    screen: Course,
   },
   Pages: DrawerNavigator({
     EditProfile: {

@@ -21,7 +21,7 @@ class Channels extends Component {
   render() {
     return <View style={styles.container}>
       <View style={styles.titleBar}>
-        <TouchableHighlight style={styles.drawerIconContainer} onPress={this.props.navAction.openDrawer} underlayColor='white'>
+        <TouchableHighlight style={styles.drawerIconContainer} onPress={this.props.navAction.openDrawer} underlayColor='#3A8FB7'>
           <Image style={styles.drawerIcon} source={DrawerImage} />
         </TouchableHighlight>
         <Text style={styles.title}>
