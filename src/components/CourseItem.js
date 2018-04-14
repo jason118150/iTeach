@@ -18,7 +18,7 @@ class CourseItem extends Component {
     } = this.props
     return (
       <View style={styles.container}>
-        <TouchableHighlight onPress={() => onPress(id)} underlayColor='white'>
+        <TouchableHighlight onPress={() => onPress(id)} underlayColor='white' style={styles.iconContainer}>
           <Image
             style={styles.icon}
             source={imgSrc} />

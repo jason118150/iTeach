@@ -9,9 +9,9 @@ export default StyleSheet.create({
   },
   input: {
     height: 40,
-    width: 270,
     padding: 10,
     margin: 10,
+    paddingHorizontal: 15,
     borderColor: '#3A8FB7',
     borderWidth: 1.7,
     borderRadius: 10,

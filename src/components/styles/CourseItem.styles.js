@@ -7,11 +7,17 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  icon: {
+  iconContainer: {
     width: 80,
     height: 80,
     borderRadius: 20,
     backgroundColor: '#3A8FB7',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  icon: {
+    width: 65,
+    height: 65,
   },
   title: {
     color: '#3A8FB7',

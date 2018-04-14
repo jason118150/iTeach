@@ -18,7 +18,7 @@ export default StyleSheet.create({
     alignItems: 'stretch',
   },
   formInput: {
-    alignItems: 'flex-start',
+    alignItems: 'stretch',
     padding: 20,
   },
   text: {
@@ -29,7 +29,6 @@ export default StyleSheet.create({
   },
   picker: {
     height: 40,
-    width: 270,
     margin: 10,
     borderColor: '#3A8FB7',
     borderWidth: 1,
