@@ -4,7 +4,7 @@ import unShare from '../../asset/icon/unShare.png'
 import info from '../../asset/icon/info.png'
 import test from '../../asset/icon/test.png'
 import rollCall from '../../asset/icon/rollCall.png'
-// import random from '../../asset/icon/random.png'
+import random from '../../asset/icon/random.png'
 import question from '../../asset/icon/question.png'
 import upload from '../../asset/icon/upload.png'
 import download from '../../asset/icon/download.png'
@@ -45,7 +45,7 @@ const CourseItemData = [
   {
     id: 5,
     title: ['隨機抽籤'],
-    imgSrc: [20],
+    imgSrc: [random],
     user: 'teacher',
   },
   {
