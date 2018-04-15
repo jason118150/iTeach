@@ -25,6 +25,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   navAction: {
     openDrawer: () => { dispatch(navAction.openDrawer()) },
+    searchCourse: () => { dispatch(navAction.searchPage()) },
+    addCourse: () => { dispatch(navAction.addCoursePage()) },
   },
   classListAction: {
     modify: (title, color) => {
@@ -79,7 +81,11 @@ class ClassMenu extends Component {
             課程選單
           </Text>
           <TouchableHighlight style={styles.addSearchIconContainer} onPress={null} underlayColor='#3A8FB7'>
-            <Image style={styles.addSearchIcon} source={this.props.status === 'teacher' ? AddImage : SearchImage} />
+            <Image
+              style={styles.addSearchIcon}
+              source={this.props.status === 'teacher' ? AddImage : SearchImage}
+              onPress={this.props.status === 'teacher' ? this.props.navAction.addCourse : this.props.navAction.searchCourse }
+            />
           </TouchableHighlight>
         </View>
         <View style={styles.listContainer}>
@@ -115,6 +121,8 @@ class ClassMenu extends Component {
 ClassMenu.propTypes = {
   navAction: PropTypes.shape({
     openDrawer: PropTypes.func.isRequired,
+    searchCourse: PropTypes.func.isRequired,
+    addCourse: PropTypes.func.isRequired,
   }).isRequired,
   classListAction: PropTypes.shape({
     modify: PropTypes.func.isRequired,
