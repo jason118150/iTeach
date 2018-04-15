@@ -1,0 +1,15 @@
+{
+    "newClasses": [{
+      "title": "新課程1",
+      "teacher": "蔡丞昊",
+      "color": "red"
+    }, {
+      "title": "新課程2",
+      "teacher": "宋玉美",
+      "color": "blue"
+    }, {
+      "title": "新課程3",
+      "teacher": "陳秉珏",
+      "color": "green"
+    }]
+}
