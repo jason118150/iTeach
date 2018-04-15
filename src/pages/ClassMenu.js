@@ -25,8 +25,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   navAction: {
     openDrawer: () => { dispatch(navAction.openDrawer()) },
-    searchCourse: () => { dispatch(navAction.searchPage()) },
-    addCourse: () => { dispatch(navAction.addCoursePage()) },
+    searchPage: () => { dispatch(navAction.searchPage()) },
   },
   classListAction: {
     modify: (title, color) => {
@@ -45,6 +44,7 @@ class ClassMenu extends Component {
     this.cancelAllDelete = this.cancelAllDelete.bind(this)
     this.deleteClass = this.deleteClass.bind(this)
     this.onPress = this.onPress.bind(this)
+    this.onPressSearchPage = this.onPressSearchPage.bind(this)
   }
 
   cancelAllDelete(without) {
@@ -70,6 +70,10 @@ class ClassMenu extends Component {
     this.props.classListAction.modify(title, color)
   }
 
+  onPressSearchPage = () => {
+    this.props.navAction.searchPage()
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -80,11 +84,10 @@ class ClassMenu extends Component {
           <Text style={styles.title}>
             課程選單
           </Text>
-          <TouchableHighlight style={styles.addSearchIconContainer} onPress={null} underlayColor='#3A8FB7'>
+          <TouchableHighlight style={styles.addSearchIconContainer} onPress={this.props.status === 'teacher' ? null : this.onPressSearchPage} underlayColor='#3A8FB7'>
             <Image
               style={styles.addSearchIcon}
               source={this.props.status === 'teacher' ? AddImage : SearchImage}
-              onPress={this.props.status === 'teacher' ? this.props.navAction.addCourse : this.props.navAction.searchCourse }
             />
           </TouchableHighlight>
         </View>
@@ -121,8 +124,7 @@ class ClassMenu extends Component {
 ClassMenu.propTypes = {
   navAction: PropTypes.shape({
     openDrawer: PropTypes.func.isRequired,
-    searchCourse: PropTypes.func.isRequired,
-    addCourse: PropTypes.func.isRequired,
+    searchPage: PropTypes.func.isRequired,
   }).isRequired,
   classListAction: PropTypes.shape({
     modify: PropTypes.func.isRequired,
