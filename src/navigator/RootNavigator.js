@@ -5,6 +5,7 @@ import ClassMenu from '../pages/ClassMenu'
 import EditProfile from '../pages/EditProfile'
 import Channels from '../pages/Channels'
 import DrawerContainer from '../pages/DrawerContainer'
+import SearchPage from '../pages/SearchPage'
 
 export default SwitchNavigator({
   Login: {
@@ -12,6 +13,9 @@ export default SwitchNavigator({
   },
   Course: {
     screen: Course,
+  },
+  SearchPage: {
+    screen: SearchPage,
   },
   Pages: DrawerNavigator({
     EditProfile: {

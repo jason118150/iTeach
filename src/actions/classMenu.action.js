@@ -3,11 +3,31 @@ import {
   Alert,
 } from 'react-native'
 import { createActions } from 'redux-actions'
+import navAction from '../actions/nav.action'
 
 const { classMenu } = createActions({
   classMenu: {
     classList: {
       set: classList => classList,
+      add: (title, color) => (async (dispatch, getState) => {
+        let success = false
+        const { classList } = getState().classMenu
+        classList.splice(0, 0, { title, color })
+        await AsyncStorage.setItem('iTeachStore:Class', JSON.stringify(classList), (error) => {
+          if (error) {
+            Alert.alert(
+              '課程更新錯誤',
+              [{ text: 'OK' }],
+            )
+          } else {
+            success = true
+          }
+        })
+        if (success) {
+          dispatch(classMenu.classList.set(classList))
+          dispatch(navAction.classMenu())
+        }
+      }),
       get: () => (async (dispatch) => {
         const classList = JSON.parse(await AsyncStorage.getItem('iTeachStore:Class'))
         if (classList) {

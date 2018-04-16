@@ -25,12 +25,15 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   navAction: {
     openDrawer: () => { dispatch(navAction.openDrawer()) },
+    searchPage: () => { dispatch(navAction.searchPage()) },
   },
   classListAction: {
     modify: (title, color) => {
       dispatch(classMenuAction.classList.modify(title, color))
     },
-    delete: (title) => { dispatch(classMenuAction.classList.delete(title)) },
+    delete: (title) => {
+      dispatch(classMenuAction.classList.delete(title))
+    },
   },
   courseAction: {
     setName: (title) => { dispatch(courseAction.setName(title)) },
@@ -43,6 +46,7 @@ class ClassMenu extends Component {
     this.cancelAllDelete = this.cancelAllDelete.bind(this)
     this.deleteClass = this.deleteClass.bind(this)
     this.onPress = this.onPress.bind(this)
+    this.onPressSearchPage = this.onPressSearchPage.bind(this)
   }
 
   cancelAllDelete(without) {
@@ -68,6 +72,10 @@ class ClassMenu extends Component {
     this.props.classListAction.modify(title, color)
   }
 
+  onPressSearchPage = () => {
+    this.props.navAction.searchPage()
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -78,8 +86,11 @@ class ClassMenu extends Component {
           <Text style={styles.title}>
             課程選單
           </Text>
-          <TouchableHighlight style={styles.addSearchIconContainer} onPress={null} underlayColor='#3A8FB7'>
-            <Image style={styles.addSearchIcon} source={this.props.status === 'teacher' ? AddImage : SearchImage} />
+          <TouchableHighlight style={styles.addSearchIconContainer} onPress={this.props.status === 'teacher' ? null : this.onPressSearchPage} underlayColor='#3A8FB7'>
+            <Image
+              style={styles.addSearchIcon}
+              source={this.props.status === 'teacher' ? AddImage : SearchImage}
+            />
           </TouchableHighlight>
         </View>
         <View style={styles.listContainer}>
@@ -115,6 +126,7 @@ class ClassMenu extends Component {
 ClassMenu.propTypes = {
   navAction: PropTypes.shape({
     openDrawer: PropTypes.func.isRequired,
+    searchPage: PropTypes.func.isRequired,
   }).isRequired,
   classListAction: PropTypes.shape({
     modify: PropTypes.func.isRequired,
