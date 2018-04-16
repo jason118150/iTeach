@@ -14,6 +14,7 @@ import CloseImage from '../../asset/close.png'
 import styles from './styles/ClassMenu.styles'
 import navAction from '../actions/nav.action'
 import SearchClassItem from '../components/SearchClassItem'
+import classMenuAction from '../actions/classMenu.action'
 import mockNewClass from '../../asset/mockNewClass.json'
 
 const mapStateToProps = state => ({
@@ -25,6 +26,11 @@ const mapDispatchToProps = dispatch => ({
   navAction: {
     onExit: () => { dispatch(navAction.classMenu()) },
   },
+  classListAction: {
+    add: (title, color) => {
+      dispatch(classMenuAction.classList.add(title, color))
+    },
+  },
 })
 
 class SearchPage extends Component {
@@ -33,17 +39,22 @@ class SearchPage extends Component {
     this.selectClass = this.selectClass.bind(this)
   }
 
-  selectClass(title, teacher) {
+  selectClass(title, teacher, color) {
     Alert.alert(
-      ''.concat('是否加入', teacher, '老師所開設的', title),
+      ''.concat('是否加入 ', teacher, ' 老師所開設的', title),
       '',
       [
-        { text: '否', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-        { text: '是', onPress: () => console.log('OK Pressed'), style: 'default' },
+        { text: '否', onPress: () => { console.log('Cancel Pressed') }, style: 'cancel' },
+        { text: '是', onPress: () => { this.registerClass(title, color) }, style: 'default' },
       ],
       { cancelable: false },
     )
   }
+
+  registerClass(title, color) {
+    this.props.classListAction.add(title, color)
+  }
+
 
   render() {
     return (
@@ -69,7 +80,7 @@ class SearchPage extends Component {
                 title={item.title}
                 teacher={item.teacher}
                 color={item.color}
-                onPress={() => this.selectClass(item.title, item.teacher)}
+                onPress={() => { this.selectClass(item.title, item.teacher, item.color) } }
               />
             )}
           />
@@ -85,6 +96,9 @@ class SearchPage extends Component {
 SearchPage.propTypes = {
   navAction: PropTypes.shape({
     onExit: PropTypes.func.isRequired,
+  }).isRequired,
+  classListAction: PropTypes.shape({
+    add: PropTypes.func.isRequired,
   }).isRequired,
   status: PropTypes.string.isRequired,
 }

@@ -1,14 +1,14 @@
 {
     "newClasses": [{
-      "title": "新課程1",
+      "title": "小海豚MV舞蹈課程",
       "teacher": "蔡丞昊",
       "color": "red"
     }, {
-      "title": "新課程2",
+      "title": "印尼文化史",
       "teacher": "宋玉美",
       "color": "blue"
     }, {
-      "title": "新課程3",
+      "title": "佛教經義賞析",
       "teacher": "陳秉珏",
       "color": "green"
     }]

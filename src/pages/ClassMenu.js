@@ -31,7 +31,9 @@ const mapDispatchToProps = dispatch => ({
     modify: (title, color) => {
       dispatch(classMenuAction.classList.modify(title, color))
     },
-    delete: (title) => { dispatch(classMenuAction.classList.delete(title)) },
+    delete: (title) => {
+      dispatch(classMenuAction.classList.delete(title))
+    },
   },
   courseAction: {
     setName: (title) => { dispatch(courseAction.setName(title)) },
