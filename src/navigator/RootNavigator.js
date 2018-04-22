@@ -4,6 +4,7 @@ import ClassMenu from '../pages/ClassMenu'
 import EditProfile from '../pages/EditProfile'
 import Channels from '../pages/Channels'
 import DrawerContainer from '../pages/DrawerContainer'
+import AddNewCourse from '../pages/AddNewCourse'
 
 export default SwitchNavigator({
   Login: {
@@ -18,6 +19,9 @@ export default SwitchNavigator({
     },
     ClassMenu: {
       screen: ClassMenu,
+    },
+    AddNewCourse: {
+      screen: AddNewCourse, // Page for 新增課程
     },
   }, {
     contentComponent: DrawerContainer,

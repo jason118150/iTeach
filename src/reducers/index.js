@@ -3,12 +3,14 @@ import nav from './nav'
 import classMenu from './classMenu'
 import account from './account'
 import RootNavigator from '../navigator/RootNavigator'
+import courseInfo from './courseInfo'
 
 // define states
 const initialState = {
   nav: nav.initialState,
   classMenu: classMenu.initialState,
   account: account.initialState,
+  courseInfo: courseInfo.initialState,
   initComplete: false,
 }
 
@@ -17,6 +19,7 @@ const reducerMap = {
   nav: nav.reducerMap,
   classMenu: classMenu.reducerMap,
   account: account.reducerMap,
+  courseInfo: courseInfo.reducerMap,
   initComplete: state => ({ ...state, initComplete: true }),
 }
 

@@ -24,6 +24,10 @@ const reducerMap = {
     ...state,
     nav: RootNavigator.router.getStateForAction(NavigationActions.navigate({ routeName: 'ClassMenu' }), state.nav),
   }),
+  addNewCourse: state => ({
+    ...state,
+    nav: RootNavigator.router.getStateForAction(NavigationActions.navigate({ routeName: 'AddNewCourse' }), state.nav),
+  }),
 }
 
 export default { initialState, reducerMap }
