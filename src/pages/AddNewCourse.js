@@ -16,6 +16,7 @@ import getSemester from '../util/getSemester'
 import getRandomColor from '../util/getRandomColor'
 import newCoursesValidation from '../util/newCoursesValidation'
 import courseInfoAction from '../actions/courseInfo.action'
+import classMenuAction from '../actions/classMenu.action'
 import navAction from '../actions/nav.action'
 
 const mapStateToProps = state => ({
@@ -28,6 +29,11 @@ const mapDispatchToProps = dispatch => ({
   },
   courseInfoAction: {
     save: (info) => { dispatch(courseInfoAction.save(info)) },
+  },
+  classListAction: {
+    add: (title, color) => {
+      dispatch(classMenuAction.classList.add(title, color))
+    },
   },
 })
 
@@ -94,6 +100,7 @@ class AddNewCourse extends Component {
       }
     } else {
       // 符合規則，跳轉到ClassMenu
+      this.props.classListAction.add(this.state.course, this.state.color)
       this.props.courseInfoAction.save(this.state)
     }
   }
@@ -246,6 +253,9 @@ AddNewCourse.propTypes = {
   }).isRequired,
   nav: PropTypes.shape({
     classMenu: PropTypes.func.isRequired,
+  }).isRequired,
+  classListAction: PropTypes.shape({
+    add: PropTypes.func.isRequired,
   }).isRequired,
 }
 
