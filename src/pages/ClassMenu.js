@@ -26,6 +26,7 @@ const mapDispatchToProps = dispatch => ({
   navAction: {
     openDrawer: () => { dispatch(navAction.openDrawer()) },
     searchPage: () => { dispatch(navAction.searchPage()) },
+    addNewCourse: () => { dispatch(navAction.addNewCourse()) },
   },
   classListAction: {
     modify: (title, color) => {
@@ -47,6 +48,7 @@ class ClassMenu extends Component {
     this.deleteClass = this.deleteClass.bind(this)
     this.onPress = this.onPress.bind(this)
     this.onPressSearchPage = this.onPressSearchPage.bind(this)
+    this.onPressAddPage = this.onPressAddPage.bind(this)
   }
 
   cancelAllDelete(without) {
@@ -76,6 +78,10 @@ class ClassMenu extends Component {
     this.props.navAction.searchPage()
   }
 
+  onPressAddPage = () => {
+    this.props.navAction.addNewCourse()
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -86,7 +92,7 @@ class ClassMenu extends Component {
           <Text style={styles.title}>
             課程選單
           </Text>
-          <TouchableHighlight style={styles.addSearchIconContainer} onPress={this.props.status === 'teacher' ? null : this.onPressSearchPage} underlayColor='#3A8FB7'>
+          <TouchableHighlight style={styles.addSearchIconContainer} onPress={this.props.status === 'teacher' ? this.onPressAddPage : this.onPressSearchPage} underlayColor='#3A8FB7'>
             <Image
               style={styles.addSearchIcon}
               source={this.props.status === 'teacher' ? AddImage : SearchImage}
@@ -127,6 +133,7 @@ ClassMenu.propTypes = {
   navAction: PropTypes.shape({
     openDrawer: PropTypes.func.isRequired,
     searchPage: PropTypes.func.isRequired,
+    addNewCourse: PropTypes.func.isRequired,
   }).isRequired,
   classListAction: PropTypes.shape({
     modify: PropTypes.func.isRequired,
