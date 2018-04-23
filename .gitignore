@@ -60,3 +60,4 @@ android/
 
 # lock
 package-lock.json
+yarn.lock
