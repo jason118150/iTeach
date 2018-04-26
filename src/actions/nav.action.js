@@ -18,6 +18,7 @@ const { nav } = createActions({
     channels: () => null,
     searchPage: () => null,
     addNewCourse: () => null,
+    onlinePeerList: () => null,
   },
 })
 

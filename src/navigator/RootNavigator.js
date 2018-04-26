@@ -18,6 +18,9 @@ export default SwitchNavigator({
   SearchPage: {
     screen: SearchPage,
   },
+  OnlinePeerList: {
+    screen: OnlinePeerList,
+  },
   Pages: DrawerNavigator({
     EditProfile: {
       screen: EditProfile, // Page for 修改個人資料

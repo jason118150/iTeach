@@ -23,6 +23,7 @@ const mapDispatchToProps = dispatch => ({
   navAction: {
     openDrawer: () => { dispatch(navAction.openDrawer()) },
     onExit: () => { dispatch(navAction.classMenu()) },
+    onPress: (id) => { dispatch(navAction.onlinePeerList()) },
   },
   courseItemAction: {
     setName: (id) => { dispatch(courseItemAction.setName(id)) },
@@ -30,6 +31,17 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class Course extends Component {
+  constructor(props) {
+    super(props)
+    this.onPress = this.onPress.bind(this)
+  }
+
+  onPress(id) {
+    if(id==0){
+      this.props.nav.onlinePeerList
+    }
+  }
+
   render() {
     const { courseItem } = this.props
     return (
