@@ -15,6 +15,7 @@ const { nav } = createActions({
     closeDrawer: () => null,
     editProfile: () => null,
     classMenu: () => null,
+    course: () => null,
     channels: () => null,
     searchPage: () => null,
     addNewCourse: () => null,
