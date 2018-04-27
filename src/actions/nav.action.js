@@ -18,6 +18,8 @@ const { nav } = createActions({
     channels: () => null,
     searchPage: () => null,
     addNewCourse: () => null,
+    course: () => null,
+    courseInfo: () => null,
   },
 })
 
