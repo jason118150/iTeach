@@ -65,4 +65,10 @@ export default StyleSheet.create({
   noDisplay: {
     display: 'none',
   },
+  centerWelcomeMsg: {
+    fontFamily: 'Avenir',
+    fontSize: 16,
+    lineHeight: 30,
+    textAlign: 'center',
+  },
 })

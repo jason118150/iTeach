@@ -6,6 +6,7 @@ import EditProfile from '../pages/EditProfile'
 import Channels from '../pages/Channels'
 import DrawerContainer from '../pages/DrawerContainer'
 import SearchPage from '../pages/SearchPage'
+import DrawLots from '../pages/DrawLots'
 
 export default SwitchNavigator({
   Login: {
@@ -16,6 +17,12 @@ export default SwitchNavigator({
   },
   SearchPage: {
     screen: SearchPage,
+  },
+  DrawLots: {
+    screen: DrawLots,
+  },
+  CourseMenu: {
+    screen: Course,
   },
   Pages: DrawerNavigator({
     EditProfile: {

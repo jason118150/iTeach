@@ -23,6 +23,7 @@ const mapDispatchToProps = dispatch => ({
   navAction: {
     openDrawer: () => { dispatch(navAction.openDrawer()) },
     onExit: () => { dispatch(navAction.classMenu()) },
+    drawLots: () => { dispatch(navAction.drawLots()) },
   },
   courseItemAction: {
     setName: (id) => { dispatch(courseItemAction.setName(id)) },
@@ -53,7 +54,7 @@ class Course extends Component {
                 imgSrc={courseItem.courseItem[item.id].onclick
                   ? courseItem.courseItem[item.id].imgSrc[1]
                   : courseItem.courseItem[item.id].imgSrc[0]}
-                onPress={this.props.courseItemAction.setName}/>
+                onPress={this.props.navAction.drawLots}/>
             ))
           }
         </View>
@@ -66,6 +67,7 @@ Course.propTypes = {
   navAction: PropTypes.shape({
     openDrawer: PropTypes.func.isRequired,
     onExit: PropTypes.func.isRequired,
+    drawLots: PropTypes.func.isRequired,
   }).isRequired,
   courseItemAction: PropTypes.shape({
     setName: PropTypes.func.isRequired,
