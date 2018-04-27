@@ -8,6 +8,7 @@ import {
 import PropTypes from 'prop-types'
 import styles from './styles/CourseItem.styles'
 
+
 class CourseItem extends Component {
   render() {
     const {

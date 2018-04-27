@@ -31,6 +31,15 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class Course extends Component {
+  ActionController(id) {
+    switch (id) {
+    case 5:
+      this.props.navAction.drawLots()
+      break
+    default:
+      this.props.navAction.onExit()
+    }
+  }
   render() {
     const { courseItem } = this.props
     return (
@@ -54,7 +63,7 @@ class Course extends Component {
                 imgSrc={courseItem.courseItem[item.id].onclick
                   ? courseItem.courseItem[item.id].imgSrc[1]
                   : courseItem.courseItem[item.id].imgSrc[0]}
-                onPress={this.props.navAction.drawLots}/>
+                onPress= {() => this.ActionController(item.id)} />
             ))
           }
         </View>

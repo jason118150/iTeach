@@ -48,7 +48,7 @@ class DrawLots extends Component {
           <Text style={styles.centerWelcomeMsg}>
               歡迎進入隨機抽籤
           </Text>
-          <Button label='抽籤' onPress={this.onExit}/>
+          <Button label='抽籤' onPress={this.props.navAction.onExit}/>
         </View>
       </View>
     )
