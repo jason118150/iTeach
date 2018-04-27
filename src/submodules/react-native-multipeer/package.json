@@ -1,0 +1,7 @@
+{
+  "dependencies": {},
+  "description": "Communicate over ad hoc wifi using Multipeer Connectivity",
+  "main": "index.js",
+  "name": "react-native-multipeer",
+  "version": "0.1.1"
+}

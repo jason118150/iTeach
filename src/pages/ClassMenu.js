@@ -34,6 +34,9 @@ const mapDispatchToProps = dispatch => ({
       dispatch(classMenuAction.classList.delete(title))
     },
   },
+  searchAction: {
+    startSearch: () => { dispatch(classMenuAction.search.startSearch()) },
+  },
   courseAction: {
     setName: (title) => { dispatch(courseAction.setName(title)) },
   },
@@ -74,6 +77,7 @@ class ClassMenu extends Component {
 
   onPressSearchPage = () => {
     this.props.navAction.searchPage()
+    this.props.searchAction.startSearch()
   }
 
   onPressAddPage = () => {
@@ -127,6 +131,9 @@ ClassMenu.propTypes = {
     modify: PropTypes.func.isRequired,
     delete: PropTypes.func.isRequired,
   }).isRequired,
+  searchAction: PropTypes.shape({
+    startSearch: PropTypes.func.isRequired,
+  }),
   courseAction: PropTypes.shape({
     setName: PropTypes.func.isRequired,
   }).isRequired,
