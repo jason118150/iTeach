@@ -15,11 +15,11 @@ import styles from './styles/ClassMenu.styles'
 import navAction from '../actions/nav.action'
 import SearchClassItem from '../components/SearchClassItem'
 import classMenuAction from '../actions/classMenu.action'
-import mockNewClass from '../../asset/mockNewClass.json'
+// import mockNewClass from '../../asset/mockNewClass.json'
 
 const mapStateToProps = state => ({
   status: state.account.status,
-  ...state.classMenu,
+  ...state.searchPage,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -55,7 +55,6 @@ class SearchPage extends Component {
     this.props.classListAction.add(title, color)
   }
 
-
   render() {
     return (
       <View style={styles.container}>
@@ -73,7 +72,7 @@ class SearchPage extends Component {
         <View style={styles.listContainer}>
           <FlatList
             style={styles.list}
-            data={mockNewClass.newClasses}
+            data={this.props.foundClassList}
             keyExtractor={item => item.title}
             renderItem={({ item }) => (
               <SearchClassItem
@@ -100,6 +99,7 @@ SearchPage.propTypes = {
   classListAction: PropTypes.shape({
     add: PropTypes.func.isRequired,
   }).isRequired,
+  foundClassList: PropTypes.array.isRequired,
   status: PropTypes.string.isRequired,
 }
 

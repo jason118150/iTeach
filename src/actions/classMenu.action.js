@@ -4,9 +4,15 @@ import {
 } from 'react-native'
 import { createActions } from 'redux-actions'
 import navAction from '../actions/nav.action'
+import searchPageAction from '../actions/searchPage.action'
 
 const { classMenu } = createActions({
   classMenu: {
+    search: {
+      startSearch: () => (dispatch) => {
+        dispatch(searchPageAction.startSearch())
+      },
+    },
     classList: {
       set: classList => classList,
       add: (title, color) => (async (dispatch, getState) => {
