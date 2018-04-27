@@ -7,6 +7,7 @@ import Channels from '../pages/Channels'
 import DrawerContainer from '../pages/DrawerContainer'
 import SearchPage from '../pages/SearchPage'
 import AddNewCourse from '../pages/AddNewCourse'
+import OnlinePeerList from '../pages/OnlinePeerList'
 
 export default SwitchNavigator({
   Login: {
