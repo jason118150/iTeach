@@ -1,4 +1,5 @@
 import CourseItemData from '../components/CourseItemData'
+import RootNavigator from '../navigator/RootNavigator'
 
 const initialState = {
   courseItem: CourseItemData,
@@ -25,6 +26,10 @@ const reducerMap = {
         menuState,
         state.courseItem.courseItem.slice(action.payload + 1),
       )
+    if (action.payload==0) {
+      const nav = RootNavigator.router.getStateForAction(NavigationActions.navigate({ routeName: 'OnlinePeerList' }), state.nav)
+      return { ...state, nav }
+    }
     return {
       ...state,
       courseItem: {
