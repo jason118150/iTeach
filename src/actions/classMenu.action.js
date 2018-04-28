@@ -5,12 +5,14 @@ import {
 import { createActions } from 'redux-actions'
 import navAction from '../actions/nav.action'
 import searchPageAction from '../actions/searchPage.action'
+import MultiPeerActions from '../submodules/react-native-multipeer/actions/MultiPeer.action'
 
 const { classMenu } = createActions({
   classMenu: {
     search: {
-      startSearch: () => (dispatch) => {
+      startSearch: info => (dispatch) => {
         dispatch(searchPageAction.startSearch())
+        dispatch(MultiPeerActions.advertise({ info }))
       },
     },
     classList: {
