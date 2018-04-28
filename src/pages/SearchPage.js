@@ -15,6 +15,7 @@ import styles from './styles/ClassMenu.styles'
 import navAction from '../actions/nav.action'
 import SearchClassItem from '../components/SearchClassItem'
 import classMenuAction from '../actions/classMenu.action'
+import searchPageAction from '../actions/searchPage.action'
 // import mockNewClass from '../../asset/mockNewClass.json'
 
 const mapStateToProps = state => ({
@@ -24,7 +25,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   navAction: {
-    onExit: () => { dispatch(navAction.classMenu()) },
+    onExit: () => {
+      dispatch(navAction.classMenu())
+      dispatch(searchPageAction.multipeer.stopSearch())
+    },
   },
   classListAction: {
     add: (title, color) => {

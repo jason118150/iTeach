@@ -17,6 +17,7 @@ import getRandomColor from '../util/getRandomColor'
 import newCoursesValidation from '../util/newCoursesValidation'
 import courseInfoAction from '../actions/courseInfo.action'
 import navAction from '../actions/nav.action'
+import addNewCourseAction from '../actions/addNewCourse.action'
 
 const mapStateToProps = state => ({
   ...state.course,
@@ -24,7 +25,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   nav: {
-    classMenu: () => { dispatch(navAction.classMenu()) },
+    classMenu: () => {
+      dispatch(navAction.classMenu())
+      dispatch(addNewCourseAction.multipeer.stopAdd())
+    },
   },
   courseInfoAction: {
     save: (info) => { dispatch(courseInfoAction.save(info)) },
