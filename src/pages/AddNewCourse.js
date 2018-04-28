@@ -18,6 +18,7 @@ import newCoursesValidation from '../util/newCoursesValidation'
 import addCourseAction from '../actions/addCourse.action'
 import navAction from '../actions/nav.action'
 import Appbar from '../components/Appbar'
+import addNewCourseAction from '../actions/addNewCourse.action'
 
 const mapStateToProps = state => ({
   ...state.course,
@@ -26,7 +27,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   nav: {
-    classMenu: () => { dispatch(navAction.classMenu()) },
+    classMenu: () => {
+      dispatch(navAction.classMenu())
+      dispatch(addNewCourseAction.multipeer.stopAdd())
+    },
   },
   addCourseAction: {
     save: (info) => { dispatch(addCourseAction.save(info)) },

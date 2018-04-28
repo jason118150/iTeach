@@ -12,6 +12,8 @@ import styles from './styles/ClassMenu.styles'
 import navAction from '../actions/nav.action'
 import courseAction from '../actions/course.action'
 import classMenuAction from '../actions/classMenu.action'
+import searchPageAction from '../actions/searchPage.action'
+import addNewCourseAction from '../actions/addNewCourse.action'
 import ClassItem from '../components/ClassItem'
 import Appbar from '../components/Appbar'
 
@@ -35,7 +37,12 @@ const mapDispatchToProps = dispatch => ({
     },
   },
   searchAction: {
-    startSearch: info => dispatch(classMenuAction.search.startSearch(info)),
+    // FIXME
+    startSearch: info => dispatch(searchPageAction.multipeer.startSearch({})),
+  },
+  addCourseAction: {
+    // FIXME
+    add: info => dispatch(addNewCourseAction.multipeer.startAdd({})),
   },
   courseAction: {
     setName: (title) => { dispatch(courseAction.setName(title)) },
@@ -77,11 +84,14 @@ class ClassMenu extends Component {
 
   onPressSearchPage = () => {
     this.props.navAction.searchPage()
+    // FIXME: pass `info ` instead of `this.props.status`
     this.props.searchAction.startSearch(this.props.status)
   }
 
   onPressAddPage = () => {
     this.props.navAction.addNewCourse()
+    // FIXME: pass `info ` instead of `this.props.status`
+    this.props.addCourseAction.add(this.props.status)
   }
 
   render() {
@@ -133,6 +143,9 @@ ClassMenu.propTypes = {
   }).isRequired,
   searchAction: PropTypes.shape({
     startSearch: PropTypes.func.isRequired,
+  }),
+  addCourseAction: PropTypes.shape({
+    add: PropTypes.func.isRequired,
   }),
   courseAction: PropTypes.shape({
     setName: PropTypes.func.isRequired,

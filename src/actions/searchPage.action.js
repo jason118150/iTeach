@@ -1,17 +1,18 @@
 import { createActions } from 'redux-actions'
-
-/*  if you call nav.openDrawer()
-    the returned action will be
-    {
-      type: 'searchPage/startSearch',
-      payload: null,
-    }
-
-*/
+import MultiPeerActions from '../submodules/react-native-multipeer/actions/MultiPeer.action'
 
 const { searchPage } = createActions({
   searchPage: {
-    startSearch: () => null,
+    multipeer: {
+      set: info => info,
+      startSearch: info => (dispatch) => {
+        dispatch(MultiPeerActions.advertise(info))
+        dispatch(searchPage.multipeer.set(info))
+      },
+      stopSearch: () => (dispatch) => {
+        dispatch(MultiPeerActions.hide())
+      },
+    },
   },
 })
 
