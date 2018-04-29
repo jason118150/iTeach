@@ -31,13 +31,12 @@ const reducerMap = {
 
 export default (state, action) => {
   // the function handleActions is similar to combineReducers
-  // console.log('action type: ', action.type )
   let newState = handleActions(reducerMap, initialState)(state, action)
-  
   // solve the navigation problem of react navigation
   if (action.type.startsWith('Navigation/')) {
     newState = { ...newState, nav: RootNavigator.router.getStateForAction(action, newState.nav) }
   }
+
   return newState
 }
 

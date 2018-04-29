@@ -7,7 +7,7 @@ import Channels from '../pages/Channels'
 import DrawerContainer from '../pages/DrawerContainer'
 import SearchPage from '../pages/SearchPage'
 import AddNewCourse from '../pages/AddNewCourse'
-import CourseInfo from '../pages/CourseInfo';
+import CourseInfo from '../pages/CourseInfo'
 
 export default SwitchNavigator({
   Login: {
@@ -20,7 +20,7 @@ export default SwitchNavigator({
     screen: SearchPage,
   },
   CourseInfo: {
-    screen: CourseInfo
+    screen: CourseInfo,
   },
   AddNewCourse: {
     screen: AddNewCourse, // Page for 新增課程

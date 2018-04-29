@@ -27,9 +27,9 @@ const mapDispatchToProps = dispatch => ({
     onExit: () => { dispatch(navAction.classMenu()) },
   },
   classListAction: {
-    add: (title, color) => {
-      dispatch(classMenuAction.classList.add(title, color))
-    },
+    add: item =>
+      dispatch(classMenuAction.classList.add(item))
+    ,
   },
 })
 
@@ -39,20 +39,21 @@ class SearchPage extends Component {
     this.selectClass = this.selectClass.bind(this)
   }
 
-  selectClass(title, teacher, color) {
+  selectClass(classItem) {
+    const { title, teacher } = classItem
     Alert.alert(
       ''.concat('是否加入 ', teacher, ' 老師所開設的', title),
       '',
       [
         { text: '否', onPress: () => { console.log('Cancel Pressed') }, style: 'cancel' },
-        { text: '是', onPress: () => { this.registerClass(title, color) }, style: 'default' },
+        { text: '是', onPress: () => { this.registerClass(classItem) }, style: 'default' },
       ],
       { cancelable: false },
     )
   }
 
-  registerClass(title, color) {
-    this.props.classListAction.add(title, color)
+  registerClass(classItem) {
+    this.props.classListAction.add(classItem)
   }
 
 
@@ -80,7 +81,7 @@ class SearchPage extends Component {
                 title={item.title}
                 teacher={item.teacher}
                 color={item.color}
-                onPress={() => { this.selectClass(item.title, item.teacher, item.color) } }
+                onPress={() => { this.selectClass(item) } }
               />
             )}
           />
