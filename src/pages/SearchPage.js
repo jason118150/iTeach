@@ -14,12 +14,11 @@ import Appbar from '../components/Appbar'
 import SearchClassItem from '../components/SearchClassItem'
 import classMenuAction from '../actions/classMenu.action'
 import searchPageAction from '../actions/searchPage.action'
-// import mockNewClass from '../../asset/mockNewClass.json'
+import mockNewClass from '../../asset/mockNewClass.json'
 
 const mapStateToProps = state => ({
   status: state.account.status,
-  peers: state.multipeer.peers,
-  ...state,
+  // peers: state.multipeer.peers
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -40,7 +39,7 @@ class SearchPage extends Component {
   constructor(props) {
     super(props)
     this.selectClass = this.selectClass.bind(this)
-    this.getCousreInfo = this.getCousreInfo.bind(this)
+    // this.getCousreInfo = this.getCousreInfo.bind(this)
   }
 
   selectClass(classItem) {
@@ -61,7 +60,7 @@ class SearchPage extends Component {
   }
 
   getCousreInfo() {
-    const { peers } = this.props.peers
+    // const { peers } = this.props.peers
     // return Object.keys(peers).map(peerId => peers[peerId].info)
     return [{
       title: '小海豚MV舞蹈課程123',
@@ -85,7 +84,7 @@ class SearchPage extends Component {
         <View style={styles.listContainer}>
           <FlatList
             style={styles.list}
-            data={ [] }
+            data={ mockNewClass.newClasses }
             keyExtractor={item => item.title}
             renderItem={({ item }) => (
               <SearchClassItem
@@ -113,7 +112,7 @@ SearchPage.propTypes = {
     add: PropTypes.func.isRequired,
   }).isRequired,
   status: PropTypes.string.isRequired,
-  peers: PropTypes.object.isRequired,
+  // peers: PropTypes.object.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage)
