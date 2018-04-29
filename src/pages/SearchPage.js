@@ -16,18 +16,19 @@ import navAction from '../actions/nav.action'
 import SearchClassItem from '../components/SearchClassItem'
 import classMenuAction from '../actions/classMenu.action'
 import searchPageAction from '../actions/searchPage.action'
-import mockNewClass from '../../asset/mockNewClass.json'
+// import mockNewClass from '../../asset/mockNewClass.json'
 
 const mapStateToProps = state => ({
   status: state.account.status,
-  // peers: state.multipeer.peers
+  peers: state.multiPeer.peers,
+  ...state,
 })
 
 const mapDispatchToProps = dispatch => ({
   navAction: {
     onExit: () => {
       dispatch(navAction.classMenu())
-      dispatch(searchPageAction.multipeer.stopSearch())
+      dispatch(searchPageAction.multiPeer.stopSearch())
     },
   },
   classListAction: {
@@ -42,6 +43,11 @@ class SearchPage extends Component {
     super(props)
     this.selectClass = this.selectClass.bind(this)
     // this.getCousreInfo = this.getCousreInfo.bind(this)
+    // Alert.alert(JSON.stringify([{
+    //   title: '小海豚MV舞蹈課程123',
+    //   teacher: '蔡丞昊',
+    //   color: 'red',
+    // }],))
   }
 
   selectClass(title, teacher, color) {
@@ -62,20 +68,21 @@ class SearchPage extends Component {
 
   getCousreInfo() {
     // const { peers } = this.props.peers
-    // return Object.keys(peers).map(peerId => peers[peerId].info)
-    return [{
-      title: '小海豚MV舞蹈課程123',
-      teacher: '蔡丞昊',
-      color: 'red',
-    }, {
-      title: '印尼文化史',
-      teacher: '宋玉美',
-      color: 'blue',
-    }, {
-      title: '佛教經義賞析',
-      teacher: '陳秉珏',
-      color: 'green',
-    }]
+    // Alert.alert(this.props.peers)
+    return Object.keys(this.props.peers).map(peerId => this.props.peers[peerId].info)
+    // return [{
+    //   title: '小海豚MV舞蹈課程123',
+    //   teacher: '蔡丞昊',
+    //   color: 'red',
+    // }, {
+    //   title: '印尼文化史',
+    //   teacher: '宋玉美',
+    //   color: 'blue',
+    // }, {
+    //   title: '佛教經義賞析',
+    //   teacher: '陳秉珏',
+    //   color: 'green',
+    // }]
   }
 
   render() {
@@ -95,7 +102,8 @@ class SearchPage extends Component {
         <View style={styles.listContainer}>
           <FlatList
             style={styles.list}
-            data={ mockNewClass.newClasses }
+            // data={ mockNewClass.newClasses }
+            data={ this.getCousreInfo() }
             keyExtractor={item => item.title}
             renderItem={({ item }) => (
               <SearchClassItem
@@ -123,7 +131,7 @@ SearchPage.propTypes = {
     add: PropTypes.func.isRequired,
   }).isRequired,
   status: PropTypes.string.isRequired,
-  // peers: PropTypes.object.isRequired,
+  peers: PropTypes.object.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage)

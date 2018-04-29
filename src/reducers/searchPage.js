@@ -3,7 +3,7 @@ const initialState = {
 }
 
 const reducerMap = {
-  multipeer: {
+  multiPeer: {
     set: (state, action) => {
       return {
         ...state,

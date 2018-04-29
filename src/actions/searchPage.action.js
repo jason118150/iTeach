@@ -3,11 +3,11 @@ import MultiPeerActions from '../submodules/react-native-multipeer/actions/Multi
 
 const { searchPage } = createActions({
   searchPage: {
-    multipeer: {
+    multiPeer: {
       set: info => info,
       startSearch: info => (dispatch) => {
         dispatch(MultiPeerActions.advertise(info))
-        dispatch(searchPage.multipeer.set(info))
+        dispatch(searchPage.multiPeer.set(info))
       },
       stopSearch: () => (dispatch) => {
         dispatch(MultiPeerActions.hide())

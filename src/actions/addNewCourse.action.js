@@ -7,7 +7,7 @@ const { addNewCourse } = createActions({
       set: info => info,
       startAdd: info => (dispatch) => {
         dispatch(MultiPeerActions.browse())
-        dispatch(addNewCourse.multipeer.set(info))
+        dispatch(addNewCourse.multiPeer.set(info))
       },
       stopAdd: () => (dispatch) => {
         dispatch(MultiPeerActions.stopBrowse())

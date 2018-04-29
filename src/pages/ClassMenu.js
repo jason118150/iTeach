@@ -40,11 +40,11 @@ const mapDispatchToProps = dispatch => ({
   },
   searchAction: {
     // FIXME
-    startSearch: info => dispatch(searchPageAction.multipeer.startSearch({})),
+    startSearch: info => dispatch(searchPageAction.multiPeer.startSearch({})),
   },
   addCourseAction: {
     // FIXME
-    add: info => dispatch(addNewCourseAction.multipeer.startAdd({})),
+    add: info => dispatch(addNewCourseAction.multiPeer.startAdd({})),
   },
   courseAction: {
     setName: (title) => { dispatch(courseAction.setName(title)) },

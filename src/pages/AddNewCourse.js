@@ -27,7 +27,7 @@ const mapDispatchToProps = dispatch => ({
   nav: {
     classMenu: () => {
       dispatch(navAction.classMenu())
-      dispatch(addNewCourseAction.multipeer.stopAdd())
+      dispatch(addNewCourseAction.multiPeer.stopAdd())
     },
   },
   courseInfoAction: {
