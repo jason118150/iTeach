@@ -18,7 +18,8 @@ import searchPageAction from '../actions/searchPage.action'
 
 const mapStateToProps = state => ({
   status: state.account.status,
-  ...state.searchPage,
+  peers: state.multipeer.peers,
+  ...state,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -39,6 +40,7 @@ class SearchPage extends Component {
   constructor(props) {
     super(props)
     this.selectClass = this.selectClass.bind(this)
+    this.getCousreInfo = this.getCousreInfo.bind(this)
   }
 
   selectClass(classItem) {
@@ -58,6 +60,24 @@ class SearchPage extends Component {
     this.props.classListAction.add(classItem)
   }
 
+  getCousreInfo() {
+    const { peers } = this.props.peers
+    // return Object.keys(peers).map(peerId => peers[peerId].info)
+    return [{
+      title: '小海豚MV舞蹈課程123',
+      teacher: '蔡丞昊',
+      color: 'red',
+    }, {
+      title: '印尼文化史',
+      teacher: '宋玉美',
+      color: 'blue',
+    }, {
+      title: '佛教經義賞析',
+      teacher: '陳秉珏',
+      color: 'green',
+    }]
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -65,7 +85,7 @@ class SearchPage extends Component {
         <View style={styles.listContainer}>
           <FlatList
             style={styles.list}
-            data={this.props.foundClassList}
+            data={ [] }
             keyExtractor={item => item.title}
             renderItem={({ item }) => (
               <SearchClassItem
@@ -92,8 +112,8 @@ SearchPage.propTypes = {
   classListAction: PropTypes.shape({
     add: PropTypes.func.isRequired,
   }).isRequired,
-  foundClassList: PropTypes.array.isRequired,
   status: PropTypes.string.isRequired,
+  peers: PropTypes.object.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage)
