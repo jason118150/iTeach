@@ -1,161 +1,98 @@
-import MultiPeerActionTypes from './MultiPeer.type';
-import Peer from '../classes/Peer';
-import MultipeerConnectivity from '../../react-native-multipeer';
-import MessageType from '../constants/MessageType.constant';
+import Peer from '../classes/Peer'
+import MultipeerConnectivity from '../../react-native-multipeer'
+import MessageType from '../constants/MessageType.constant'
+import { createActions } from 'redux-actions'
 
-const MultiPeerActions = {
-  init(selfName) {
-    return {
-      type: MultiPeerActionTypes.INIT,
-      selfName,
-    };
-  },
-  browse() {
-    MultipeerConnectivity.browse();
-    return {
-      type: MultiPeerActionTypes.BROWSE,
-    };
-  },
-  stopBrowse() {
-    MultipeerConnectivity.stopBrowse();
-    return {
-      type: MultiPeerActionTypes.STOP_BROWSE,
-    };
-  },
-  disconnect(callback = () => {}) {
-    MultipeerConnectivity.disconnect(callback);
-    return {
-      type: MultiPeerActionTypes.DISCONNECT,
-    };
-  },
-  advertise(info = {}) {
-    MultipeerConnectivity.advertise(info);
-    return {
-      type: MultiPeerActionTypes.ADVERTISE,
-    };
-  },
-  hide() {
-    MultipeerConnectivity.hide();
-    return {
-      type: MultiPeerActionTypes.HIDE,
-    };
-  },
-  invite(peerId, myInfo, callback = () => {}) {
-    MultipeerConnectivity.invite(peerId, myInfo, callback);
-    return {
-      type: MultiPeerActionTypes.INVITE,
-      peerId,
-    };
-  },
-  responseInvite(sender, accept, callback = () => {}) {
-    MultipeerConnectivity.responseInvite(sender.invitationId, accept, callback);
-    return {
-      type: MultiPeerActionTypes.RESPONSE_INVITE,
-      sender,
-    };
-  },
-  requestInfo(peerId) {
-    MultipeerConnectivity.requestInfo(peerId);
-    return {
-      type: MultiPeerActionTypes.REQUEST_INFO,
-      peerId,
-    };
-  },
-  returnInfo(receiverId, info) {
-    MultipeerConnectivity.returnInfo(receiverId, info);
-    return {
-      type: MultiPeerActionTypes.RETURN_INFO,
-      info,
-    };
-  },
-  createStreamForPeer(peerId, name, callback = () => {}) {
-    MultipeerConnectivity.createStreamForPeer(peerId, name, callback);
-    return {
-      type: MultiPeerActionTypes.CREATE_STREAM_FOR_PEER,
-    };
-  },
-  sendData(recipients, data, callback = () => {}) {
-    const recipientIds = recipients.map((recipient) => {
-      if (recipient instanceof Peer) {
-        return recipient.id;
+const { multiPeer } = createActions({
+  multiPeer: {
+    init: selfName => selfName,
+    browse: () => {
+      MultipeerConnectivity.browse()
+    },
+    stopBrowse: () => {
+      MultipeerConnectivity.stopBrowse()
+    },
+    disconnect: (callback = () => {}) => {
+      MultipeerConnectivity.disconnect(callback)
+    },
+    advertise: (info = {}) => {
+      MultipeerConnectivity.advertise(info)
+    },
+    hide: () => {
+      MultipeerConnectivity.hide()
+    },
+    invite: (peerId, myInfo, callback = () => {}) => {
+      MultipeerConnectivity.invite(peerId, myInfo, callback)
+      return peerId
+    },
+    responseInvite: (sender, accept, callback = () => {}) => {
+      MultipeerConnectivity.responseInvite(sender.invitationId, accept, callback)
+      return sender
+    },
+    requestInfo: (peerId) => {
+      MultipeerConnectivity.requestInfo(peerId)
+      return peerId
+    },
+    returnInfo: (receiverId, info) => {
+      MultipeerConnectivity.returnInfo(receiverId, info)
+      return info
+    },
+    createStreamForPeer: (peerId, name, callback = () => {}) => {
+      MultipeerConnectivity.createStreamForPeer(peerId, name, callback)
+    },
+    sendData: (recipients, data, callback = () => {}) => {
+      const recipientIds = recipients.map((recipient) => {
+        if (recipient instanceof Peer) {
+          return recipient.id;
+        }
+        return recipient
+      })
+      MultipeerConnectivity.sendData(recipientIds, data, callback)
+    },
+    broadcastData: (data, callback = () => {}) => {
+      MultipeerConnectivity.broadcastData(data, callback)
+    },
+    onPeerFound: (peerId, peerName) => {
+      const peer = new Peer(peerId, peerName)
+      return peer
+    },
+    onPeerLost: (peerId) => {
+      return peerId
+    },
+    onPeerConnected: (peerId) => {
+      const peer = new Peer(peerId, '', true, false, '')
+      return peer
+    },
+    onPeerConnecting: (peerId) => {
+      return peerId
+    },
+    onPeerDisconnected: (peerId) => {
+      return peerId
+    },
+    onStreamOpened: () => null,
+    onInviteReceived: (invitation) => {
+      const peer = new Peer(
+        invitation.sender.id,
+        invitation.sender.info,
+        false,
+        false,
+        invitation.id,
+      )
+      return peer
+    },
+    onDataReceived: (senderId, data) => {
+      return {
+        senderId,
+        data,
       }
-      return recipient;
-    });
-    MultipeerConnectivity.sendData(recipientIds, data, callback);
-    return {
-      type: MultiPeerActionTypes.SEND_DATA,
-    };
+    },
+    onInfoUpdate(peerId, info) {
+      return {
+        peerId,
+        info,
+      }
+    },
   },
-  broadcastData(data, callback = () => {}) {
-    MultipeerConnectivity.broadcastData(data, callback);
-    return {
-      type: MultiPeerActionTypes.BROADCAST_DATA,
-    };
-  },
-  onPeerFound(peerId, peerName) {
-    const peer = new Peer(peerId, peerName);
-    return {
-      type: MultiPeerActionTypes.ON_PEER_FOUND,
-      peer,
-    };
-  },
-  onPeerLost(peerId) {
-    return {
-      type: MultiPeerActionTypes.ON_PEER_LOST,
-      peerId,
-    };
-  },
-  onPeerConnected(peerId) {
-    const peer = new Peer(peerId, '', true, false, '');
-    return {
-      type: MultiPeerActionTypes.ON_PEER_CONNECTED,
-      peer,
-    };
-  },
-  onPeerConnecting(peerId) {
-    return {
-      type: MultiPeerActionTypes.ON_PEER_CONNECTING,
-      peerId,
-    };
-  },
-  onPeerDisconnected(peerId) {
-    return {
-      type: MultiPeerActionTypes.ON_PEER_DISCONNECTED,
-      peerId,
-    };
-  },
-  onStreamOpened() {
-    return {
-      type: MultiPeerActionTypes.ON_STREAM_OPENED,
-    };
-  },
-  onInviteReceived(invitation) {
-    const peer = new Peer(
-      invitation.sender.id,
-      invitation.sender.name,
-      false,
-      false,
-      invitation.id,
-    );
-    return {
-      type: MultiPeerActionTypes.ON_INVITE_RECEIVED,
-      peer,
-    };
-  },
-  onDataReceived(senderId, data) {
-    return {
-      type: MultiPeerActionTypes.ON_DATA_RECEIVED,
-      senderId,
-      data,
-    };
-  },
-  onInfoUpdate(peerId, info) {
-    return {
-      type: MultiPeerActionTypes.ON_INFO_UPDATE,
-      peerId,
-      info,
-    };
-  },
-};
+})
 
-export default MultiPeerActions;
+export default multiPeer;

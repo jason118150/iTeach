@@ -1,141 +1,141 @@
-import MultiPeerActionTypes from '../actions/MultiPeer.type';
-
-const initState = {
+const initialState = {
   selfName: 'User-default',
   peers: {},
   isBrowsing: false,
   isAdvertising: false,
-};
+}
 
-export default (state = initState, action) => {
-  switch (action.type) {
-    case MultiPeerActionTypes.INIT:
-      return {
-        ...initState,
-        selfName: action.selfName,
-      };
-    case MultiPeerActionTypes.BROWSE:
-      return {
-        ...state,
-        isBrowsing: true,
-      };
-    case MultiPeerActionTypes.STOP_BROWSE: {
-      return {
-        ...state,
-        isBrowsing: false,
-      };
+const reducerMap = {
+  init: (state, action) => {
+    return {
+      ...state,
+      selfName: action.payload,
     }
-    case MultiPeerActionTypes.DISCONNECT:
-      return {
-        ...initState,
-        selfName: state.selfName,
-      };
-    case MultiPeerActionTypes.ADVERTISE:
-      return {
-        ...state,
-        isAdvertising: true,
-      };
-    case MultiPeerActionTypes.HIDE: {
-      const peers = {};
-      Object.keys(state.peers).forEach((peerId) => {
-        if (state.peers[peerId].invitationId === '') {
-          peers[peerId] = state.peers[peerId];
-        }
-      });
-      return {
-        ...state,
-        isAdvertising: false,
-        peers,
-      };
+  },
+  browse: (state) => {
+    return {
+      ...state,
+      isBrowsing: true,
     }
-    case MultiPeerActionTypes.INVITE: {
-      if (!(action.peerId in state.peers) || state.peers[action.peerId].connected) {
-        return state;
+  },
+  stopBrowse: (state) => {
+    return {
+      ...state,
+      isBrowsing: false,
+    }
+  },
+  disconnect: (state) => {
+    return {
+      ...state,
+      selfName: state.multiPeer.selfName,
+    }
+  },
+  advertise: (state) => {
+    return {
+      ...state,
+      isAdvertising: true,
+    }
+  },
+  hide: (state) => {
+    const peers = {}
+    Object.keys(state.multiPeer.peers).forEach((peerId) => {
+      if (state.multiPeer.peers[peerId].invitationId === '') {
+        peers[peerId] = state.multiPeer.peers[peerId]
       }
-      const peer = state.peers[action.peerId];
-      peer.invited = true;
-      return {
-        ...state,
-        peers: {
-          ...state.peers,
-          [action.peerId]: peer,
-        },
-      };
+    })
+    return {
+      ...state,
+      isAdvertising: false,
+      peers,
     }
-    case MultiPeerActionTypes.ON_PEER_FOUND: {
-      if (action.peer.id in state.peers) {
-        return state;
-      }
-      return {
-        ...state,
-        peers: {
-          ...state.peers,
-          [action.peer.id]: action.peer,
-        },
-      };
+  },
+  invite: (state, action) => {
+    if (!(action.peerId in state.multiPeer.peers) || state.multiPeer.peers[action.peerId].connected) {
+      return state
     }
-    case MultiPeerActionTypes.ON_PEER_LOST: {
-      if (!(action.peerId in state.peers)) {
-        return state;
-      }
-      const peers = Object.assign({}, state.peers);
-      delete peers[action.peerId];
-      return {
-        ...state,
-        peers,
-      };
+    const peer = state.multiPeer.peers[action.peerId]
+    peer.invited = true
+    return {
+      ...state,
+      peers: {
+        ...state.multiPeer.peers,
+        [action.peerId]: peer,
+      },
     }
-    case MultiPeerActionTypes.ON_PEER_CONNECTED: {
-      const peer = Object.assign({}, action.peer);
-      if (peer.id in state.peers) {
-        peer.name = state.peers[peer.id].name;
-      }
-      return {
-        ...state,
-        peers: {
-          ...state.peers,
-          [peer.id]: peer,
-        },
-      };
+  },
+  onPeerFound: (state, action) => {
+    if (action.peer.id in state.multiPeer.peers) {
+      return state
     }
-    case MultiPeerActionTypes.ON_PEER_DISCONNECTED: {
-      if (!(action.peerId in state.peers)) {
-        return state;
-      }
-      const peers = Object.assign({}, state.peers);
-      delete peers[action.peerId];
-      return {
-        ...state,
-        peers,
-      };
+    return {
+      ...state,
+      peers: {
+        ...state.multiPeer.peers,
+        [action.peer.id]: action.peer,
+      },
     }
-    case MultiPeerActionTypes.ON_INVITE_RECEIVED: {
-      if (action.peer.id in state.peers) {
-        return state;
-      }
-      return {
-        ...state,
-        peers: {
-          ...state.peers,
-          [action.peer.id]: action.peer,
-        },
-      };
+  },
+  inPeerLost: (state, action) => {
+    if (!(action.peerId in state.multiPeer.peers)) {
+      return state
     }
-    case MultiPeerActionTypes.ON_INFO_UPDATE: {
-      if (!(action.peerId in state.peers)) {
-        return state;
-      }
-      const peer = state.peers[action.peerId];
-      peer.name = action.info.name;
-      return {
-        ...state,
-        peers: {
-          ...state.peers,
-          [action.peerId]: peer,
-        },
-      };
+    const peers = Object.assign({}, state.multiPeer.peers)
+    delete peers[action.peerId]
+    return {
+      ...state,
+      peers,
     }
-    default:
-      return state;
-  }
-};
+  },
+  onPeerConnected: (state, action) => {
+    const peer = Object.assign({}, action.peer)
+    if (peer.id in state.multiPeer.peers) {
+      peer.name = state.multiPeer.peers[peer.id].name
+    }
+    return {
+      ...state,
+      peers: {
+        ...state.multiPeer.peers,
+        [peer.id]: peer,
+      },
+    }
+  },
+  onPeerDisconnected: (state, action) => {
+    if (!(action.peerId in state.multiPeer.peers)) {
+      return state
+    }
+    const peers = Object.assign({}, state.multiPeer.peers)
+    delete peers[action.peerId]
+    return {
+      ...state,
+      peers,
+    }
+  },
+  onInviteReceived: (state, action) => {
+    if (action.peer.id in state.multiPeer.peers) {
+      return state
+    }
+    return {
+      ...state,
+      peers: {
+        ...state.multiPeer.peers,
+        [action.peer.id]: action.peer,
+      },
+    }
+  },
+  onInfoUpdate: (state, action) => {
+    if (!(action.peerId in state.multiPeer.peers)) {
+      return state
+    }
+    const peer = state.multiPeer.peers[action.peerId]
+    peer.name = action.info.name
+    return {
+      ...state,
+      peers: {
+        ...state.multiPeer.peers,
+        [action.peerId]: peer,
+      },
+    }
+  },
+}
+
+export default { reducerMap, initialState }

@@ -43,7 +43,7 @@ export default () => {
           id: event.invite.id,
           sender: {
             id: event.peer.id,
-            name: event.peer.info.name,
+            info: event.peer.info,
           },
         };
         store.dispatch(MultiPeerActions.onInviteReceived(invitation));
