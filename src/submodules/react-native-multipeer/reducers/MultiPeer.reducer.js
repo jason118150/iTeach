@@ -5,7 +5,7 @@ const p1 = new Peer(1, { title: '佛教經義賞析', teacher: '陳秉珏', colo
 const initialState = {
   selfName: 'User-default',
   peers: {
-    p0, p1,
+    0: p0, 1: p1,
   },
   isBrowsing: false,
   isAdvertising: false,
