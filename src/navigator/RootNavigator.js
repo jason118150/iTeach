@@ -19,11 +19,11 @@ export default SwitchNavigator({
   SearchPage: {
     screen: SearchPage,
   },
-  CourseInfo: {
-    screen: CourseInfo,
-  },
   AddNewCourse: {
     screen: AddNewCourse, // Page for 新增課程
+  },
+  CourseInfo: {
+    screen: CourseInfo,
   },
   Pages: DrawerNavigator({
     EditProfile: {
