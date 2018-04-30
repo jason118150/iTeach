@@ -31,6 +31,10 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class Course extends Component {
+  iconOnPress(id) {
+    this.props.courseItemAction.setName(id)
+    this.props.navAction.enterFeature(id)
+  }
   render() {
     const { courseItem } = this.props
     return (
@@ -54,7 +58,7 @@ class Course extends Component {
                 imgSrc={courseItem.courseItem[item.id].onclick
                   ? courseItem.courseItem[item.id].imgSrc[1]
                   : courseItem.courseItem[item.id].imgSrc[0]}
-                onPress={this.props.navAction.enterFeature} />
+                onPress={this.iconOnPress.bind(this)} />
             ))
           }
         </View>
