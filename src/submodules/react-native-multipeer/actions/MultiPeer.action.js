@@ -56,13 +56,14 @@ const { multiPeer } = createActions({
 
     // Why should I do this
     onPeerFoundSet: peer => peer,
-    onPeerFound: (peerId, peerName) => (dispatch) => {
+    onPeerFound: (peerId, peerName) => (dispatch, getState) => {
       const peer = new Peer(peerId, peerName)
+      const state = getState()
       dispatch(multiPeer.invite(
         peer.id,
-        { title: '#0301連線測試', teacher: '黃文璁', color: 'red' },
+        { title: state.course, teacher: state.account.username, color: 'red' },
       ))
-      dispatch(multiPeer.onPeerFound2({ peer }))
+      dispatch(multiPeer.onPeerFoundSet({ peer }))
     },
     onPeerLost: (peerId) => {
       return { peerId }

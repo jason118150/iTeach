@@ -1,13 +1,13 @@
 import { Alert } from 'react-native'
-import Peer from '../classes/Peer'
+// import Peer from '../classes/Peer'
 
-const p0 = new Peer(0, { title: '小海豚MV舞蹈課程123', teacher: '蔡丞昊', color: 'red' })
-const p1 = new Peer(1, { title: '佛教經義賞析', teacher: '陳秉珏', color: 'green' })
+// const p0 = new Peer(0, { title: '小海豚MV舞蹈課程123', teacher: '蔡丞昊', color: 'red' })
+// const p1 = new Peer(1, { title: '佛教經義賞析', teacher: '陳秉珏', color: 'green' })
 
 const initialState = {
   selfName: 'User-default',
   peers: {
-    0: p0, 1: p1,
+    // 0: p0, 1: p1,
   },
   isBrowsing: false,
   isAdvertising: false,
@@ -152,7 +152,7 @@ const reducerMap = {
     }
   },
   onInviteReceived: (state, action) => {
-    Alert.alert(JSON.stringify(action))
+    // Alert.alert(JSON.stringify(action))
     if (action.payload.peer.id in state.multiPeer.peers) {
       return state
     }
