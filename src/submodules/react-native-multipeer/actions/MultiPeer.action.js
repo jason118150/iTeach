@@ -4,7 +4,9 @@ import { createActions } from 'redux-actions'
 
 const { multiPeer } = createActions({
   multiPeer: {
-    init: selfName => selfName,
+    init: (selfName) => {
+      return { selfName }
+    },
     browse: () => {
       MultipeerConnectivity.browse()
     },
@@ -22,19 +24,19 @@ const { multiPeer } = createActions({
     },
     invite: (peerId, myInfo, callback = () => {}) => {
       MultipeerConnectivity.invite(peerId, myInfo, callback)
-      return peerId
+      return { peerId }
     },
     responseInvite: (sender, accept, callback = () => {}) => {
       MultipeerConnectivity.responseInvite(sender.invitationId, accept, callback)
-      return sender
+      return { sender }
     },
     requestInfo: (peerId) => {
       MultipeerConnectivity.requestInfo(peerId)
-      return peerId
+      return { peerId }
     },
     returnInfo: (receiverId, info) => {
       MultipeerConnectivity.returnInfo(receiverId, info)
-      return info
+      return { info }
     },
     createStreamForPeer: (peerId, name, callback = () => {}) => {
       MultipeerConnectivity.createStreamForPeer(peerId, name, callback)
@@ -42,31 +44,38 @@ const { multiPeer } = createActions({
     sendData: (recipients, data, callback = () => {}) => {
       const recipientIds = recipients.map((recipient) => {
         if (recipient instanceof Peer) {
-          return recipient.id
+          return { recipient: recipient.id }
         }
-        return recipient
+        return { recipient }
       })
       MultipeerConnectivity.sendData(recipientIds, data, callback)
     },
     broadcastData: (data, callback = () => {}) => {
       MultipeerConnectivity.broadcastData(data, callback)
     },
-    onPeerFound: (peerId, peerName) => {
+
+    // Why should I do this
+    onPeerFoundSet: peer => peer,
+    onPeerFound: (peerId, peerName) => (dispatch) => {
       const peer = new Peer(peerId, peerName)
-      return peer
+      dispatch(multiPeer.invite(
+        peer.id,
+        { title: '#0301連線測試', teacher: '黃文璁', color: 'red' },
+      ))
+      dispatch(multiPeer.onPeerFound2({ peer }))
     },
     onPeerLost: (peerId) => {
-      return peerId
+      return { peerId }
     },
     onPeerConnected: (peerId) => {
       const peer = new Peer(peerId, '', true, false, '')
-      return peer
+      return { peer }
     },
     onPeerConnecting: (peerId) => {
-      return peerId
+      return { peerId }
     },
     onPeerDisconnected: (peerId) => {
-      return peerId
+      return { peerId }
     },
     onStreamOpened: () => null,
     onInviteReceived: (invitation) => {
@@ -77,7 +86,7 @@ const { multiPeer } = createActions({
         false,
         invitation.id,
       )
-      return peer
+      return { peer }
     },
     onDataReceived: (senderId, data) => {
       return {

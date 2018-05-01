@@ -40,12 +40,6 @@ class SearchPage extends Component {
   constructor(props) {
     super(props)
     this.selectClass = this.selectClass.bind(this)
-    // this.getCousreInfo = this.getCousreInfo.bind(this)
-    // Alert.alert(JSON.stringify([{
-    //   title: '小海豚MV舞蹈課程123',
-    //   teacher: '蔡丞昊',
-    //   color: 'red',
-    // }],))
   }
 
   selectClass(classItem) {
