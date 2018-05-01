@@ -15,9 +15,8 @@ import styles from './styles/ClassMenu.styles'
 import navAction from '../actions/nav.action'
 import courseAction from '../actions/course.action'
 import classMenuAction from '../actions/classMenu.action'
-import searchPageAction from '../actions/searchPage.action'
-import addNewCourseAction from '../actions/addNewCourse.action'
 import ClassItem from '../components/ClassItem'
+import multiPeerAction from '../actions/multiPeer.action'
 
 const mapStateToProps = state => ({
   status: state.account.status,
@@ -27,7 +26,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   navAction: {
     openDrawer: () => { dispatch(navAction.openDrawer()) },
-    searchPage: () => { dispatch(navAction.searchPage()) },
+    searchPage: () => {
+      dispatch(navAction.searchPage())
+      dispatch(multiPeerAction.student.searchStart())
+    },
     addNewCourse: () => { dispatch(navAction.addNewCourse()) },
   },
   classListAction: {
@@ -37,14 +39,6 @@ const mapDispatchToProps = dispatch => ({
     delete: (title) => {
       dispatch(classMenuAction.classList.delete(title))
     },
-  },
-  searchAction: {
-    // FIXME
-    startSearch: info => dispatch(searchPageAction.multiPeer.startSearch({})),
-  },
-  addCourseAction: {
-    // FIXME
-    add: info => dispatch(addNewCourseAction.multiPeer.startAdd({})),
   },
   courseAction: {
     setName: (title) => { dispatch(courseAction.setName(title)) },
@@ -86,14 +80,10 @@ class ClassMenu extends Component {
 
   onPressSearchPage = () => {
     this.props.navAction.searchPage()
-    // FIXME: pass `info ` instead of `this.props.status`
-    this.props.searchAction.startSearch(this.props.status)
   }
 
   onPressAddPage = () => {
     this.props.navAction.addNewCourse()
-    // FIXME: pass `info ` instead of `this.props.status`
-    this.props.addCourseAction.add(this.props.status)
   }
 
   render() {
@@ -153,12 +143,6 @@ ClassMenu.propTypes = {
     modify: PropTypes.func.isRequired,
     delete: PropTypes.func.isRequired,
   }).isRequired,
-  searchAction: PropTypes.shape({
-    startSearch: PropTypes.func.isRequired,
-  }),
-  addCourseAction: PropTypes.shape({
-    add: PropTypes.func.isRequired,
-  }),
   courseAction: PropTypes.shape({
     setName: PropTypes.func.isRequired,
   }).isRequired,

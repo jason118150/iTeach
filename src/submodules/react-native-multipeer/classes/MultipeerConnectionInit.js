@@ -1,9 +1,9 @@
-import MultipeerConnection from './MultipeerConnection';
-import MultiPeerActions from '../actions/MultiPeer.action';
-import { store } from '../../../../App';
+import MultipeerConnection from './MultipeerConnection'
+import MultiPeerActions from '../actions/MultiPeer.action'
+import { store } from '../../../../App'
 
 export default () => {
-  const selfName = `User-${Math.round(1e6 * Math.random())}`;
+  const selfName = `User-${Math.round(1e6 * Math.random())}`
 
   MultipeerConnection.registerListeners([
     {
@@ -20,8 +20,8 @@ export default () => {
     {
       eventName: 'RCTMultipeerConnectivityPeerConnected',
       handler: (event) => {
-        store.dispatch(MultiPeerActions.onPeerConnected(event.peer.id));
-        store.dispatch(MultiPeerActions.requestInfo(event.peer.id));
+        store.dispatch(MultiPeerActions.onPeerConnected(event.peer.id))
+        store.dispatch(MultiPeerActions.requestInfo(event.peer.id))
       },
     },
     {
@@ -45,8 +45,8 @@ export default () => {
             id: event.peer.id,
             info: event.peer.info,
           },
-        };
-        store.dispatch(MultiPeerActions.onInviteReceived(invitation));
+        }
+        store.dispatch(MultiPeerActions.onInviteReceived(invitation))
       },
     },
     {
@@ -56,11 +56,10 @@ export default () => {
         event.data,
       )),
     },
-  ]);
+  ])
 
   // Workaround: wait for MultiPeerActions to be loaded
   setTimeout(() => {
-    store.dispatch(MultiPeerActions.init(selfName));
-  });
-};
-
+    store.dispatch(MultiPeerActions.init(selfName))
+  })
+}

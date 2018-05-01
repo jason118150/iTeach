@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
+  Alert,
   Image,
   Text,
   TouchableHighlight,
@@ -13,6 +14,8 @@ import navAction from '../actions/nav.action'
 import courseItemAction from '../actions/courseItem.action'
 import CourseItem from '../components/CourseItem'
 import CourseItemData from '../components/CourseItemData'
+import multiPeerAction from '../actions/multiPeer.action'
+
 
 const mapStateToProps = state => ({
   status: state.account.status,
@@ -27,8 +30,16 @@ const mapDispatchToProps = dispatch => ({
   courseItemAction: {
     setName: (id) => {
       dispatch(courseItemAction.setName(id))
+    },
+    onPress: (id, status = '', onclick = false) => {
       if (id === 0) {
         dispatch(navAction.onlinePeerList())
+      } else if (id === 1 && status === 'teacher') {
+        if (onclick === true) {
+          dispatch(multiPeerAction.teacher.releaseStart())
+        } else {
+          dispatch(multiPeerAction.teacher.releaseStop())
+        }
       }
     },
   },
@@ -58,7 +69,16 @@ class Course extends Component {
                 imgSrc={courseItem.courseItem[item.id].onclick
                   ? courseItem.courseItem[item.id].imgSrc[1]
                   : courseItem.courseItem[item.id].imgSrc[0]}
-                onPress={this.props.courseItemAction.setName}/>
+                onPress={
+                  (id) => {
+                    this.props.courseItemAction.setName(id)
+                    this.props.courseItemAction.onPress(
+                      id,
+                      this.props.status,
+                      courseItem.courseItem[item.id].onclick,
+                    )
+                  }
+                }/>
             ))
           }
         </View>
@@ -74,6 +94,7 @@ Course.propTypes = {
   }).isRequired,
   courseItemAction: PropTypes.shape({
     setName: PropTypes.func.isRequired,
+    onPress: PropTypes.func.isRequired,
   }).isRequired,
   course: PropTypes.string.isRequired,
   courseItem: PropTypes.object.isRequired,
