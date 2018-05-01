@@ -2,6 +2,7 @@ import Peer from '../classes/Peer'
 
 const p0 = new Peer(0, { title: '小海豚MV舞蹈課程123', teacher: '蔡丞昊', color: 'red' })
 const p1 = new Peer(1, { title: '佛教經義賞析', teacher: '陳秉珏', color: 'green' })
+
 const initialState = {
   selfName: 'User-default',
   peers: {

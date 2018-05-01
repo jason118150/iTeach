@@ -13,7 +13,7 @@ import navAction from '../actions/nav.action'
 import Appbar from '../components/Appbar'
 import SearchClassItem from '../components/SearchClassItem'
 import classMenuAction from '../actions/classMenu.action'
-import searchPageAction from '../actions/searchPage.action'
+import multiPeerAction from '../actions/multiPeer.action'
 // import mockNewClass from '../../asset/mockNewClass.json'
 
 const mapStateToProps = state => ({
@@ -26,7 +26,7 @@ const mapDispatchToProps = dispatch => ({
   navAction: {
     onExit: () => {
       dispatch(navAction.classMenu())
-      dispatch(searchPageAction.multiPeer.stopSearch())
+      dispatch(multiPeerAction.student.searchStop())
     },
   },
   classListAction: {
@@ -66,22 +66,7 @@ class SearchPage extends Component {
   }
 
   getCousreInfo() {
-    // const { peers } = this.props.peers
-    // Alert.alert(this.props.peers)
     return Object.keys(this.props.peers).map(peerId => this.props.peers[peerId].info)
-    // return [{
-    //   title: '小海豚MV舞蹈課程123',
-    //   teacher: '蔡丞昊',
-    //   color: 'red',
-    // }, {
-    //   title: '印尼文化史',
-    //   teacher: '宋玉美',
-    //   color: 'blue',
-    // }, {
-    //   title: '佛教經義賞析',
-    //   teacher: '陳秉珏',
-    //   color: 'green',
-    // }]
   }
 
   render() {
@@ -91,7 +76,6 @@ class SearchPage extends Component {
         <View style={styles.listContainer}>
           <FlatList
             style={styles.list}
-            // data={ mockNewClass.newClasses }
             data={ this.getCousreInfo() }
             keyExtractor={item => item.title}
             renderItem={({ item }) => (

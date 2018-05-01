@@ -1,6 +1,5 @@
 import Peer from '../classes/Peer'
 import MultipeerConnectivity from '../../react-native-multipeer'
-import MessageType from '../constants/MessageType.constant'
 import { createActions } from 'redux-actions'
 
 const { multiPeer } = createActions({
@@ -43,7 +42,7 @@ const { multiPeer } = createActions({
     sendData: (recipients, data, callback = () => {}) => {
       const recipientIds = recipients.map((recipient) => {
         if (recipient instanceof Peer) {
-          return recipient.id;
+          return recipient.id
         }
         return recipient
       })
@@ -86,7 +85,7 @@ const { multiPeer } = createActions({
         data,
       }
     },
-    onInfoUpdate(peerId, info) {
+    onInfoUpdate: (peerId, info) => {
       return {
         peerId,
         info,
@@ -95,4 +94,4 @@ const { multiPeer } = createActions({
   },
 })
 
-export default multiPeer;
+export default multiPeer
