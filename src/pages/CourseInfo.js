@@ -9,12 +9,19 @@ import PropTypes from 'prop-types'
 import Button from '../components/Button'
 import styles from './styles/CourseInfo.styles'
 import Appbar from '../components/Appbar'
-
+import navAction from '../actions/nav.action'
+import closeImage from '../../asset/close.png'
 
 const mapStateToProps = state => ({
   status: state.account.status,
   classList: state.classMenu.classList,
   courseName: state.course.courseName,
+})
+
+const mapDispatchToProps = dispatch => ({
+  navAction: {
+    onExit: () => dispatch(navAction.course()),
+  },
 })
 
 class CourseInfo extends Component {
@@ -31,7 +38,9 @@ class CourseInfo extends Component {
     } = courseInfo
     return (
       <View style={styles.container}>
-        <Appbar/>
+        <Appbar title='課程資訊' withDrawer
+          rightIcon={closeImage}
+          onRightPress={this.props.navAction.onExit}/>
         <View style={styles.contentContainer}>
           <View style={styles.titleContainer}>
             <View style={[styles.colorBox, { backgroundColor: color }]} />
@@ -87,9 +96,12 @@ class CourseInfo extends Component {
 }
 
 CourseInfo.propTypes = {
+  navAction: PropTypes.shape({
+    onExit: PropTypes.func.isRequired,
+  }),
   status: PropTypes.string.isRequired,
   classList: PropTypes.array.isRequired,
   courseName: PropTypes.string.isRequired,
 }
 
-export default connect(mapStateToProps)(CourseInfo)
+export default connect(mapStateToProps, mapDispatchToProps)(CourseInfo)

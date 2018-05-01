@@ -17,6 +17,7 @@ import getRandomColor from '../util/getRandomColor'
 import newCoursesValidation from '../util/newCoursesValidation'
 import courseInfoAction from '../actions/courseInfo.action'
 import navAction from '../actions/nav.action'
+import Appbar from '../components/Appbar'
 
 const mapStateToProps = state => ({
   ...state.course,
@@ -105,11 +106,12 @@ class AddNewCourse extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.titleBar}>
+        <Appbar title='新增課程'/>
+        {/* <View style={styles.titleBar}>
           <Text style={styles.title}>
             新增課程
           </Text>
-        </View>
+        </View> */}
         <View style={styles.whiteContainer}>
           <View>
             <View style={styles.courseInputContainer}>

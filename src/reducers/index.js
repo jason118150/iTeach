@@ -36,7 +36,6 @@ export default (state, action) => {
   if (action.type.startsWith('Navigation/')) {
     newState = { ...newState, nav: RootNavigator.router.getStateForAction(action, newState.nav) }
   }
-
   return newState
 }
 

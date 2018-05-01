@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
-import {
-  View,
-  Text,
-  TouchableHighlight,
-  Image,
-} from 'react-native'
+import { View } from 'react-native'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import DrawerImage from '../../asset/drawer.png'
 import navAction from '../actions/nav.action'
 import styles from './styles/ClassMenu.styles'
+import Appbar from '../components/Appbar'
 
 const mapDispatchToProps = dispatch => ({
   navAction: {
@@ -20,14 +15,7 @@ const mapDispatchToProps = dispatch => ({
 class Channels extends Component {
   render() {
     return <View style={styles.container}>
-      <View style={styles.titleBar}>
-        <TouchableHighlight style={styles.drawerIconContainer} onPress={this.props.navAction.openDrawer} underlayColor='#3A8FB7'>
-          <Image style={styles.drawerIcon} source={DrawerImage} />
-        </TouchableHighlight>
-        <Text style={styles.title}>
-          切換頻道的頁面
-        </Text>
-      </View>
+      <Appbar title='切換頻道的頁面' withDrawer/>
     </View>
   }
 }
