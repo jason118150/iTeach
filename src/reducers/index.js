@@ -7,9 +7,7 @@ import account from './account'
 import RootNavigator from '../navigator/RootNavigator'
 import courseInfo from './courseInfo'
 import onlinePeerList from './onlinePeerList'
-import searchPage from './searchPage'
-import addNewCourse from './addNewCourse'
-import multiPeer from '../submodules/react-native-multipeer/reducers/MultiPeer.reducer'
+import multiPeer from './multiPeer'
 
 // define states
 const initialState = {
@@ -20,8 +18,6 @@ const initialState = {
   account: account.initialState,
   courseInfo: courseInfo.initialState,
   onlinePeerList: onlinePeerList.initialState,
-  searchPage: searchPage.initialState,
-  addNewCourse: addNewCourse.initialState,
   multiPeer: multiPeer.initialState,
   initComplete: false,
 }
@@ -35,8 +31,6 @@ const reducerMap = {
   account: account.reducerMap,
   courseInfo: courseInfo.reducerMap,
   onlinePeerList: onlinePeerList.reducerMap,
-  searchPage: searchPage.reducerMap,
-  addNewCourse: addNewCourse.reducerMap,
   multiPeer: multiPeer.reducerMap,
   initComplete: state => ({ ...state, initComplete: true }),
 }
