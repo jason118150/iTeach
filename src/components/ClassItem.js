@@ -17,6 +17,7 @@ class ClassItem extends Component {
 
   render() {
     const {
+      item,
       title,
       color,
       deleteClass,
@@ -34,7 +35,7 @@ class ClassItem extends Component {
           pagingEnabled
           showsHorizontalScrollIndicator={false}>
           <View style={[styles.colorBox, { backgroundColor: color }]} />
-          <TouchableHighlight style={styles.textContainer} onPress={() => { onPress(title, color) }} underlayColor='white'>
+          <TouchableHighlight style={styles.textContainer} onPress={() => { onPress(item) }} underlayColor='white'>
             <Text style={styles.title}>
               {title}
             </Text>
@@ -49,6 +50,7 @@ class ClassItem extends Component {
 }
 
 ClassItem.propTypes = {
+  item: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
   deleteClass: PropTypes.func.isRequired,

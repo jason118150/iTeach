@@ -7,6 +7,7 @@ import Channels from '../pages/Channels'
 import DrawerContainer from '../pages/DrawerContainer'
 import SearchPage from '../pages/SearchPage'
 import AddNewCourse from '../pages/AddNewCourse'
+import CourseInfo from '../pages/CourseInfo'
 
 export default SwitchNavigator({
   Login: {
@@ -18,6 +19,12 @@ export default SwitchNavigator({
   SearchPage: {
     screen: SearchPage,
   },
+  CourseInfo: {
+    screen: CourseInfo,
+  },
+  AddNewCourse: {
+    screen: AddNewCourse, // Page for 新增課程
+  },
   Pages: DrawerNavigator({
     EditProfile: {
       screen: EditProfile, // Page for 修改個人資料
@@ -27,9 +34,6 @@ export default SwitchNavigator({
     },
     ClassMenu: {
       screen: ClassMenu,
-    },
-    AddNewCourse: {
-      screen: AddNewCourse, // Page for 新增課程
     },
   }, {
     contentComponent: DrawerContainer,
