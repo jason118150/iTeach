@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
-  Image,
-  Text,
-  TouchableHighlight,
   View,
   FlatList,
   ActivityIndicator,
@@ -13,6 +10,7 @@ import PropTypes from 'prop-types'
 import CloseImage from '../../asset/close.png'
 import styles from './styles/ClassMenu.styles'
 import navAction from '../actions/nav.action'
+import Appbar from '../components/Appbar'
 import SearchClassItem from '../components/SearchClassItem'
 import classMenuAction from '../actions/classMenu.action'
 import mockNewClass from '../../asset/mockNewClass.json'
@@ -60,17 +58,7 @@ class SearchPage extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.titleBar}>
-          <Text style={styles.title}>
-            搜尋課程
-          </Text>
-          <TouchableHighlight style={styles.addSearchIconContainer} onPress={this.props.navAction.onExit} underlayColor='#3A8FB7'>
-            <Image
-              style={styles.addSearchIcon}
-              source={CloseImage}
-            />
-          </TouchableHighlight>
-        </View>
+        <Appbar title='搜尋課程' rightIcon={CloseImage} onRightPress={this.props.navAction.onExit}/>
         <View style={styles.listContainer}>
           <FlatList
             style={styles.list}

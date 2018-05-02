@@ -1,7 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
-	titleBar: {
+  titleBar: {
     height: 60,
     alignItems: 'center',
     flexDirection: 'row',
@@ -15,7 +15,7 @@ export default StyleSheet.create({
     textAlign: 'center',
     flex: 1,
   },
-	drawerIconContainer: {
+  drawerIconContainer: {
     width: 40,
     height: 40,
     margin: 10,

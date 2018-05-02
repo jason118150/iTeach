@@ -15,19 +15,21 @@ import styles from './styles/AddNewCourse.styles'
 import getSemester from '../util/getSemester'
 import getRandomColor from '../util/getRandomColor'
 import newCoursesValidation from '../util/newCoursesValidation'
-import courseInfoAction from '../actions/courseInfo.action'
+import addCourseAction from '../actions/addCourse.action'
 import navAction from '../actions/nav.action'
+import Appbar from '../components/Appbar'
 
 const mapStateToProps = state => ({
   ...state.course,
+  account: state.account,
 })
 
 const mapDispatchToProps = dispatch => ({
   nav: {
     classMenu: () => { dispatch(navAction.classMenu()) },
   },
-  courseInfoAction: {
-    save: (info) => { dispatch(courseInfoAction.save(info)) },
+  addCourseAction: {
+    save: (info) => { dispatch(addCourseAction.save(info)) },
   },
 })
 
@@ -36,11 +38,12 @@ class AddNewCourse extends Component {
     super(props)
     this.state = {
       color: getRandomColor(),
-      course: '',
+      teacher: '',
+      title: '',
       year: new Date().getFullYear() - 1911,
       semester: getSemester(),
       classroom: '',
-      weekday: '1',
+      weekday: '星期一',
       time: '12:00',
       website: '',
     }
@@ -50,8 +53,31 @@ class AddNewCourse extends Component {
     this.handleFirstConnectivityChange = this.handleFirstConnectivityChange.bind(this)
     this.tenYearsAgo = this.state.year - 7
     this.years = Array.from(Array(14), (_, x) => x + this.tenYearsAgo)
+    this.stateToInfo = this.stateToInfo.bind(this)
   }
+  stateToInfo = () => {
+    const {
+      color,
+      course,
+      year,
+      semester,
+      classroom,
+      weekday,
+      time,
+      website,
+    } = this.state
 
+    const info = {
+      teacher: this.props.account.username,
+      title: course,
+      color,
+      semester: `${year}學年${semester}學期`,
+      classroom,
+      time: weekday + time,
+      website,
+    }
+    return info
+  }
   handleFirstConnectivityChange(connectionInfo) {
     this.connectionInfo = connectionInfo.type
   }
@@ -94,7 +120,7 @@ class AddNewCourse extends Component {
       }
     } else {
       // 符合規則，跳轉到ClassMenu
-      this.props.courseInfoAction.save(this.state)
+      this.props.addCourseAction.save(this.stateToInfo())
     }
   }
 
@@ -105,11 +131,7 @@ class AddNewCourse extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.titleBar}>
-          <Text style={styles.title}>
-            新增課程
-          </Text>
-        </View>
+        <Appbar title='新增課程'/>
         <View style={styles.whiteContainer}>
           <View>
             <View style={styles.courseInputContainer}>
@@ -148,11 +170,11 @@ class AddNewCourse extends Component {
                     onValueChange={(itemValue) => { this.setState({ semester: itemValue }) }}
                   >
                     <Picker.Item
-                      value='1'
+                      value='上'
                       label='上'
                     />
                     <Picker.Item
-                      value='2'
+                      value='下'
                       label='下'
                     />
                   </Picker>
@@ -174,35 +196,35 @@ class AddNewCourse extends Component {
                   <Picker
                     style={styles.picker}
                     textStyle={styles.pickerText}
-                    selectedValue={(this.state && this.state.weekday) || '1'}
+                    selectedValue={(this.state && this.state.weekday) || '星期一'}
                     onValueChange={(itemValue) => { this.setState({ weekday: itemValue }) }}
                   >
                     <Picker.Item
-                      value='7'
+                      value='星期日'
                       label='星期日'
                     />
                     <Picker.Item
-                      value='1'
+                      value='星期一'
                       label='星期一'
                     />
                     <Picker.Item
-                      value='2'
+                      value='星期二'
                       label='星期二'
                     />
                     <Picker.Item
-                      value='3'
+                      value='星期三'
                       label='星期三'
                     />
                     <Picker.Item
-                      value='4'
+                      value='星期四'
                       label='星期四'
                     />
                     <Picker.Item
-                      value='5'
+                      value='星期五'
                       label='星期五'
                     />
                     <Picker.Item
-                      value='6'
+                      value='星期六'
                       label='星期六'
                     />
                   </Picker>
@@ -241,12 +263,13 @@ class AddNewCourse extends Component {
 }
 
 AddNewCourse.propTypes = {
-  courseInfoAction: PropTypes.shape({
+  addCourseAction: PropTypes.shape({
     save: PropTypes.func.isRequired,
   }).isRequired,
   nav: PropTypes.shape({
     classMenu: PropTypes.func.isRequired,
   }).isRequired,
+  account: PropTypes.object.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddNewCourse)
