@@ -1,14 +1,15 @@
 import { createActions } from 'redux-actions'
 import Peer from '../components/Peer'
 import MultipeerConnectivity from '../util/multiPeerInit'
+import getRandomColor from '../util/getRandomColor'
 
 const { multiPeer } = createActions({
   multiPeer: {
     student: {
-      searchStart: info => (dispatch) => {
+      startSearch: info => (dispatch) => {
         dispatch(multiPeer.backend.advertise())
       },
-      searchStop: () => (dispatch) => {
+      stopSearch: () => (dispatch) => {
         dispatch(multiPeer.backend.hide())
       },
       joinCourse: courseName => (dispatch) => {
@@ -16,10 +17,10 @@ const { multiPeer } = createActions({
       },
     },
     teacher: {
-      releaseStart: () => (dispatch) => {
+      startRelease: () => (dispatch) => {
         dispatch(multiPeer.backend.browse())
       },
-      releaseStop: () => (dispatch) => {
+      stopRelease: () => (dispatch) => {
         dispatch(multiPeer.backend.stopBrowse())
       },
     },
@@ -79,7 +80,11 @@ const { multiPeer } = createActions({
         const state = getState()
         dispatch(multiPeer.backend.invite(
           peer.id,
-          { title: state.course, teacher: state.account.username, color: 'red' },
+          {
+            title: state.course,
+            teacher: state.account.username,
+            color: getRandomColor(),
+          },
         ))
         dispatch(multiPeer.backend.onPeerFoundSet({ peer }))
       },

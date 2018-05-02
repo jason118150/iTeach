@@ -26,7 +26,7 @@ const mapDispatchToProps = dispatch => ({
     openDrawer: () => { dispatch(navAction.openDrawer()) },
     searchPage: () => {
       dispatch(navAction.searchPage())
-      dispatch(multiPeerAction.student.searchStart())
+      dispatch(multiPeerAction.student.startSearch())
     },
     addNewCourse: () => { dispatch(navAction.addNewCourse()) },
   },

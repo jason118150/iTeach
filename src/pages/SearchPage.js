@@ -26,7 +26,7 @@ const mapDispatchToProps = dispatch => ({
   navAction: {
     onExit: () => {
       dispatch(navAction.classMenu())
-      dispatch(multiPeerAction.student.searchStop())
+      dispatch(multiPeerAction.student.stopSearch())
     },
   },
   classListAction: {
