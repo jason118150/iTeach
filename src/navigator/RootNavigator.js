@@ -7,7 +7,6 @@ import Channels from '../pages/Channels'
 import DrawerContainer from '../pages/DrawerContainer'
 import SearchPage from '../pages/SearchPage'
 import AddNewCourse from '../pages/AddNewCourse'
-import OnlinePeerList from '../pages/OnlinePeerList'
 import CourseInfo from '../pages/CourseInfo'
 
 export default SwitchNavigator({
@@ -19,9 +18,6 @@ export default SwitchNavigator({
   },
   SearchPage: {
     screen: SearchPage,
-  },
-  OnlinePeerList: {
-    screen: OnlinePeerList,
   },
   AddNewCourse: {
     screen: AddNewCourse, // Page for 新增課程

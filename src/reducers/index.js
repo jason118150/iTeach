@@ -5,7 +5,6 @@ import courseItem from './courseItem'
 import classMenu from './classMenu'
 import account from './account'
 import RootNavigator from '../navigator/RootNavigator'
-import onlinePeerList from './onlinePeerList'
 
 // define states
 const initialState = {
@@ -14,7 +13,6 @@ const initialState = {
   course: course.initialState,
   courseItem: courseItem.initialState,
   account: account.initialState,
-  onlinePeerList: onlinePeerList.initialState,
   initComplete: false,
 }
 
@@ -25,7 +23,6 @@ const reducerMap = {
   course: course.reducerMap,
   courseItem: courseItem.reducerMap,
   account: account.reducerMap,
-  onlinePeerList: onlinePeerList.reducerMap,
   addCourse: state => state,
   initComplete: state => ({ ...state, initComplete: true }),
 }
