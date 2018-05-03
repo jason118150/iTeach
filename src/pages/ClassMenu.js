@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
-  Image,
   Text,
-  TouchableHighlight,
   View,
   FlatList,
 } from 'react-native'
 import PropTypes from 'prop-types'
-import DrawerImage from '../../asset/drawer.png'
 import SearchImage from '../../asset/search.png'
 import AddImage from '../../asset/add.png'
 import styles from './styles/ClassMenu.styles'
@@ -16,6 +13,7 @@ import navAction from '../actions/nav.action'
 import courseAction from '../actions/course.action'
 import classMenuAction from '../actions/classMenu.action'
 import ClassItem from '../components/ClassItem'
+import Appbar from '../components/Appbar'
 
 const mapStateToProps = state => ({
   status: state.account.status,
@@ -29,8 +27,8 @@ const mapDispatchToProps = dispatch => ({
     addNewCourse: () => { dispatch(navAction.addNewCourse()) },
   },
   classListAction: {
-    modify: (title, color) => {
-      dispatch(classMenuAction.classList.modify(title, color))
+    modify: (classItem) => {
+      dispatch(classMenuAction.classList.modify(classItem))
     },
     delete: (title) => {
       dispatch(classMenuAction.classList.delete(title))
@@ -69,9 +67,9 @@ class ClassMenu extends Component {
     delete this.classRef[title]
   }
 
-  onPress(title, color) {
-    this.props.courseAction.setName(title)
-    this.props.classListAction.modify(title, color)
+  onPress(classItem) {
+    this.props.courseAction.setName(classItem.title)
+    this.props.classListAction.modify(classItem)
   }
 
   onPressSearchPage = () => {
@@ -85,20 +83,9 @@ class ClassMenu extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.titleBar}>
-          <TouchableHighlight style={styles.drawerIconContainer} onPress={this.props.navAction.openDrawer} underlayColor='#3A8FB7'>
-            <Image style={styles.drawerIcon} source={DrawerImage} />
-          </TouchableHighlight>
-          <Text style={styles.title}>
-            課程選單
-          </Text>
-          <TouchableHighlight style={styles.addSearchIconContainer} onPress={this.props.status === 'teacher' ? this.onPressAddPage : this.onPressSearchPage} underlayColor='#3A8FB7'>
-            <Image
-              style={styles.addSearchIcon}
-              source={this.props.status === 'teacher' ? AddImage : SearchImage}
-            />
-          </TouchableHighlight>
-        </View>
+        <Appbar title='課程選單' withDrawer
+          rightIcon={this.props.status === 'teacher' ? AddImage : SearchImage}
+          onRightPress={this.props.status === 'teacher' ? this.onPressAddPage : this.onPressSearchPage}/>
         <View style={styles.listContainer}>
           <View style={[styles.welcomeMsgContainer, { display: this.props.classList.length === 0 ? 'flex' : 'none' }]}>
             <Text style={styles.welcomeMsg}>{`
@@ -114,6 +101,7 @@ class ClassMenu extends Component {
             keyExtractor={item => item.title}
             renderItem={({ item }) => (
               <ClassItem
+                item={item}
                 title={item.title}
                 color={item.color}
                 deleteClass={this.deleteClass}

@@ -40,6 +40,17 @@ const reducerMap = {
     ...state,
     nav: RootNavigator.router.getStateForAction(NavigationActions.navigate({ routeName: 'OnlinePeerList' }), state.nav),
   }),
+  course: state => ({
+    ...state,
+    nav: RootNavigator.router.getStateForAction(NavigationActions.navigate({ routeName: 'Course' }), state.nav),
+  }),
+  enterFeature: (state, action) => {
+    const nav = RootNavigator.router.getStateForAction(
+      NavigationActions.navigate({ routeName: action.payload }),
+      state.nav,
+    )
+    return { ...state, nav }
+  },
 }
 
 export default { initialState, reducerMap }

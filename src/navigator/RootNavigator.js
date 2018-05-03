@@ -8,6 +8,7 @@ import DrawerContainer from '../pages/DrawerContainer'
 import SearchPage from '../pages/SearchPage'
 import AddNewCourse from '../pages/AddNewCourse'
 import OnlinePeerList from '../pages/OnlinePeerList'
+import CourseInfo from '../pages/CourseInfo'
 
 export default SwitchNavigator({
   Login: {
@@ -22,6 +23,12 @@ export default SwitchNavigator({
   OnlinePeerList: {
     screen: OnlinePeerList,
   },
+  AddNewCourse: {
+    screen: AddNewCourse, // Page for 新增課程
+  },
+  CourseInfo: {
+    screen: CourseInfo,
+  },
   Pages: DrawerNavigator({
     EditProfile: {
       screen: EditProfile, // Page for 修改個人資料
@@ -31,9 +38,6 @@ export default SwitchNavigator({
     },
     ClassMenu: {
       screen: ClassMenu,
-    },
-    AddNewCourse: {
-      screen: AddNewCourse, // Page for 新增課程
     },
   }, {
     contentComponent: DrawerContainer,
