@@ -9,7 +9,6 @@ import SearchPage from '../pages/SearchPage'
 import AddNewCourse from '../pages/AddNewCourse'
 import OnlinePeerList from '../pages/OnlinePeerList'
 import CourseInfo from '../pages/CourseInfo'
-import CourseInfo from '../pages/CourseInfo'
 import Quiz from '../pages/Quiz'
 
 export default SwitchNavigator({
