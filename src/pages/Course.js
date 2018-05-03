@@ -22,7 +22,12 @@ const mapDispatchToProps = dispatch => ({
     enterFeature: (id) => { dispatch(navAction.enterFeature(id)) },
   },
   courseItemAction: {
-    setName: (id) => { dispatch(courseItemAction.setName(id)) },
+    setName: (id) => {
+      dispatch(courseItemAction.setName(id))
+      if (id === 0) {
+        dispatch(navAction.onlinePeerList())
+      }
+    },
   },
 })
 
