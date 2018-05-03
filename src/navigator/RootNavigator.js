@@ -7,8 +7,13 @@ import Channels from '../pages/Channels'
 import DrawerContainer from '../pages/DrawerContainer'
 import SearchPage from '../pages/SearchPage'
 import AddNewCourse from '../pages/AddNewCourse'
+<<<<<<< HEAD
 import OnlinePeerList from '../pages/OnlinePeerList'
 import CourseInfo from '../pages/CourseInfo'
+=======
+import CourseInfo from '../pages/CourseInfo'
+import Quiz from '../pages/Quiz'
+>>>>>>> check folder name and redo with current version
 
 export default SwitchNavigator({
   Login: {
@@ -20,15 +25,24 @@ export default SwitchNavigator({
   SearchPage: {
     screen: SearchPage,
   },
+<<<<<<< HEAD
   OnlinePeerList: {
     screen: OnlinePeerList,
   },
+=======
+>>>>>>> check folder name and redo with current version
   AddNewCourse: {
     screen: AddNewCourse, // Page for 新增課程
   },
   CourseInfo: {
     screen: CourseInfo,
   },
+<<<<<<< HEAD
+=======
+  Quiz: {
+    screen: Quiz,
+  },
+>>>>>>> check folder name and redo with current version
   Pages: DrawerNavigator({
     EditProfile: {
       screen: EditProfile, // Page for 修改個人資料

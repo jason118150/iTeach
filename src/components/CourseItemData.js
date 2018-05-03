@@ -38,7 +38,11 @@ const CourseItemData = [
     title: ['隨堂測驗'],
     imgSrc: [test],
     user: 'teacher student',
+<<<<<<< HEAD
     routeName: '',
+=======
+    routeName: 'Quiz',
+>>>>>>> check folder name and redo with current version
   },
   {
     id: 4,
