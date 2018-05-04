@@ -9,6 +9,7 @@ import SearchPage from '../pages/SearchPage'
 import AddNewCourse from '../pages/AddNewCourse'
 import OnlinePeerList from '../pages/OnlinePeerList'
 import CourseInfo from '../pages/CourseInfo'
+import DrawLots from '../pages/DrawLots'
 
 export default SwitchNavigator({
   Login: {
@@ -28,6 +29,9 @@ export default SwitchNavigator({
   },
   CourseInfo: {
     screen: CourseInfo,
+  },
+  DrawLots: {
+    screen: DrawLots, // Page for 隨機抽籤
   },
   Pages: DrawerNavigator({
     EditProfile: {
