@@ -16,7 +16,7 @@ const CourseItemData = [
     title: ['在線名單'],
     imgSrc: [onlineList],
     user: 'teacher student',
-    routeName: '',
+    routeName: 'OnlinePeerList',
   },
   {
     id: 1,

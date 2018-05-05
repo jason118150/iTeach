@@ -23,7 +23,8 @@ export default StyleSheet.create({
   text: {
     color: '#3A8FB7',
     fontFamily: 'Avenir',
-    fontSize: 28,
+    fontSize: 22,
+    textAlign: 'center',
   },
   textContainer: {
     padding: '5%',

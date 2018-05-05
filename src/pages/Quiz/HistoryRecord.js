@@ -30,7 +30,8 @@ class HistoryRecord extends Component {
           onRightPress={this.props.navAction.onExit}/>
         <View style={styles.textContainer}>
           <Text style={styles.text}>
-            歡迎進入{questionType}
+            歡迎進入{questionType}{'\n'}
+            課程：{this.props.course.courseName}
           </Text>
         </View>
       </View>

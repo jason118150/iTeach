@@ -37,7 +37,7 @@ class Quiz extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Appbar title={this.props.course.courseName}
+        <Appbar title={'隨堂測驗'}
           rightIcon={CloseImage}
           onRightPress={this.props.navAction.onExit}/>
         <View style={styles.itemContainer}>

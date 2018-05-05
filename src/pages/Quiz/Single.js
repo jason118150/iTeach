@@ -30,7 +30,9 @@ class Single extends Component {
           onRightPress={this.props.navAction.onExit}/>
         <View style={styles.textContainer}>
           <Text style={styles.text}>
-            歡迎進入{questionType}
+            歡迎進入隨堂測驗{'\n'}
+            課程：{this.props.course.courseName}{'\n'}
+            題型：{questionType}
           </Text>
         </View>
       </View>
