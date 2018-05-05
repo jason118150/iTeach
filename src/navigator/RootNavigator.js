@@ -9,6 +9,7 @@ import SearchPage from '../pages/SearchPage'
 import AddNewCourse from '../pages/AddNewCourse'
 import OnlinePeerList from '../pages/OnlinePeerList'
 import CourseInfo from '../pages/CourseInfo'
+import Quiz from '../pages/Quiz'
 
 export default SwitchNavigator({
   Login: {
@@ -28,6 +29,9 @@ export default SwitchNavigator({
   },
   CourseInfo: {
     screen: CourseInfo,
+  },
+  Quiz: {
+    screen: Quiz,
   },
   Pages: DrawerNavigator({
     EditProfile: {
