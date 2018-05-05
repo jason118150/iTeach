@@ -7,12 +7,7 @@ const initialState = {
 const reducerMap = {
   setName: (state, action) => {
     const menu = QuizItemData.filter(item => item.id === action.payload)[0]
-    const menuState = menu.id === 1 ? [{
-      id: menu.id,
-      title: menu.title,
-      imgSrc: menu.imgSrc,
-      user: menu.user,
-    }] : [{
+    const menuState = [{
       id: action.payload,
       title: menu.title,
       imgSrc: menu.imgSrc,

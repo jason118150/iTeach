@@ -9,7 +9,12 @@ import SearchPage from '../pages/SearchPage'
 import AddNewCourse from '../pages/AddNewCourse'
 import OnlinePeerList from '../pages/OnlinePeerList'
 import CourseInfo from '../pages/CourseInfo'
-import Quiz from '../pages/Quiz'
+import Quiz from '../pages/Quiz/Quiz'
+import Single from '../pages/Quiz/Single'
+import Multi from '../pages/Quiz/Multi'
+import TrueFalse from '../pages/Quiz/TrueFalse'
+import ShortDescription from '../pages/Quiz/ShortDescription'
+import HistoryRecord from '../pages/Quiz/HistoryRecord'
 
 export default SwitchNavigator({
   Login: {
@@ -32,6 +37,21 @@ export default SwitchNavigator({
   },
   Quiz: {
     screen: Quiz,
+  },
+  Single: {
+    screen: Single,
+  },
+  Multi: {
+    screen: Multi,
+  },
+  TrueFalse: {
+    screen: TrueFalse,
+  },
+  ShortDescription: {
+    screen: ShortDescription,
+  },
+  HistoryRecord: {
+    screen: HistoryRecord,
   },
   Pages: DrawerNavigator({
     EditProfile: {

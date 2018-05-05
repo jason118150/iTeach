@@ -40,11 +40,18 @@ const reducerMap = {
     ...state,
     nav: RootNavigator.router.getStateForAction(NavigationActions.navigate({ routeName: 'OnlinePeerList' }), state.nav),
   }),
-  course: state => ({
+  quizMainPage: state => ({
     ...state,
-    nav: RootNavigator.router.getStateForAction(NavigationActions.navigate({ routeName: 'Course' }), state.nav),
+    nav: RootNavigator.router.getStateForAction(NavigationActions.navigate({ routeName: 'Quiz' }), state.nav),
   }),
   enterFeature: (state, action) => {
+    const nav = RootNavigator.router.getStateForAction(
+      NavigationActions.navigate({ routeName: action.payload }),
+      state.nav,
+    )
+    return { ...state, nav }
+  },
+  enterQuestion: (state, action) => {
     const nav = RootNavigator.router.getStateForAction(
       NavigationActions.navigate({ routeName: action.payload }),
       state.nav,
