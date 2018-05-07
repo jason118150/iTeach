@@ -1,5 +1,6 @@
 import { createActions } from 'redux-actions'
 import CourseItemData from '../components/CourseItemData'
+import QuizItemData from '../components/QuizItemData'
 
 /*  if you call nav.openDrawer()
     the returned action will be
@@ -21,8 +22,9 @@ const { nav } = createActions({
     searchPage: () => null,
     addNewCourse: () => null,
     onlinePeerList: () => null,
-    course: () => null,
+    quizMainPage: () => null,
     enterFeature: id => CourseItemData[id].routeName,
+    enterQuestion: id => QuizItemData[id].routeName,
   },
 })
 
