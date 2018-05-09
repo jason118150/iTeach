@@ -25,9 +25,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   navAction: {
     openDrawer: () => { dispatch(navAction.openDrawer()) },
-    onExit: () => {
+    onExit: (identity) => {
       dispatch(navAction.classMenu())
-      dispatch(multiPeerAction.student.exitCourse())
+      dispatch(multiPeerAction[identity].exitCourse())
     },
   },
   courseItemAction: {
@@ -37,6 +37,7 @@ const mapDispatchToProps = dispatch => ({
     onPress: (id, status = '', onclick = false) => {
       if (id === 0) {
         dispatch(navAction.onlinePeerList())
+        dispatch(multiPeerAction.common.openOnlineList())
       } else if (id === 1 && status === 'teacher') {
         if (onclick === false) {
           dispatch(multiPeerAction.teacher.startRelease())
@@ -57,7 +58,7 @@ class Course extends Component {
           <Text style={styles.title}>
             {this.props.course}
           </Text>
-          <TouchableHighlight style={styles.addSearchIconContainer} onPress={this.props.navAction.onExit} underlayColor='#3A8FB7'>
+          <TouchableHighlight style={styles.addSearchIconContainer} onPress={() => this.props.navAction.onExit(this.props.status)} underlayColor='#3A8FB7'>
             <Image style={styles.addSearchIcon} source={CloseImage} />
           </TouchableHighlight>
         </View>

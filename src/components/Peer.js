@@ -5,7 +5,6 @@ export default class Peer {
       identity: '', // 'teacher', 'student'
       username: '', // name of user represented by this peer
       course: '', // current active course
-      additional: {}, // identity-specific additional information
       ...info,
     }
     this.connected = connected

@@ -87,12 +87,12 @@ class SearchPage extends Component {
               <SearchClassItem
                 title={item.course}
                 teacher={item.username}
-                color={item.additional.color}
+                color={item.color}
                 onPress={() => {
                   this.selectClass(
                     item.course,
                     item.username,
-                    item.additional.color,
+                    item.color,
                   )
                 }}
               />

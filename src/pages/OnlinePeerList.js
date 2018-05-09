@@ -6,6 +6,7 @@ import {
   TouchableHighlight,
   View,
   FlatList,
+  Alert,
 } from 'react-native'
 import PropTypes from 'prop-types'
 import CloseImage from '../../asset/close.png'
@@ -14,6 +15,7 @@ import styles from './styles/OnlinePeerList.styles'
 import navAction from '../actions/nav.action'
 import mockData from '../../asset/mockData.json'
 import OnlineListItem from '../components/OnlineListItem'
+import multiPeerAction from '../actions/multiPeer.action'
 
 const mapStateToProps = state => ({
   status: state.account.status,
@@ -24,11 +26,20 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   navAction: {
     openDrawer: () => { dispatch(navAction.openDrawer()) },
-    onExit: () => { dispatch(navAction.course()) },
+    onExit: () => {
+      dispatch(navAction.course())
+      dispatch(multiPeerAction.common.exitOnlineList())
+    },
   },
 })
 
 class OnlinePeerList extends Component {
+  getOnlinePeerList() {
+    return Object.keys(this.props.peers).map(i => this.props.peers[i]).filter(item => item.online === true)
+  }
+  getOfflinePeerList() {
+    return Object.keys(this.props.peers).map(i => this.props.peers[i]).filter(item => item.online === false)
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -48,12 +59,12 @@ class OnlinePeerList extends Component {
         <View style={styles.itemContainer}>
           <FlatList
             style={styles.list}
-            data={mockData.payload}
-            keyExtractor={item => item.title}
+            data={this.getOnlinePeerList()}
+            keyExtractor={item => item.info.username}
             renderItem={({ item }) => (
               <OnlineListItem
-                title={item.title}
-                color={item.color}
+                title={item.info.username}
+                color={'green'}
               />
             )}
           />
@@ -66,12 +77,12 @@ class OnlinePeerList extends Component {
         <View style={styles.itemContainer}>
           <FlatList
             style={styles.list}
-            data={mockData.payload}
-            keyExtractor={item => item.title}
+            data={this.getOfflinePeerList()}
+            keyExtractor={item => item.info.username}
             renderItem={({ item }) => (
               <OnlineListItem
-                title={item.title}
-                color={item.color}
+                title={item.info.username}
+                color={'grey'}
               />
             )}
           />
@@ -87,6 +98,7 @@ OnlinePeerList.propTypes = {
     onExit: PropTypes.func.isRequired,
   }).isRequired,
   status: PropTypes.string.isRequired,
+  peers: PropTypes.object.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(OnlinePeerList)

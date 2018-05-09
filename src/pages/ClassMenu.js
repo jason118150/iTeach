@@ -19,7 +19,7 @@ import ClassItem from '../components/ClassItem'
 import multiPeerAction from '../actions/multiPeer.action'
 
 const mapStateToProps = state => ({
-  status: state.account.status,
+  account: state.account,
   ...state.classMenu,
 })
 
@@ -42,7 +42,7 @@ const mapDispatchToProps = dispatch => ({
   },
   courseAction: {
     setName: (title) => { dispatch(courseAction.setName(title)) },
-    openCourse: (title) => { dispatch(multiPeerAction.student.openCourse(title)) },
+    openCourse: (identity) => { dispatch(multiPeerAction[identity].openCourse()) },
   },
 })
 
@@ -76,7 +76,7 @@ class ClassMenu extends Component {
 
   onPress(title, color) {
     this.props.courseAction.setName(title)
-    this.props.courseAction.openCourse(title)
+    this.props.courseAction.openCourse(this.props.account.status)
     this.props.classListAction.modify(title, color)
   }
 
@@ -98,10 +98,10 @@ class ClassMenu extends Component {
           <Text style={styles.title}>
             課程選單
           </Text>
-          <TouchableHighlight style={styles.addSearchIconContainer} onPress={this.props.status === 'teacher' ? this.onPressAddPage : this.onPressSearchPage} underlayColor='#3A8FB7'>
+          <TouchableHighlight style={styles.addSearchIconContainer} onPress={this.props.account.status === 'teacher' ? this.onPressAddPage : this.onPressSearchPage} underlayColor='#3A8FB7'>
             <Image
               style={styles.addSearchIcon}
-              source={this.props.status === 'teacher' ? AddImage : SearchImage}
+              source={this.props.account.status === 'teacher' ? AddImage : SearchImage}
             />
           </TouchableHighlight>
         </View>
@@ -110,7 +110,7 @@ class ClassMenu extends Component {
             <Text style={styles.welcomeMsg}>{`
               (歡迎訊息)
               歡迎使用 iTeach
-              請利用右上方按鈕`}{this.props.status === 'teacher' ? '新增' : '搜尋'}課程
+              請利用右上方按鈕`}{this.props.account.status === 'teacher' ? '新增' : '搜尋'}課程
             </Text>
           </View>
           <FlatList
@@ -149,8 +149,7 @@ ClassMenu.propTypes = {
     setName: PropTypes.func.isRequired,
     openCourse: PropTypes.func.isRequired,
   }).isRequired,
-  status: PropTypes.string.isRequired,
-  // name: PropTypes.string.isRequired,
+  account: PropTypes.object.isRequired,
   classList: PropTypes.array.isRequired,
 }
 
