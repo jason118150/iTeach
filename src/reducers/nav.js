@@ -44,6 +44,10 @@ const reducerMap = {
     ...state,
     nav: RootNavigator.router.getStateForAction(NavigationActions.navigate({ routeName: 'Quiz' }), state.nav),
   }),
+  quizResultPage: state => ({
+    ...state,
+    nav: RootNavigator.router.getStateForAction(NavigationActions.navigate({ routeName: 'QuestionResult' }), state.nav),
+  }),
   enterFeature: (state, action) => {
     const nav = RootNavigator.router.getStateForAction(
       NavigationActions.navigate({ routeName: action.payload }),
