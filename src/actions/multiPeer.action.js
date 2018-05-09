@@ -74,6 +74,9 @@ const { multiPeer } = createActions({
       broadcastData: (data, callback = () => {}) => {
         MultipeerConnectivity.broadcastData(data, callback)
       },
+      onPeerListChange: () => (dispatch) => {
+
+      },
       onPeerFoundSet: peer => peer,
       onPeerFound: (peerId, peerInfo) => (dispatch, getState) => {
         const peer = new Peer(peerId, peerInfo)

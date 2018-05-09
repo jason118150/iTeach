@@ -5,15 +5,19 @@ import {
   Text,
   TouchableHighlight,
   View,
+  FlatList,
 } from 'react-native'
 import PropTypes from 'prop-types'
 import CloseImage from '../../asset/close.png'
 // TODO: online peer list style
-import styles from './styles/Course.styles'
+import styles from './styles/OnlinePeerList.styles'
 import navAction from '../actions/nav.action'
+import mockData from '../../asset/mockData.json'
+import OnlineListItem from '../components/OnlineListItem'
 
 const mapStateToProps = state => ({
   status: state.account.status,
+  peers: state.multiPeer.peers,
   ...state,
 })
 
@@ -35,6 +39,42 @@ class OnlinePeerList extends Component {
           <TouchableHighlight style={styles.addSearchIconContainer} onPress={this.props.navAction.onExit} underlayColor='#3A8FB7'>
             <Image style={styles.addSearchIcon} source={CloseImage} />
           </TouchableHighlight>
+        </View>
+        <View style={styles.subtitleBar}>
+          <Text style={styles.subtitle}>
+            在線
+          </Text>
+        </View>
+        <View style={styles.itemContainer}>
+          <FlatList
+            style={styles.list}
+            data={mockData.payload}
+            keyExtractor={item => item.title}
+            renderItem={({ item }) => (
+              <OnlineListItem
+                title={item.title}
+                color={item.color}
+              />
+            )}
+          />
+        </View>
+        <View style={styles.subtitleBar}>
+          <Text style={styles.subtitle}>
+            離線
+          </Text>
+        </View>
+        <View style={styles.itemContainer}>
+          <FlatList
+            style={styles.list}
+            data={mockData.payload}
+            keyExtractor={item => item.title}
+            renderItem={({ item }) => (
+              <OnlineListItem
+                title={item.title}
+                color={item.color}
+              />
+            )}
+          />
         </View>
       </View>
     )
