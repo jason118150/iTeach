@@ -60,7 +60,7 @@ class SearchPage extends Component {
     this.props.classListAction.add(title, color)
   }
 
-  getCousreInfo() {
+  getCourseInfo() {
     return Object.keys(this.props.peers).map(peerId => this.props.peers[peerId].info)
   }
 
@@ -81,14 +81,20 @@ class SearchPage extends Component {
         <View style={styles.listContainer}>
           <FlatList
             style={styles.list}
-            data={ this.getCousreInfo() }
-            keyExtractor={item => item.title}
+            data={ this.getCourseInfo() }
+            keyExtractor={item => item.course}
             renderItem={({ item }) => (
               <SearchClassItem
-                title={item.title}
-                teacher={item.teacher}
-                color={item.color}
-                onPress={() => { this.selectClass(item.title, item.teacher, item.color) } }
+                title={item.course}
+                teacher={item.username}
+                color={item.additional.color}
+                onPress={() => {
+                  this.selectClass(
+                    item.course,
+                    item.username,
+                    item.additional.color,
+                  )
+                }}
               />
             )}
           />

@@ -42,6 +42,7 @@ const mapDispatchToProps = dispatch => ({
   },
   courseAction: {
     setName: (title) => { dispatch(courseAction.setName(title)) },
+    openCourse: (title) => { dispatch(multiPeerAction.student.openCourse(title)) },
   },
 })
 
@@ -75,6 +76,7 @@ class ClassMenu extends Component {
 
   onPress(title, color) {
     this.props.courseAction.setName(title)
+    this.props.courseAction.openCourse(title)
     this.props.classListAction.modify(title, color)
   }
 
@@ -145,6 +147,7 @@ ClassMenu.propTypes = {
   }).isRequired,
   courseAction: PropTypes.shape({
     setName: PropTypes.func.isRequired,
+    openCourse: PropTypes.func.isRequired,
   }).isRequired,
   status: PropTypes.string.isRequired,
   // name: PropTypes.string.isRequired,

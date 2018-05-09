@@ -1,5 +1,3 @@
-import { Alert } from 'react-native'
-
 const initialState = {
   selfName: 'User-default',
   peers: {},
@@ -103,12 +101,13 @@ const reducerMap = {
         },
       }
     },
-    onPeerLost: (state, action) => {
+    onPeerLostSet: (state, action) => {
       if (!(action.payload.peerId in state.multiPeer.peers)) {
         return state
       }
       const peers = Object.assign({}, state.multiPeer.peers)
-      delete peers[action.payload.peerId]
+      // delete peers[action.payload.peerId]
+      peers[action.payload.peerId].online = false
       return {
         ...state,
         multiPeer: {

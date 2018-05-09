@@ -6,14 +6,25 @@ import getRandomColor from '../util/getRandomColor'
 const { multiPeer } = createActions({
   multiPeer: {
     student: {
-      startSearch: info => (dispatch) => {
-        dispatch(multiPeer.backend.advertise())
+      startSearch: () => (dispatch) => {
+        dispatch(multiPeer.backend.advertise({
+          identity: 'student',
+          username: '',
+          course: '',
+        }))
       },
       stopSearch: () => (dispatch) => {
         dispatch(multiPeer.backend.hide())
       },
-      joinCourse: courseName => (dispatch) => {
-        return courseName
+      openCourse: (name, course) => (dispatch) => {
+        dispatch(multiPeer.backend.advertise({
+          identity: 'student',
+          username: '',
+          course: '',
+        }))
+      },
+      exitCourse: () => (dispatch) => {
+        dispatch(multiPeer.backend.hide())
       },
     },
     teacher: {
@@ -21,7 +32,30 @@ const { multiPeer } = createActions({
         dispatch(multiPeer.backend.browse())
       },
       stopRelease: () => (dispatch) => {
+        // TODO: students shouldn't see the course after release stopped
         dispatch(multiPeer.backend.stopBrowse())
+      },
+    },
+    common: {
+      onPeerListChange: (peer, status) => (dispatch, getState) => {
+        // status: found, lost
+        const state = getState()
+        if (state.account.status === 'teacher') {
+          if (status === 'found') {
+            dispatch(multiPeer.backend.invite(
+              peer.id,
+              {
+                identity: 'teacher',
+                username: state.account.username,
+                course: state.course,
+                additional: {
+                  color: getRandomColor(),
+                },
+              },
+            ))
+          }
+        } else {
+        }
       },
     },
     backend: {
@@ -74,28 +108,31 @@ const { multiPeer } = createActions({
       broadcastData: (data, callback = () => {}) => {
         MultipeerConnectivity.broadcastData(data, callback)
       },
-      onPeerListChange: () => (dispatch) => {
-
+      onPeerFoundSet: (peer) => {
+        return { peer }
       },
-      onPeerFoundSet: peer => peer,
       onPeerFound: (peerId, peerInfo) => (dispatch, getState) => {
         const peer = new Peer(peerId, peerInfo)
         const state = getState()
-        dispatch(multiPeer.backend.invite(
-          peer.id,
-          {
-            title: state.course,
-            teacher: state.account.username,
-            color: getRandomColor(),
-          },
-        ))
-        dispatch(multiPeer.backend.onPeerFoundSet({ peer }))
+        peer.online = true
+        if (!(peer.id in state.multiPeer.peers)) {
+          dispatch(multiPeer.common.onPeerListChange(peer, 'found'))
+        }
+        dispatch(multiPeer.backend.onPeerFoundSet(peer))
       },
-      onPeerLost: (peerId) => {
-        return { peerId }
+      onPeerLostSet: (peer) => {
+        return { peer }
+      },
+      onPeerLost: peerId => (dispatch, getState) => {
+        const state = getState()
+        if (peerId in state.multiPeer.peers) {
+          const peer = state.multiPeer.peers[peerId]
+          dispatch(multiPeer.common.onPeerListChange(peer, 'lost'))
+          dispatch(multiPeer.backend.onPeerLostSet(peer))
+        }
       },
       onPeerConnected: (peerId) => {
-        const peer = new Peer(peerId, '', true, false, '')
+        const peer = new Peer(peerId, '', true, false, '', true)
         return { peer }
       },
       onPeerConnecting: (peerId) => {
@@ -112,6 +149,7 @@ const { multiPeer } = createActions({
           false,
           false,
           invitation.id,
+          true,
         )
         return { peer }
       },

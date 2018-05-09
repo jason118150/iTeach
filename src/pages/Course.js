@@ -25,7 +25,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   navAction: {
     openDrawer: () => { dispatch(navAction.openDrawer()) },
-    onExit: () => { dispatch(navAction.classMenu()) },
+    onExit: () => {
+      dispatch(navAction.classMenu())
+      dispatch(multiPeerAction.student.exitCourse())
+    },
   },
   courseItemAction: {
     setName: (id) => {
