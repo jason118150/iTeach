@@ -27,6 +27,7 @@ const reducerMap = {
   account: account.reducerMap,
   onlinePeerList: onlinePeerList.reducerMap,
   addCourse: state => state,
+  changeCourseInfo: state => state,
   initComplete: state => ({ ...state, initComplete: true }),
 }
 

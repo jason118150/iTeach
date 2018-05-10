@@ -23,6 +23,7 @@ const { nav } = createActions({
     addNewCourse: () => null,
     onlinePeerList: () => null,
     quizMainPage: () => null,
+    changeCourseInfo: () => null,
     enterFeature: id => CourseItemData[id].routeName,
     enterQuestion: id => QuizItemData[id].routeName,
   },
