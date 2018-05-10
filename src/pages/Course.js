@@ -18,7 +18,9 @@ import multiPeerAction from '../actions/multiPeer.action'
 
 
 const mapStateToProps = state => ({
+  peers: state.multiPeer.peers,
   status: state.account.status,
+  mul: state.multiPeer,
   ...state,
 })
 
@@ -99,6 +101,8 @@ Course.propTypes = {
   course: PropTypes.string.isRequired,
   courseItem: PropTypes.object.isRequired,
   status: PropTypes.string.isRequired,
+  peers: PropTypes.object.isRequired,
+  mul: PropTypes.object.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Course)

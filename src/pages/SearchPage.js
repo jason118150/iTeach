@@ -16,6 +16,8 @@ import navAction from '../actions/nav.action'
 import SearchClassItem from '../components/SearchClassItem'
 import classMenuAction from '../actions/classMenu.action'
 import multiPeerAction from '../actions/multiPeer.action'
+import courseAction from '../actions/course.action'
+import courseInfoAction from '../actions/courseInfo.action'
 // import mockNewClass from '../../asset/mockNewClass.json'
 
 const mapStateToProps = state => ({
@@ -36,12 +38,26 @@ const mapDispatchToProps = dispatch => ({
       dispatch(classMenuAction.classList.add(title, color))
     },
   },
+  courseAction: {
+    joinCourse: (sender, title) => {     
+      dispatch(multiPeerAction.backend.responseInvite(sender[0].invitationId, true))
+      dispatch(multiPeerAction.student.stopSearch())
+      dispatch(multiPeerAction.backend.onPeerConnected(sender[0].id, sender[0].info))
+      dispatch(courseAction.setName(title)) 
+    },
+  },
+  courseInfoAction: {
+    save: (info) => { dispatch(courseInfoAction.save(info)) },
+  },
 })
 
 class SearchPage extends Component {
   constructor(props) {
     super(props)
     this.selectClass = this.selectClass.bind(this)
+    this.getCousreInfo = this.getCousreInfo.bind(this)
+    this.saveCourseInfo = this.saveCourseInfo.bind(this)
+    this.onConfirm = this.onConfirm.bind(this)
   }
 
   selectClass(title, teacher, color) {
@@ -50,18 +66,30 @@ class SearchPage extends Component {
       '',
       [
         { text: '否', onPress: () => { console.log('Cancel Pressed') }, style: 'cancel' },
-        { text: '是', onPress: () => { this.registerClass(title, color) }, style: 'default' },
+        { text: '是', onPress: () => { this.onConfirm(title, color) }, style: 'default' },
       ],
       { cancelable: false },
     )
   }
 
-  registerClass(title, color) {
+  onConfirm(title, color){
+    this.saveCourseInfo(title, color)
+    this.registerClass(title)
+  }
+  getCousreInfo() {
+    return Object.keys(this.props.peers).map(peerId => this.props.peers[peerId].info)
+  }
+
+
+  saveCourseInfo(title, color){
+    this.props.courseInfoAction.save(this.getCousreInfo()[0])
     this.props.classListAction.add(title, color)
   }
 
-  getCousreInfo() {
-    return Object.keys(this.props.peers).map(peerId => this.props.peers[peerId].info)
+  registerClass(title){
+    Alert.alert(''.concat('進入 ', title, ' 課程頁面'))     
+    peer = Object.keys(this.props.peers).map(peerId => this.props.peers[peerId])
+    this.props.courseAction.joinCourse(peer, title) 
   }
 
   render() {
@@ -107,6 +135,12 @@ SearchPage.propTypes = {
   }).isRequired,
   classListAction: PropTypes.shape({
     add: PropTypes.func.isRequired,
+  }).isRequired,
+  courseAction: PropTypes.shape({
+    joinCourse: PropTypes.func.isRequired,
+  }).isRequired,
+  courseInfoAction: PropTypes.shape({
+    save: PropTypes.func.isRequired,
   }).isRequired,
   status: PropTypes.string.isRequired,
   peers: PropTypes.object.isRequired,

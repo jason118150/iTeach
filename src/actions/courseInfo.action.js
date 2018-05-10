@@ -25,7 +25,7 @@ const { courseInfo } = createActions({
         }
       })
       if (success) {
-        dispatch(courseInfo.set(courseData))
+        // dispatch(courseInfo.set(courseData))
       }
     }),
 
