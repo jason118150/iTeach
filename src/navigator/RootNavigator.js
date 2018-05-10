@@ -8,6 +8,13 @@ import DrawerContainer from '../pages/DrawerContainer'
 import SearchPage from '../pages/SearchPage'
 import AddNewCourse from '../pages/AddNewCourse'
 import OnlinePeerList from '../pages/OnlinePeerList'
+import CourseInfo from '../pages/CourseInfo'
+import Quiz from '../pages/Quiz/Quiz'
+import Single from '../pages/Quiz/Single'
+import Multi from '../pages/Quiz/Multi'
+import TrueFalse from '../pages/Quiz/TrueFalse'
+import ShortDescription from '../pages/Quiz/ShortDescription'
+import HistoryRecord from '../pages/Quiz/HistoryRecord'
 
 export default SwitchNavigator({
   Login: {
@@ -22,6 +29,30 @@ export default SwitchNavigator({
   OnlinePeerList: {
     screen: OnlinePeerList,
   },
+  AddNewCourse: {
+    screen: AddNewCourse, // Page for 新增課程
+  },
+  CourseInfo: {
+    screen: CourseInfo,
+  },
+  Quiz: {
+    screen: Quiz,
+  },
+  Single: {
+    screen: Single,
+  },
+  Multi: {
+    screen: Multi,
+  },
+  TrueFalse: {
+    screen: TrueFalse,
+  },
+  ShortDescription: {
+    screen: ShortDescription,
+  },
+  HistoryRecord: {
+    screen: HistoryRecord,
+  },
   Pages: DrawerNavigator({
     EditProfile: {
       screen: EditProfile, // Page for 修改個人資料
@@ -31,9 +62,6 @@ export default SwitchNavigator({
     },
     ClassMenu: {
       screen: ClassMenu,
-    },
-    AddNewCourse: {
-      screen: AddNewCourse, // Page for 新增課程
     },
   }, {
     contentComponent: DrawerContainer,

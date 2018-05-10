@@ -10,16 +10,14 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types'
 import CloseImage from '../../asset/close.png'
-// TODO: online peer list style
 import styles from './styles/OnlinePeerList.styles'
 import navAction from '../actions/nav.action'
-import mockData from '../../asset/mockData.json'
 import OnlineListItem from '../components/OnlineListItem'
-import multiPeerAction from '../actions/multiPeer.action'
 
 const mapStateToProps = state => ({
   status: state.account.status,
-  peers: state.multiPeer.peers,
+  multiPeer: state.multiPeer,
+  courseName: state.course.courseName,
   ...state,
 })
 
@@ -34,10 +32,10 @@ const mapDispatchToProps = dispatch => ({
 
 class OnlinePeerList extends Component {
   getOnlinePeerList() {
-    return Object.keys(this.props.peers).map(i => this.props.peers[i]).filter(item => item.online === true)
+    return Object.keys(this.props.multiPeer.peers).map(i => this.props.multiPeer.peers[i]).filter(peer => peer.online === true && peer.info.course === this.props.courseName)
   }
   getOfflinePeerList() {
-    return Object.keys(this.props.peers).map(i => this.props.peers[i]).filter(item => item.online === false)
+    return Object.keys(this.props.multiPeer.peers).map(i => this.props.multiPeer.peers[i]).filter((peer => (peer.online === false || !(peer.info.course === this.props.courseName)) && (this.props.multiPeer.courses[this.props.courseName] && peer.id in this.props.multiPeer.courses[this.props.courseName])))
   }
   render() {
     return (
@@ -97,7 +95,8 @@ OnlinePeerList.propTypes = {
     onExit: PropTypes.func.isRequired,
   }).isRequired,
   status: PropTypes.string.isRequired,
-  peers: PropTypes.object.isRequired,
+  multiPeer: PropTypes.object.isRequired,
+  courseName: PropTypes.string.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(OnlinePeerList)

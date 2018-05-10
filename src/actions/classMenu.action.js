@@ -9,10 +9,10 @@ const { classMenu } = createActions({
   classMenu: {
     classList: {
       set: classList => classList,
-      add: (title, color) => (async (dispatch, getState) => {
+      add: classItem => (async (dispatch, getState) => {
         let success = false
         const { classList } = getState().classMenu
-        classList.splice(0, 0, { title, color })
+        classList.splice(0, 0, classItem)
         await AsyncStorage.setItem('iTeachStore:Class', JSON.stringify(classList), (error) => {
           if (error) {
             Alert.alert(
@@ -36,11 +36,11 @@ const { classMenu } = createActions({
           }
         }
       }),
-      modify: (title, color) => (async (dispatch, getState) => {
+      modify: classItem => (async (dispatch, getState) => {
         let success = false
         let { classList } = getState().classMenu
-        classList = classList.filter(item => item.title !== title)
-        classList.splice(0, 0, { title, color })
+        classList = classList.filter(item => item.title !== classItem.title)
+        classList.splice(0, 0, classItem)
         await AsyncStorage.setItem('iTeachStore:Class', JSON.stringify(classList), (error) => {
           if (error) {
             Alert.alert(

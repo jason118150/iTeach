@@ -4,6 +4,7 @@ import { PeerStatus } from '../components/Peer'
 const initialState = {
   selfName: '',
   peers: {},
+  courses: {}, // peer ids that have endered a course: peerId in state.multiPeer.courses['name']
   isBrowsing: false,
   isAdvertising: false,
   status: PeerStatus.IDLE, // idle, releasing, viewing, searching
@@ -102,6 +103,11 @@ const reducerMap = {
     onPeerFoundSet: (state, action) => {
       const foundPeer = action.payload.peer
       foundPeer.online = true
+      const { courses } = state.multiPeer
+      if (!(foundPeer.info.course in courses)) {
+        courses[foundPeer.info.course] = {}
+      }
+      courses[foundPeer.info.course][foundPeer.id] = true
       return {
         ...state,
         multiPeer: {
@@ -110,6 +116,7 @@ const reducerMap = {
             ...state.multiPeer.peers,
             [foundPeer.id]: foundPeer,
           },
+          courses,
         },
       }
     },
@@ -128,7 +135,12 @@ const reducerMap = {
       }
     },
     onPeerConnected: (state, action) => {
-      const peer = Object.assign({}, action.payload.peer)
+      let peer = Object.assign({}, action.payload.peer)
+      if (peer.id in state.multiPeer.peers) {
+        peer = state.multiPeer.peers[peer.id]
+        peer.connected = true
+        peer.online = true
+      }
       return {
         ...state,
         multiPeer: {
@@ -145,7 +157,8 @@ const reducerMap = {
         return state
       }
       const peers = Object.assign({}, state.multiPeer.peers)
-      delete peers[action.payload.peerId]
+      peers[action.payload.peerId].online = false
+      peers[action.payload.peerId].connected = false
       return {
         ...state,
         multiPeer: {

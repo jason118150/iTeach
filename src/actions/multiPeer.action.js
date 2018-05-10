@@ -7,14 +7,14 @@ import getRandomColor from '../util/getRandomColor'
 const getStudentPeerInfo = state => ({
   identity: 'student',
   username: state.account.username,
-  course: (typeof state.course === 'string') ? state.course : '',
+  course: state.course.courseName,
   color: getRandomColor(),
 })
 
 const getTeacherPeerInfo = state => ({
   identity: 'teacher',
   username: state.account.username,
-  course: (typeof state.course === 'string') ? state.course : '',
+  course: state.course.courseName,
   color: getRandomColor(),
 })
 
@@ -42,13 +42,11 @@ const { multiPeer } = createActions({
     },
     teacher: {
       startRelease: () => (dispatch) => {
-        // TODO: should send invitation if invited == false
         dispatch(multiPeer.backend.browse())
         dispatch(multiPeer.common.setStatus(PeerStatus.RELEASING))
       },
       stopRelease: () => (dispatch) => {
         // TODO: students shouldn't see the course after release stopped
-        // TODO: should set all peer invited = false
         dispatch(multiPeer.teacher.sendStopRelease())
         dispatch(multiPeer.backend.stopBrowse())
         dispatch(multiPeer.common.setStatus(PeerStatus.VIEWING))
@@ -64,14 +62,8 @@ const { multiPeer } = createActions({
         dispatch(multiPeer.teacher.stopRelease())
         dispatch(multiPeer.common.setStatus(PeerStatus.IDLE))
       },
-      sendStopRelease: () => (dispatch, getState) => {
-        const state = getState()
-        const { peers } = state.multiPeer
-        const info = getTeacherPeerInfo(state)
-        info.releasing = false
-        Object.keys(peers).forEach((peer) => {
-          dispatch(multiPeer.backend.invite(peer.id, info))
-        })
+      sendStopRelease: () => (dispatch) => {
+        dispatch(multiPeer.backend.disconnect())
       },
     },
     common: {
@@ -162,8 +154,7 @@ const { multiPeer } = createActions({
         }
       },
       onPeerConnected: (peerId) => {
-        Alert.alert('connected')
-        const peer = new Peer('', {})
+        const peer = new Peer(peerId, {})
         return { peer }
       },
       onPeerConnecting: (peerId) => {
