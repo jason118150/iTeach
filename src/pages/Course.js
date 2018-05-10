@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View } from 'react-native'
+import { View, Alert } from 'react-native'
 import PropTypes from 'prop-types'
 import CloseImage from '../../asset/close.png'
 import styles from './styles/Course.styles'
@@ -26,10 +26,8 @@ const mapDispatchToProps = dispatch => ({
     setName: (id) => {
       dispatch(courseItemAction.setName(id))
     },
-    onPress: (id, status = '', onclick = false) => {
-      if (id === 0) {
-        dispatch(navAction.onlinePeerList())
-      } else if (id === 1 && status === 'teacher') {
+    multiPeer: (id, status = '', onclick = false) => {
+      if (id === 1 && status === 'teacher') {
         if (onclick === false) {
           dispatch(multiPeerAction.teacher.startRelease())
         } else {
@@ -43,7 +41,7 @@ const mapDispatchToProps = dispatch => ({
 class Course extends Component {
   iconOnPress(id) {
     this.props.courseItemAction.setName(id)
-    this.props.courseItemAction.onPress(
+    this.props.courseItemAction.multiPeer(
       id,
       this.props.status,
       this.props.courseItem.courseItem[1].onclick,
@@ -85,7 +83,7 @@ Course.propTypes = {
   }).isRequired,
   courseItemAction: PropTypes.shape({
     setName: PropTypes.func.isRequired,
-    onPress: PropTypes.func.isRequired,
+    multiPeer: PropTypes.func.isRequired,
   }).isRequired,
   course: PropTypes.object.isRequired,
   courseItem: PropTypes.object.isRequired,
