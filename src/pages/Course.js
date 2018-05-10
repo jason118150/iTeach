@@ -1,16 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-<<<<<<< HEAD
 import { View } from 'react-native'
-=======
-import {
-  Alert,
-  Image,
-  Text,
-  TouchableHighlight,
-  View,
-} from 'react-native'
->>>>>>> Create multiPeer.action.js
 import PropTypes from 'prop-types'
 import CloseImage from '../../asset/close.png'
 import styles from './styles/Course.styles'
@@ -18,12 +8,8 @@ import navAction from '../actions/nav.action'
 import courseItemAction from '../actions/courseItem.action'
 import CourseItem from '../components/CourseItem'
 import CourseItemData from '../components/CourseItemData'
-<<<<<<< HEAD
 import Appbar from '../components/Appbar'
-=======
 import multiPeerAction from '../actions/multiPeer.action'
-
->>>>>>> Create multiPeer.action.js
 
 const mapStateToProps = state => ({
   status: state.account.status,
@@ -77,20 +63,7 @@ class Course extends Component {
                 imgSrc={courseItem.courseItem[item.id].onclick
                   ? courseItem.courseItem[item.id].imgSrc[1]
                   : courseItem.courseItem[item.id].imgSrc[0]}
-<<<<<<< HEAD
                 onPress={this.iconOnPress.bind(this)} />
-=======
-                onPress={
-                  (id) => {
-                    this.props.courseItemAction.setName(id)
-                    this.props.courseItemAction.onPress(
-                      id,
-                      this.props.status,
-                      courseItem.courseItem[item.id].onclick,
-                    )
-                  }
-                }/>
->>>>>>> Create multiPeer.action.js
             ))
           }
         </View>
