@@ -81,7 +81,7 @@ const { multiPeer } = createActions({
         dispatch(multiPeer.backend.invite(
           peer.id,
           {
-            title: state.course,
+            title: state.course.courseName,
             teacher: state.account.username,
             color: getRandomColor(),
           },

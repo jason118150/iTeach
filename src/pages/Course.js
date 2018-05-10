@@ -43,6 +43,11 @@ const mapDispatchToProps = dispatch => ({
 class Course extends Component {
   iconOnPress(id) {
     this.props.courseItemAction.setName(id)
+    this.props.courseItemAction.onPress(
+      id,
+      this.props.status,
+      this.props.courseItem.courseItem[1].onclick,
+    )
     this.props.navAction.enterFeature(id)
   }
   render() {
