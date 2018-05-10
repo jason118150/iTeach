@@ -19,9 +19,7 @@ import courseInfoAction from '../actions/courseInfo.action'
 import navAction from '../actions/nav.action'
 // import addNewCourseAction from '../actions/addNewCourse.action'
 
-const mapStateToProps = state => ({
-  ...state.course,
-})
+const mapStateToProps = state => ({})
 
 const mapDispatchToProps = dispatch => ({
   nav: {

@@ -28,7 +28,6 @@ const mapDispatchToProps = dispatch => ({
     openDrawer: () => { dispatch(navAction.openDrawer()) },
     onExit: () => {
       dispatch(navAction.course())
-      dispatch(multiPeerAction.common.exitOnlineList())
     },
   },
 })

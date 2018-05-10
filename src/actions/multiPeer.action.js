@@ -1,81 +1,96 @@
 import { Alert } from 'react-native'
 import { createActions } from 'redux-actions'
-import Peer from '../components/Peer'
+import Peer, { PeerStatus } from '../components/Peer'
 import MultipeerConnectivity from '../util/multiPeerInit'
 import getRandomColor from '../util/getRandomColor'
 
 const getStudentPeerInfo = state => ({
   identity: 'student',
   username: state.account.username,
-  course: state.course,
+  course: (typeof state.course === 'string') ? state.course : '',
   color: getRandomColor(),
 })
 
 const getTeacherPeerInfo = state => ({
   identity: 'teacher',
   username: state.account.username,
-  course: state.course,
+  course: (typeof state.course === 'string') ? state.course : '',
   color: getRandomColor(),
 })
 
 const { multiPeer } = createActions({
   multiPeer: {
     student: {
-      startSearch: () => (dispatch) => {
-        dispatch(multiPeer.backend.advertise({ identity: 'student' }))
+      startSearch: () => (dispatch, getState) => {
+        dispatch(multiPeer.backend.advertise(getStudentPeerInfo(getState())))
+        dispatch(multiPeer.common.setStatus(PeerStatus.SEARCHING))
       },
       stopSearch: () => (dispatch) => {
         dispatch(multiPeer.backend.hide())
+        dispatch(multiPeer.common.setStatus(PeerStatus.IDLE))
       },
       openCourse: () => (dispatch, getState) => {
         dispatch(multiPeer.backend.browse())
         dispatch(multiPeer.backend.advertise(getStudentPeerInfo(getState())))
+        dispatch(multiPeer.common.setStatus(PeerStatus.VIEWING))
       },
       exitCourse: () => (dispatch) => {
         dispatch(multiPeer.backend.stopBrowse())
         dispatch(multiPeer.backend.hide())
+        dispatch(multiPeer.common.setStatus(PeerStatus.IDLE))
       },
     },
     teacher: {
       startRelease: () => (dispatch) => {
         // TODO: should send invitation if invited == false
         dispatch(multiPeer.backend.browse())
+        dispatch(multiPeer.common.setStatus(PeerStatus.RELEASING))
       },
       stopRelease: () => (dispatch) => {
         // TODO: students shouldn't see the course after release stopped
         // TODO: should set all peer invited = false
+        dispatch(multiPeer.teacher.sendStopRelease())
         dispatch(multiPeer.backend.stopBrowse())
+        dispatch(multiPeer.common.setStatus(PeerStatus.VIEWING))
       },
       openCourse: () => (dispatch, getState) => {
         dispatch(multiPeer.backend.browse())
         dispatch(multiPeer.backend.advertise(getTeacherPeerInfo(getState())))
+        dispatch(multiPeer.common.setStatus(PeerStatus.VIEWING))
       },
       exitCourse: () => (dispatch) => {
         dispatch(multiPeer.backend.stopBrowse())
         dispatch(multiPeer.backend.hide())
+        dispatch(multiPeer.teacher.stopRelease())
+        dispatch(multiPeer.common.setStatus(PeerStatus.IDLE))
+      },
+      sendStopRelease: () => (dispatch, getState) => {
+        const state = getState()
+        const { peers } = state.multiPeer
+        const info = getTeacherPeerInfo(state)
+        info.releasing = false
+        Object.keys(peers).forEach((peer) => {
+          dispatch(multiPeer.backend.invite(peer.id, info))
+        })
       },
     },
     common: {
-      openOnlineList: () => (dispatch, getState) => {
-        // if (!getState().multiPeer.isBrowsing) {
-        //   dispatch(multiPeer.backend.browse())
-        // }
-      },
-      exitOnlineList: () => (dispatch, getState) => {
-        // if (getState().multiPeer.isBrowsing) {
-        //   dispatch(multiPeer.backend.stopBrowse())
-        // }
-      },
-      onPeerListChange: (peer, status) => (dispatch, getState) => {
-        // status: found, lost
+      setStatus: status => status,
+      onPeerStateChange: (peer, change) => (dispatch, getState) => {
+        // change: found, lost
         const state = getState()
         const identity = state.account.status
         if (identity === 'teacher') {
-          if (status === 'found') {
-            // dispatch(multiPeer.backend.invite(peer.id, getTeacherPeerInfo(state)))
+          if (change === 'found' && state.multiPeer.status === PeerStatus.RELEASING) {
+            const info = getTeacherPeerInfo(state)
+            info.releasing = true
+            dispatch(multiPeer.backend.invite(peer.id, info))
           }
         } else if (identity === 'student') {
-          if (status === 'found') {
+          if (change === 'found') {
+            // TODO
+          } else if (change === 'lost') {
+            // TODO
           }
         }
       },
@@ -131,13 +146,10 @@ const { multiPeer } = createActions({
         MultipeerConnectivity.broadcastData(data, callback)
       },
       onPeerFoundSet: peer => ({ peer }),
-      onPeerFound: (peerId, peerInfo) => (dispatch, getState) => {
+      onPeerFound: (peerId, peerInfo) => (dispatch) => {
         const peer = new Peer(peerId, peerInfo)
-        const state = getState()
         peer.online = true
-        if (!(peer.id in state.multiPeer.peers)) {
-          dispatch(multiPeer.common.onPeerListChange(peer, 'found'))
-        }
+        dispatch(multiPeer.common.onPeerStateChange(peer, 'found'))
         dispatch(multiPeer.backend.onPeerFoundSet(peer))
       },
       onPeerLostSet: peer => ({ peer }),
@@ -145,12 +157,13 @@ const { multiPeer } = createActions({
         const state = getState()
         if (peerId in state.multiPeer.peers) {
           const peer = state.multiPeer.peers[peerId]
-          dispatch(multiPeer.common.onPeerListChange(peer, 'lost'))
+          dispatch(multiPeer.common.onPeerStateChange(peer, 'lost'))
           dispatch(multiPeer.backend.onPeerLostSet(peer))
         }
       },
       onPeerConnected: (peerId) => {
-        const peer = new Peer(peerId, '', true, false, '', true)
+        Alert.alert('connected')
+        const peer = new Peer('', {})
         return { peer }
       },
       onPeerConnecting: (peerId) => {
@@ -160,7 +173,8 @@ const { multiPeer } = createActions({
         return { peerId }
       },
       onStreamOpened: () => null,
-      onInviteReceived: (invitation) => {
+      onInviteReceivedSet: peer => ({ peer }),
+      onInviteReceived: invitation => (dispatch) => {
         const peer = new Peer(
           invitation.sender.id,
           invitation.sender.info,
@@ -169,7 +183,8 @@ const { multiPeer } = createActions({
           invitation.id,
           true,
         )
-        return { peer }
+        dispatch(multiPeer.backend.responseInvite({ invitationId: invitation.id }, true))
+        dispatch(multiPeer.backend.onInviteReceivedSet(peer))
       },
       onDataReceived: (senderId, data) => {
         return {

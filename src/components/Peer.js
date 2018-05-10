@@ -5,6 +5,7 @@ export default class Peer {
       identity: '', // 'teacher', 'student'
       username: '', // name of user represented by this peer
       course: '', // current active course
+      releasing: false, // teacher releasing
       ...info,
     }
     this.connected = connected
@@ -12,4 +13,11 @@ export default class Peer {
     this.invitationId = invitationId
     this.online = online
   }
+}
+
+export const PeerStatus = {
+  IDLE: 'IDLE',
+  RELEASING: 'RELEASING',
+  SEARCHING: 'SEARCHING',
+  VIEWING: 'VIEWING',
 }

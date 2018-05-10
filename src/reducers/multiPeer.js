@@ -1,13 +1,24 @@
 import { Alert } from 'react-native'
+import { PeerStatus } from '../components/Peer'
 
 const initialState = {
-  selfName: 'defaultSelfName',
+  selfName: '',
   peers: {},
   isBrowsing: false,
   isAdvertising: false,
+  status: PeerStatus.IDLE, // idle, releasing, viewing, searching
 }
 
 const reducerMap = {
+  common: {
+    setStatus: (state, action) => ({
+      ...state,
+      multiPeer: {
+        ...state.multiPeer,
+        status: action.payload,
+      },
+    }),
+  },
   backend: {
     init: (state, action) => {
       return {
@@ -89,16 +100,15 @@ const reducerMap = {
       }
     },
     onPeerFoundSet: (state, action) => {
-      if (action.payload.peer.id in state.multiPeer.peers) {
-        return state
-      }
+      const foundPeer = action.payload.peer
+      foundPeer.online = true
       return {
         ...state,
         multiPeer: {
           ...state.multiPeer,
           peers: {
             ...state.multiPeer.peers,
-            [action.payload.peer.id]: action.payload.peer,
+            [foundPeer.id]: foundPeer,
           },
         },
       }
@@ -119,9 +129,6 @@ const reducerMap = {
     },
     onPeerConnected: (state, action) => {
       const peer = Object.assign({}, action.payload.peer)
-      if (peer.id in state.multiPeer.peers) {
-        peer.name = state.multiPeer.peers[peer.id].name
-      }
       return {
         ...state,
         multiPeer: {
@@ -147,17 +154,15 @@ const reducerMap = {
         },
       }
     },
-    onInviteReceived: (state, action) => {
-      if (action.payload.peer.id in state.multiPeer.peers) {
-        return state
-      }
+    onInviteReceivedSet: (state, action) => {
+      const inviterPeer = action.payload.peer
       return {
         ...state,
         multiPeer: {
           ...state.multiPeer,
           peers: {
             ...state.multiPeer.peers,
-            [action.payload.peer.id]: action.payload.peer,
+            [inviterPeer.id]: inviterPeer,
           },
         },
       }

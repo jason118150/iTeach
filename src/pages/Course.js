@@ -37,7 +37,6 @@ const mapDispatchToProps = dispatch => ({
     onPress: (id, status = '', onclick = false) => {
       if (id === 0) {
         dispatch(navAction.onlinePeerList())
-        dispatch(multiPeerAction.common.openOnlineList())
       } else if (id === 1 && status === 'teacher') {
         if (onclick === false) {
           dispatch(multiPeerAction.teacher.startRelease())

@@ -61,7 +61,8 @@ class SearchPage extends Component {
   }
 
   getCourseInfo() {
-    return Object.keys(this.props.peers).map(peerId => this.props.peers[peerId].info)
+    // return Object.keys(this.props.peers).map(i => this.props.peers[i].info)
+    return Object.keys(this.props.peers).map(i => this.props.peers[i].info).filter(item => item.identity === 'teacher' && item.releasing === true)
   }
 
   render() {
