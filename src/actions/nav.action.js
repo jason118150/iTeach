@@ -21,7 +21,7 @@ const { nav } = createActions({
     searchPage: () => null,
     addNewCourse: () => null,
     onlinePeerList: () => null,
-    course: () => null,
+    drawFinish: () => null,
     enterFeature: id => CourseItemData[id].routeName,
   },
 })
