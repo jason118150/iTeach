@@ -10,7 +10,7 @@ import AddNewCourse from '../pages/AddNewCourse'
 import OnlinePeerList from '../pages/OnlinePeerList'
 import CourseInfo from '../pages/CourseInfo'
 import DrawLots from '../pages/DrawLots'
-import DrawFinish from '../pages/drawLots_finish'
+import DrawFinish from '../pages/DrawLotsFinish'
 
 
 export default SwitchNavigator({
